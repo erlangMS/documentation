@@ -1,0 +1,64 @@
+\documentclass[documentacao]{unb-doc-ssi}%
+
+\usepackage{pdfpages}% incluir PDFs, usado no apêndice
+
+% Adicionados ao template por Everton Agilar
+\usepackage{enumerate}
+\usepackage{dcolumn}
+\usepackage{tabu}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{changes}
+\usepackage{listings}
+\usepackage{placeins}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+\usepackage{scalefnt}
+\usepackage{color}
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\usepackage{multirow}
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}%
+
+
+\autor{Everton de Vargas}{Agilar}%
+
+\titulo{Guia Rápido para Desenvolvedores Java na Arquitetura Erlangms}%
+
+\palavraschave{Arquitetura Orientada a Serviços, REST, Erlangms.}%
+
+
+\lstset{language=Java,		 
+   basicstyle=\small, % or \small or \footnotesize etc.		
+   numbersep=10pt,    % how far the line-numbers are from the code		
+   tabsize=4,  		
+   showspaces=false,		
+   showtabs=false,		
+   breaklines=true,		
+   showstringspaces=false,		
+   breakatwhitespace=true,		
+   commentstyle=\color{pgreen},		
+   keywordstyle=\color{pblue},		
+   stringstyle=\color{pred},		
+   captionpos=b,		
+   inputencoding=utf8,		
+   extendedchars=true,		
+   literate={á}{{\'a}}1 {ã}{{\~a}}1 {é}{{\'e}}1 {ê}{{\^e}}1 {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1		
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Texto
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}%
+	  \capitulo{1_Introducao}{Introdução}%
+	  \capitulo{2_NovoProjeto}{Criando um Novo Projeto}%
+	  \capitulo{3_Design}{Design de Implementação}%
+\end{document}%

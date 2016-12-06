@@ -1,0 +1,120 @@
+
+\lstset{language=Java,
+        basicstyle=\footnotesize,
+        numbers=left,
+        numberstyle=\footnotesize,
+        tabsize=2,
+        numbers=none,
+        rulesepcolor=\color{blue}}
+    
+\section{Cadastro de Agenda}
+             
+\begin{lstlisting} 
+
+{
+	"name" : "/sae/agenda",
+	"comment": "Lista as agendas para atendimento.",
+	"owner": "sae",
+	"version": "1",
+	"service" : "br.unb.sae.facade.AgendaFacade:listaAgenda",
+	"url": "/sae/agenda",
+	"type": "GET",
+	"APIkey":"true",
+	"querystring": [
+		{
+			"name": "filter",
+			"type": "string",
+			"default" : "",
+			"comment": "Filtro principal da pesquisa"
+		},
+		{
+			"name": "fields",
+			"type": "string",
+			"default" : "",
+			"comment": "Campos que devem ser retornados na pesquisa"
+		},
+		{
+			"name": "limit_ini",
+			"type": "int",
+			"default" : "0",
+			"comment": "Limite inicial do paginador"
+		},
+		{
+			"name": "limit_fim",
+			"type": "int",
+			"default" : "100",
+			"comment": "Limite final do paginador"
+		},
+		{
+			"name": "sort",
+			"type": "string",
+			"default" : "",
+			"comment": "Campos que devem ser ordenados"
+		},
+	]
+}
+
+
+\end{lstlisting}
+
+\section{Monitoramento de Serviços}
+             
+\begin{lstlisting} 
+
+{
+
+  "name" : "/health/top_services/:id",
+	"comment": "Lista os top services mais solicitados",
+	"owner": "health",
+	"version": "1",
+	"service" : "msbus_health_service:top_services",
+	"url": "/health/top_services/:id",
+	"type": "GET",
+	"APIkey":"true",
+	"querystring": [
+		{
+			"name": "periodo",
+			"type": ["min", "day", "week", "month", "year"],
+			"default" : "month",
+			"comment": "Periodo da pesquisa",
+			"required" : "true"
+		},
+		{
+			"name": "sort",
+			"type": ["url", "qtd"],
+			"default" : "qtd",
+			"comment": "qual campo ordenar"
+		}
+	],
+	"lang" : "erlang"
+},
+
+{
+	"name" : "/health/qtd_requests_by_date/:id",
+	"comment": "Lista a quantidade de requests por data",
+	"owner": "health",
+	"version": "1",
+	"service" : "msbus_health_service:qtd_requests_by_date",
+	"url": "/health/qtd_requests_by_date/:id",
+	"type": "GET",
+	"APIkey":"true",
+	"querystring": [
+		{
+			"name": "periodo",
+			"type": ["min", "day", "week", "month", "year"],
+			"default" : "month",
+			"comment": "Periodo da pesquisa",
+			"required" : "true"
+		},
+		{
+			"name": "sort",
+			"type": ["date", "qtd"],
+			"default" : "date",
+			"comment": "qual campo ordenar"
+		}
+	],
+	"lang" : "erlang"
+}
+
+
+\end{lstlisting}

@@ -1,0 +1,338 @@
+\label{avaliacao}
+
+Este capítulo apresenta uma avaliação da abordagem em um cenário real
+de modernização de software no CPD/UnB. Assim, a Seção~\ref{ava:contexto} descreve
+o contexto e os objetivos da avaliação; a Seção~\ref{ava:protocolo} define
+o protocolo utilizado; a Seção~\ref{ava:questoes} apresenta as questões de
+pesquisa; a Seção~\ref{ava:estudo_caso} relata o planejamento e a execução
+do estudo de caso conduzido na modernização de um sistema legado; 
+a Seção~\ref{ava:resultados} apresenta os resultados obtidos e; por fim,
+a Seção~\ref{ava:ameacas} identifica as ameaças a validade da pesquisa.
+
+\section{Contexto e Objetivos}\label{ava:contexto}
+
+A avaliação conduzida no restante deste capítulo tem, por finalidade, validar
+o uso da abordagem proposta neste trabalho de dissertação em um projeto do CPD, 
+tendo como base, um estudo de caso através do qual foi modernizado o \acrfull{SAE} 
+da \acrlong{UnB}. O objetivo é avaliar se a abordagem melhora a facilidade de 
+compreensão e manutenibilidade dos produtos de software desenvolvidos pelo CPD. 
+
+
+
+
+\section{Protocolo da Avaliação}\label{ava:protocolo}
+
+Um protocolo de pesquisa foi definido, segundo
+orientações de~\cite{Petersen:2008}, 
+para selecionar o método avaliativo, o tipo de pesquisa e
+as técnicas de pesquisa utilizadas na avaliação.
+
+O método avaliativo baseia-se no método \acrfull{GQM}, 
+proposto em ~\cite{van1999goal}. Seu 
+uso fornece diretrizes para a execução de uma avaliação. A 
+Tabela ~\ref{fig:objetivo_gqm} 
+ilustra os objetivos da avaliação de acordo com o
+método \acrshort{GQM}. Aplica-se uma \emph{avaliação qualitativa}
+para responder as questões de pesquisa. De 
+acordo com~\cite{iso2003iec}, as avaliações qualitativas
+são adequados neste tipo de investigação, uma vez que se
+quer obter as respostas a partir de 
+observações e opiniões dos participantes do estudo,
+sem requerer, no entanto, 
+a aplicação de técnicas estatísticas quantitativas. 
+
+
+
+% Tabela GQM com os objetivos da avaliação
+%======================================================================================
+\input{tables/avaliacao/table_objetivo_qgm.tex}
+
+
+Para~\cite{van1999goal}, é necessário definir as técnicas
+de pesquisa. Com base nessa
+premissa, as técnicas utilizadas foram: a) elaboração
+de um questionário para 
+avaliar o uso da abordagem pelos participantes do
+estudo de caso; b) coleta 
+de métricas de software para analisar o produto de
+software desenvolvido e; 
+c) documentar o estudo de caso em áudio com a devida
+permissão dos participantes.
+
+
+
+\section{Questões de Pesquisa (QP)}\label{ava:questoes}
+
+As questões de pesquisa foram elaboradas de acordo com a motivação da avaliação, 
+que é validar a aplicação da abordagem proposta, na modernização de um
+sistema legado do CPD/UnB, no contexto da manutenção de software. As questões de
+pesquisa estão listadas a seguir:
+
+\begin{enumerate}[(QP1)]
+
+\item Qual a facilidade de compreender (ou adotar) a abordagem 
+proposta neste trabalho de dissertação?
+
+\item A modernização centrada em \acrfull{SOC} e suportada 
+pela abordagem e arquitetura proposta, melhora a qualidade dos
+produtos desenvolvidos no CPD/UnB?
+
+\end{enumerate}
+
+Assim, a QP1 é respondida por meio de um questionário aplicado aos participantes
+do estudo de caso. Já a segunda questão (QP2) é respondida através do
+questionário e da comparação dos códigos fonte dos sistemas.
+
+
+
+
+
+
+\section{Planejamento e Execução do Estudo de Caso}\label{ava:estudo_caso}
+
+O estudo de caso foi conduzido com a metodologia 
+\emph{Pesquisa-Ação}~\cite{santos2009action},
+um método empírico de investigação. O motivo de utilizá-lo deu-se porque era
+necessário resolver um problema real, ou seja, como tratar a
+modernização dos sistemas legados no \acrshort{CPD} por meio de uma 
+nova abordagem, enquanto estudava-se a experiência em resolvê-lo. 
+
+Segundo~\cite{santos2009action}, as seguintes premissas devem
+ser consideradas com o uso da metodologia Pesquisa-Ação: a) ter um
+dono do problema (\textit{problem owner}) para
+colaborar e estar engajado com a solução bem como prover os recursos
+necessários; b) o problema precisa ser autêntico e; c) não haver
+conhecimento sobre resultados do problema.
+
+O estudo de caso foi conduzido no contexto da disciplina 
+\emph{Modernização de Software} do Mestrado Acadêmico em Informática 
+da \acrshort{UnB}. Os alunos matriculados nessa disciplina participaram
+do estudo, totalizando 12 pessoas, sendo que o autor dessa dissertação
+exerceu o papel de \emph{arquiteto de software}. Alguns gestores do CPD, que
+faziam parte do estudo, não se envolveram diretamente com o desenvolvimento
+dos serviços mas participaram ativamente nas demais atividades da investigação.
+A Tabela \ref{ava:perfil_participantes} lista um resumo do perfil dos participantes.
+
+% Tabela do perfil dos participantes do estudo de caso
+%======================================================================================
+\input{tables/avaliacao/table_perfil_participantes.tex}
+
+O CPD/UnB forneceu a infraestrutura de hardware e software bem
+como a sala para os encontros. Os participantes também puderam
+trabalhar em casa, pois o código fonte do projeto foi 
+disponibilizado no portal \emph{ErlangMS} no 
+sítio \url{https://github.com/erlangms}. Um
+banco de dados em memória JavaDB foi utilizado para
+não depender de conexão remota ao CPD.
+
+O estudo de caso teve início em 24 de agosto de 2015
+com uma série de debates e aulas expositivas sobre
+modernização e reengenharia de software, 
+com o intuito de definir o escopo e os objetivos da 
+modernização de um sistema legado da \acrshort{UnB}. 
+No decorrer dos
+debates e das aulas expositivas, foi apresentado a abordagem
+orientada a serviços proposta neste trabalho de dissertação 
+aos participantes do 
+estudo de caso. Posteriormente, durante o planejamento 
+conduzido com os participantes e com alguns gestores
+do CPD, optou-se em modernizar o \acrfull{SAE}. Este sistema
+tem como objetivo fazer a automação
+do \acrfull{PNAES}. Nesse sentido, o sistema oferece
+funcionalidades para gestão do processo de 
+avaliação socioeconômica dos estudantes da \acrshort{UnB} 
+regularmente matriculados em disciplinas de cursos
+presenciais de graduação e pós-graduação (mestrado e doutorado)
+da Universidade. Assim, durante o processo de avaliação socioeconômica, 
+os estudantes da \acrshort{UnB} em situação de
+vulnerabilidade socioeconômica podem participar do programa 
+preenchendo os formulários 
+disponíveis no sistema \acrshort{SAE} e solicitar os benefícios
+socioeconômicos (que poderá ser concedido se atender aos critérios da avaliação). 
+Entre os benefícios socioeconômicos oferecidos no \acrshort{PNAES} 
+destacam-se o \emph{Auxílio Alimentação} que 
+consiste no repasse mensal de recurso em forma
+de pecúnia e o \emph{Moradia Estudantil}.
+
+Atualmente, o sistema legado \acrshort{SAE} está em produção
+sob duas versões: a \emph{versão web} (linguagem C\#) e a
+\emph{versão desktop} (linguagem VB). Há funcionalidades 
+nesses sistemas (como relatórios e contagem de pontuações
+para seleção dos aprovados) 
+onde se utiliza a versão VB. A 
+versão C\# é utilizada principalmente pelos estudantes da \acrshort{UnB} 
+no preenchimento dos formulários da avaliação
+socioeconômica. A justificativa
+para escolha do \acrshort{SAE}, segundo os gestores do CPD, foram
+motivadas pela duplicidade
+das regras de negócios que acabam dificultando a manutenção e
+elevando o seu custo. No Apêndice \ref{compreensao_sae} apresenta-se
+detalhes do levantamento de requisitos realizado, sendo
+importante destacar que o dono do problema definido para esta investigação
+é o CPD/UnB, que está interessado em verificar os benefícios que 
+podem-se obter com a abordagem proposta. 
+
+Sendo assim, o trabalho realizado no decorrer do estudo de caso
+consistiu na migração do sistema legado \acrshort{SAE}
+(as versões VB e C\#) 
+para a linguagem Java usando a abordagem proposta nesse
+trabalho de dissertação, com o objetivo de ter apenas uma
+única aplicação, facilitar a manutenção do software e, futuramente, 
+possibilitar a integração com outros sistemas da \acrshort{UnB}, 
+como o \acrfull{SISRU} que poderá consumir um serviço
+do \acrshort{SAE} para verificar se um estudante
+da \acrshort{UnB} tem direito ao benefício
+do auxílio alimentação. 
+
+Com base no exposto, as
+principais atividades executadas na modernização do
+sistema legado \acrshort{SAE} foram a definição da 
+direção estratégica do projeto de modernização;
+a compreensão do sistema mediante 
+apresentações e reuniões com os usuários desse sistema, 
+inspeções do código fonte e do esquema do
+banco de dados (apoiados por ferramentas de análise estática); 
+a extração dos fluxos de negócios para
+identificar os serviços a serem desenvolvidos na nova aplicação; 
+a reestruturação do banco de dados do \acrshort{SAE}; a 
+especificação do catálogo de serviços para o projeto; o
+desenvolvimento dos serviços e do
+protótipo para o \textit{front-end} do sistema e; por fim,
+o deploy e testes dos serviços.
+
+
+Para lidar com os desafios da especificação do modelo
+de domínio do negócio, 
+os participantes do estudo de caso experimentaram
+dois padrões de design de software: o \acrfull{DDD} e
+o \textit{Transaction Script}. Mais detalhes sobre esses dois
+padrões podem ser consultados no Capítulo \ref{fundamentos}.
+Como os sistemas da \acrshort{UnB} utilizavam o \textit{Transaction Script}, 
+foi a opção inicial de escolha. No entanto, 
+como foi visto na prática, o design procedimental deste
+método não foi adequado para a implementação dos serviços
+do sistema \acrshort{SAE}. Por
+conta disso, os participantes decidiram experimentar o
+design \acrshort{DDD} de acordo com as técnicas
+descritas em ~\cite{evans2004domain, stal2006using}. 
+Como a maior parte dos participantes
+do estudo de caso não tinham experiência nesse design, 
+organizou-se no CPD/UnB uma mesa redonda com especialistas 
+em \emph{Arquitetura de Software} de alguns Órgãos Públicos
+de Brasília para falar sobre as suas experiências em projetos de
+software nessas organizações.
+
+Após a fase de modelagem do domínio de negócio dos serviços e 
+a reestruturação do esquema do banco de dados do \acrshort{SAE}, 
+houve a implementação dos serviços, executada sem muitos
+problemas. Assim, foram
+construídos 4 módulos de \textit{back-end} 
+(onde cada módulo contém 
+um conjunto de serviços em um domínio de negócio específico)
+representando os \emph{domínios de contexto} de acordo com o \acrshort{DDD} 
+e o desenvolvimento de
+1 módulo \textit{front-end} representando a \emph{interface web}
+da aplicação. 
+
+A Tabela~\ref{tab:modulos-estudo-caso} lista os módulos desenvolvidos durante 
+a modernização. Em relação aos módulos de \textit{back-end},
+o \emph{unb-questionario} 
+surgiu devido a possibilidade de se criar um conjunto de serviços para
+gestão de questionários genéricos, permitindo o seu uso em outros sistemas
+além do \acrshort{SAE} (requisito solicitado pelo CPD). O módulo
+\emph{unb-sae} contém os serviços para o preenchimento dos formulários 
+da avaliação socioeconômica do \acrshort{PNAES} e os
+módulos \emph{unb-sigra} e \emph{unb-sitab} expõem outros
+serviços que foram necessários, como cadastros de alunos
+ou campus. Salienta-se que algumas funcionalidades já existentes
+em Java poderiam ter sido utilizadas mas não foram possíveis, a exemplo
+do cadastro de pessoa, devido
+a dificuldade para importar as dependências do 
+\textit{framework} de desenvolvimento Java do CPD e
+a funcionalidade de autenticação do usuário, que estava
+codificado diretamente no sistema \emph{autenticacao}, o portal 
+web de login do usuário.
+
+% Tabela que lista os módulos do SAE
+%======================================================================================
+\input{tables/avaliacao/table_modulos_sae.tex}
+
+
+Por fim, o estudo de caso foi concluído no dia 10 de
+dezembro de 2015 com uma apresentação final do projeto 
+de modernização do \acrshort{SAE} na disciplina Modernização de Software. 
+Posteriormente, realizou-se no auditório 
+do CPD/UnB uma apresentação para os servidores deste
+Centro da abordagem proposta onde discutiu-se
+os principais desafios e
+experiências obtidas durante o estudo de caso.
+
+
+
+
+
+
+
+\section{Resultados da Avaliação}\label{ava:resultados}
+
+Nesta seção são descritos os resultados da avaliação. Na primeira questão, buscou-se identificar a facilidade de compreender (ou adotar) a abordagem proposta neste trabalho de dissertação. Essa faceta foi então combinada a QP2 para analisar se a abordagem proposta melhora a qualidade dos produtos desenvolvidos no CPD/UnB com o foco na manutenibilidade do software.
+
+
+\input{tex/avaliacao/resposta_QP1.tex}
+
+\input{tex/avaliacao/resposta_QP2.tex}
+
+\input{tex/avaliacao/resposta_QP2_complementar.tex}
+
+
+
+\section{Ameaças à Validade}\label{ava:ameacas}
+
+A avaliação empírica apresentada limitou-se em avaliar
+a aplicação da abordagem proposta 
+neste trabalho de dissertação na
+modernização de um sistema legado no CPD/UnB, no
+contexto da manutenção de software. 
+
+Os participantes do estudo de caso demonstraram muito
+interesse em aplicar um abordagem \acrshort{SOA}
+na modernização de um sistema legado da \acrlong{UnB}. Com base 
+nesses aspectos,
+as possíveis ameaças identificadas no estudo, de acordo com
+as recomendações de~\cite{kitchenham:2004}, são descritas a seguir:
+
+\begin{itemize}
+
+	\item Validade Interna. Capacidade de um novo experimento repetir o
+comportamento atual com os mesmos objetivos. Identificou-se que que
+deveria haver um número mínimo de participantes. O estudo de caso
+teve 12 participantes, um número que se mostrou adequado para os fins do estudo.
+
+	\item Validade externa. Generalizar os efeitos observados
+fora do estudo. Identificou-se que o perfil dos participantes
+foi representativo, pois haviam profissionais de alguns outros
+órgãos públicos além do CPD/UnB, bem como alunos de graduação
+e mestrado da \acrshort{UnB}.
+
+	\item Validade de conclusão. Refere-se à habilidade de se
+chegar a uma conclusão. Foi utilizado questionários e métricas
+de software para conduzir o experimento e se chegar a uma conclusão.
+
+\end{itemize}
+
+Sabe-se que uma avaliação pode requerer um longo período
+para se observar e examinar todas as causas e efeitos do universo
+estudado. Para conduzir a avaliação da melhor forma possível, as
+atividades foram documentadas em áudio. Além do mais,
+devido ao curto período de tempo disponível para o estudo de
+caso (apenas 4 meses), optou-se pelo método Pesquisa-Ação que se
+mostrou muito conveniente e estabeleceu uma ampla atuação dos
+participantes da situação problema (a modernização do \acrshort{SAE}
+através da abordagem proposta) de modo cooperativo e participativo. 
+
+
+
+
+
+
+

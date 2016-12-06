@@ -1,0 +1,198 @@
+\label{mapeamento}
+
+Apesar de ser um tema de crescente interesse, tanto 
+de pesquisa quanto de aplicação na indústria, a literatura 
+não apresenta uma consolidação das principais contribuições 
+relacionadas à modernização de sistemas legados. Ou seja, com o 
+intuito de descrever adequadamente cenários reais de modernização 
+em uma instituição específica, identificou-se  a necessidade 
+prévia da condução de \acrfull{MS} para 
+caracterizar a modernização de sistemas legados no 
+contexto da manutenção de software---uma vez que 
+um \acrshort{MS} pode ser conduzido 
+para identificar e agregar resultados relevantes 
+de estudos sobre determinado tema, ao responder 
+questões de pesquisa em particular~\cite{kitchenham:2004,Petersen:2008}. 
+Neste capítulo, apresenta-se os resultados da condu\c c\~{a}o de 
+um \acrshort{MS} na \'{a}rea de moderniza\c c\~{a}o de software.
+
+\section{Método de Pesquisa}
+
+A condução de mapeamentos sistemáticos na área de 
+Engenharia de Software tem se tornado uma prática 
+consolidada que envolve um conjunto bem definido 
+de atividades~\cite{Petersen:2008}. Esta seção descreve 
+o protocolo de estudo usado, 
+de acordo com as recomendações já propostas para a 
+condução desse tipo de estudo. 
+
+Um protocolo de estudo é um plano com os procedimentos básicos de 
+estudos que devem ser utilizados no MS, de acordo com~\cite{Petersen:2008}. 
+Dessa forma, seu  uso favorece que o mapeamento 
+possa ser reproduzido por outros pesquisadores, 
+sem os problemas do viés de publicação 
+mencionados em~\cite{kitchenham:2004}. A Figura~\ref{fig:protocolo_pesquisa_ms} 
+mostra o protocolo da pesquisa. O restante dessa seção contém as questões de pesquisa, 
+a estratégia de busca e os critérios de inclusão e 
+exclusão de publicações usados neste mapeamento.
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=1.2]{img/mapeamento/protocolo_pesquisa_ms.pdf}
+\caption{Protocolo de pesquisa do mapeamento sistemático.}
+\label{fig:protocolo_pesquisa_ms}
+\end{figure}
+
+
+\subsection{Questões de Pesquisa (QP)}
+
+As questões de pesquisa foram elaboradas 
+de acordo com a motivação deste estudo, 
+que visa caracterizar a modernização dos sistemas legados 
+no contexto da manutenção de software, ao identificar 
+as principais contribuições e estudos na literatura sobre este tema. 
+São elas:
+
+\begin{enumerate}[(QP1)]
+\item O que caracteriza a modernização dos sistemas legados de 
+acordo com a literatura existente? Quais outros termos estão relacionados 
+com modernização?
+
+\item Quais processos, técnicas ou ferramentas têm sido sugeridos 
+na literatura para suportar as atividades de modernização 
+dos sistemas legados?
+
+\item Quais as razões que levam as organizações a 
+modernizarem os seus sistemas legados?
+
+\end{enumerate}
+
+\subsection{Estrat\'{e}gia de Busca}
+
+A estratégia de busca consistiu 
+na pesquisa manual de publicações disponíveis em conferências 
+e periódicos da área de Engenharia de Software. 
+Tal estratégia, referenciada em~\cite{kitchenham:2004}, foi adotada 
+por entender que seria possível obter artigos de maior relevância 
+face ao uso de \textit{strings} de busca, uma vez que os termos 
+utilizados para referir a modernização ou evolução de sistemas 
+são bem amplos. 
+
+Com isso, a busca foi organizada para ser executada em três etapas. 
+Uma lista com as fontes de pesquisa foi selecionada para cada etapa de 
+maneira empírica. Essa estratégia foi complementada pela 
+técnica ``snowball''~\cite{kitchenham:2004}, 
+que objetiva obter novas fontes de pesquisa primárias analisando 
+as refer\^{e}ncias dos artigos encontrados. 
+As fontes de pesquisa selecionadas foram:
+
+\begin{enumerate}[(a)]
+
+\item Fontes de pesquisa da etapa 1
+  \begin{itemize}
+   \item{ICSE -- International Conference on Software Engineering;}
+   \item{TSE -- Transactions on Software Engineering;}
+   \item{SPE -- Software: Practice and Experience;}
+   \item{IEEE Software.} 
+  \end{itemize}
+
+\item Fontes de pesquisa da etapa 2
+
+  \begin{itemize}
+   \item{ICSM -- International Conference on Software Maintenance;}
+   \item{WCRE -- Working Conference on Reverse Engineering;}
+   \item{CSMR -- Software Evolution Week.} 
+  \end{itemize}
+
+\item Fontes de pesquisa da etapa 3
+
+  \begin{itemize}
+   \item{ACM Digital Library;}
+   \item{IEEE Xplore;}
+   \item{SpringerLink;}
+   \item{SEI Digital Library;} 
+   \item{Science Direct.}
+  \end{itemize}
+
+\end{enumerate}
+
+\subsection{Critérios de Inclusão e Exclusão}
+
+A fim de selecionar os estudos primários mais relevantes, restrições de inclusão e exclusão foram estipuladas. 
+Para o critério de inclusão, somente as publicações que faziam alusão ao tema abordado no título ou no \textit{abstract} 
+cuja data de publicação estivesse compreendido entre 1995 e 2015. 
+Este intervalo foi definido para obter o maior número possível de publicações relevantes. 
+Para o critério de exclusão, fontes que contribuem com algum resultado (positivo ou negativo), 
+que tenham mais de 20 citações e pelo menos 4 páginas.
+
+\subsection{Seleção das Publicações}
+
+A seleção das publicações iniciou com a pesquisa manual nas fontes de pesquisa primárias selecionadas anteriormente, 
+observando o protocolo de pesquisa. Com isso, foi gerada uma lista inicial com 59 publicações. Posteriormente, essa lista passou 
+para 44 com as técnicas de \textit{screening} sugeridas por~\cite{Petersen:2008} que descartou algumas publicações não 
+enquadradas nos critérios do protocolo. A tabela \ref{table:artigos} exibe a lista de publicações selecionadas para análise.
+
+\subsection{Extração de Dados e Análise}
+
+Como pode ser visto na Figura~\ref{fig:grafico_distribuicao}, no gráfico de distribuição à esquerda, 
+o \acrfull{IEEE} foi a fonte de pesquisa que retornou 
+a maior parcela dos estudos primários com 63.64\%, seguido do Science Direct com 11.36\% e do SEI Digital Library com 9.09\%. 
+Supõem-se que é porque o \acrshort{IEEE} possui o maior número de conferências e publicações na área de Engenharia de Software e 
+também porque indexam publicações de outras bibliotecas. No gráfico de distribuição à direita, pode-se visualizar 
+as principais conferências e jornais que publicaram sobre o tema, destacando-se 
+a \acrfull{CSMR} com 21.43\%, e o \acrfull{SEI} com 14.29\%. Todas as demais conferências e jornais possuem 7.14\% de publicações cada uma. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.64]{img/mapeamento/grafico_distribuicao.pdf}
+\caption{Distribuição das publicações por fontes de pesquisa.}
+\label{fig:grafico_distribuicao}
+\end{figure}
+
+
+\input{tex/mapeamento/papers}
+
+
+\section{Resultados}
+
+Nesta seção, são descritos os resultados do \acrshort{MS} obtidos após o estudo das publicações selecionadas. 
+Quanto à resposta a primeira questão, foram analisados os estudos primários 
+com o foco na caracterização do tema modernização. Esta faceta foi então combinada para responder a 
+segunda questão QP2. Finalmente, na QP3, abordaram-se as razões que levam as organizações a buscarem a 
+modernização dos sistemas legados de acordo com a literatura estudada.
+
+\input{tex/mapeamento/resposta_QP1}
+\input{tex/mapeamento/resposta_QP2}
+\input{tex/mapeamento/resposta_QP3}
+
+
+\section{Síntese do Capítulo}
+
+As organizações querem 
+adaptar-se rapidamente as mudanças nos requerimentos de negócios,
+sejam elas intra-organizacionais, alterações em leis ou 
+regulamentações; mudanças que envolvem 
+a modernização dos sistemas legados e a
+atualização de tecnologias.
+
+Como visto neste capítulo, 
+independente do ciclo de vida selecionado para
+descrever a evolução de um sistema legado, 
+de acordo com~\cite{S3_Bisbal:1999,S12_WeidermanApproaches:1997}, 
+determinar qual é a atividade mais apropriada
+em diferentes pontos pode ser um grande desafio: devemos
+continuar mantendo o sistema, modernizá-lo ou substituí-lo?
+Ao tomar esta decisão, as organizações devem avaliar seus
+sistemas legados, de modo que se possa 
+determinar a melhor estratégia de evolução e
+identificar as implicações de cada ação~\cite{Seacord:2003}. 
+
+Nesse contexto, foi muito importante compreender
+as estratégias de modernização dos sistemas legados descritos na literatura.
+Após este \acrfull{MS}, tornou-se claro que um processo de 
+modernização com uma abordagem sistemática deveria ser proposto ao CPD/UnB,
+para diminuir os custos e os riscos associados com a 
+modernização dos sistemas legados, ao permitir continuar mantendo
+os sistemas atuais enquanto a migração acontece em paralelo
+de forma gradativa.

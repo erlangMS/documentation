@@ -1,0 +1,81 @@
+\subsection{Análise Quantitativa Complementar}
+
+Além da avaliação qualitativa apresentada anteriormente, optou-se por incluir uma \emph{análise quantitativa complementar} utilizando algumas métricas de software identificadas na literatura~\cite{chidamber1994metrics, fenton2014software, gyimothy2005empirical, mccabe1976complexity}, descritas resumidamente a seguir:
+
+\begin{enumerate}[(M1)]
+
+\item{Line of Code (LoC)}
+
+A métrica LoC é uma métrica tradicional para mensurar o tamanho físico de um software. Calcula-se nessa avaliação o número de linhas de código que cada sistema avaliado contém. Não são contabilizados documentações, comentários para explicar o que o código faz, nem as linhas em branco, segundo as observações de~\cite{fenton2014software}.
+
+\item{Cyclomatic Complexity (CC)}
+
+Métrica para medir a complexidade de um software e consiste basicamente em contar o número de caminhos diferentes que um método pode ter. É obtido através de heurísticas e independe da linguagem de programação.
+Segundo o seu criador \emph{McCabe`s}~\cite{mccabe1976complexity}, é uma das métricas mais utilizadas para mensurar a complexidade de softwares (tanto para sistemas orientados a objetos quanto os procedurais).
+
+
+\item{Weighted Methods Per Class (WMC)}
+
+Mensura a complexidade das classes em termos da soma das complexidades dos métodos. De acordo com ~\cite{chidamber1994metrics}, o número de métodos de uma classe é uma forma efetiva para estimar o tempo e o esforços de manutenção para uma classe.
+
+
+\item{Coupling Between Objects (CBO)}
+
+Verifica o acoplamento entre objetos, ou seja, o nível de dependências entre as classes. Calcula-se aqui duas variáveis: o \emph{acoplamento eferente} (a quantidade de classes que uma classe depende) e; o \emph{acoplamento aferente} (a quantidade de classes que dependem de uma classe).
+
+\item{Lack of Cohesion of Methods (LCOM)}
+
+Avalia a falta de coesão entre os métodos de uma classe. Representa a diferença entre o número de pares de métodos de uma classe que não compartilham o mesmo conjunto de atributos e o número de pares que compartilham. Existem algumas variações dessa métrica. Nessa avaliação, o algoritmo utilizado é o LCOM1 de Chidamber \& Kemerer~\cite{chidamber1994metrics}.
+
+\end{enumerate}
+
+
+As métricas foram coletadas com a suíte de análise estática da empresa CoderGears\footnote{A suíte de ferramentas CodeGears está disponível no sítio \url{http://www.codergears.com}.} e com a ferramenta CLOC\footnote{A ferramenta CLOC está disponível no sítio \url{http://cloc.sourceforge.net}.}. Salienta-se que a justificativa para a seleção dessas métricas é verificar quantitativamente se o sistema modernizado no estudo de caso possui indicativos
+de uma arquitetura melhor quando comparado com os demais sistemas da UnB, em termos de modularidade, coesão e acoplamento, atributos que podem segundo~\cite{fenton2014software}, contribuir na maximização da manutenibilidade dos sistemas de software. 
+
+Nesse sentido, os sistemas selecionados para a análise estão listados na Tabela~\ref{sistemas_avaliados}. 
+
+% Tabela dos sistemas para a avaliação
+%======================================================================================
+\input{tables/avaliacao/table_sistemas_avaliacao.tex}
+
+ 
+A métrica LoC pode ser visualizada na Tabela~\ref{sistemas_avaliados}. A Figura~\ref{fig:proporcao_tam_sae_versoes} mostra também um gráfico com as três versões do \acrshort{SAE}. As demais métricas coletadas estão disponíveis na Tabela~\ref{tab:coleta_metricas_sae}. Destaca-se que a granularidade da métrica LoC é por aplicação e as demais métricas é por classe ou componente (também chamado de \emph{entidade}) para obter mais informações sobre os sistemas e a sua arquitetura correspondente.
+
+De acordo com a Figura~\ref{fig:proporcao_tam_sae_versoes}, as versões VB, C\# e Java do \acrshort{SAE} tem 16087, 11078, 9558 linhas de código respectivamente. A métrica LoC tem um propósito apenas informativo já que cada linguagem tem suas próprias características. Salienta-se que o novo \acrshort{SAE} é dividido em módulos \textit{back-end} (com os serviços de negócios) e o \textit{front-end} da aplicação (que ainda não está completo). O Código fonte completo pode ser consultado no sítio \url{https://github.com/erlangMS/samples/tree/master/sae/backend}.
+
+
+% Figura que mostra o tamanho de cada versão do SAE
+%======================================================================================
+
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.72]{/img/avaliacao/QP2/proporcao_tam_sae_versoes.eps}
+\caption{Métrica LoC nas três versões do SAE.}
+\label{fig:proporcao_tam_sae_versoes}
+\end{figure}
+
+
+Examinando a métrica WMC, percebe-se que os sistemas diferem nesse quesito. Tome como exemplo o \acrshort{SAE} Java com média WMC=8,17 em comparação ao \acrshort{SAE} VB com WMC=14,05 e o \acrshort{SAE} C\# com WMC=12,55. Segundo~\cite{chidamber1994metrics}, um valor médio até 10 é considerado bom e a partir disso, o sistema pode apresentar certa dificuldade em sua manutenção. Como se observa, a maior parte dos sistemas estão acima desse indicador ou apresentam alguma entidade acima deste valor, como indica a medição Max. Apenas como curiosidade, descobriu-se uma classe chamada \emph{VoEstudosSocioEconomicos} em C\# com 171 atributos, a qual os participantes decidiram refatorar em várias classes menores.
+
+Analisando a complexidade ciclomática (métrica CC), verificou-se que o novo \acrshort{SAE} é muito parecido com o \acrshort{SAE} C\#. Segundo afirma~\cite{watson1996structured}, um valor até 10 é considerado bom e há boas razões para limitar essa complexidade ciclomática. Por exemplo, artefatos muito complexos são alvo de mais problemas, são difíceis entendê-los, testá-los e modificá-los. De acordo com esse limite, os sistemas \acrshort{SIADD}, \acrshort{SICONV} e o \acrshort{SIMAR}, provavelmente, precisariam ser revistos já que a complexidade ciclomática média foi ultrapassada. Todos os sistemas analisados tem alguma entidade que ultrapassou este limite, como por exemplo, o \acrshort{SIADD} com Max=322, o \acrshort{SICONV} com Max=109 e o \acrshort{SIMAR} com Max=123. 
+
+Além disso, comparando os dados coletados da métrica LCOM, que mede a falta de coesão entre os métodos de uma classe, pode-se notar que o novo \acrshort{SAE} é o sistema mais coeso da lista. Para o \acrshort{SAE} C\#, foi pontuado o valor 0 para todas as entidades, podendo ser um erro ou limitação da ferramenta de análise estática na linguagem C\#. O princípio básico desta métrica é que as classes não devem ter muitas responsabilidades, limitando este valor na faixa entre 0 até 1. Valores altos apontam classes geralmente pouco coesas, como afirmam~\cite{chidamber1994metrics, gyimothy2005empirical}. Acredita-se que o design \acrshort{DDD} pode ter favorecido uma boa pontuação para o \acrshort{SAE} Java.
+
+Do modo geral, o resultado obtido analisando as métricas de software 
+nos sistemas selecionados indica que o novo sistema \acrshort{SAE} apresenta alguns
+indicativos de uma melhora arquitetural, uma vez que as médias (Avg) e o desvio padrão (Std.) 
+apontadas nas métricas coletadas são um pouco melhores no \acrshort{SAE} que nos
+demais sistemas avaliados. No entanto, apenas com uma \emph{análise quantitativa}
+não foi possível afirmar que a manutenibilidade poderia ser maximizada com 
+o uso da abordagem proposta.
+
+
+% Tabela de estatisticas coletadas
+%======================================================================================
+\input{tables/avaliacao/table_coleta_estatisticas.tex}
+
+
+
+
+

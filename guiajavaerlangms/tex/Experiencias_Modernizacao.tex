@@ -1,0 +1,128 @@
+\section{Experiências do CPD/UnB na Modernização dos Sistemas Legados}
+
+Esta seção abre um espaço para discutir as experiências do Centro de Informática (CPD) da UnB, ao longo dos anos, na modernização dos sistemas legados da Instituição. O \acrshort{CPD} é o departamento de Tecnologia da Informação (TI) responsável pelo desenvolvimento, manutenção e evolução dos sistemas computacionais.
+
+Nos últimos 20 anos, uma gama considerável de sistemas foi desenvolvido pelo CPD. Historicamente, entre as décadas de 70 e 90, foram implementados a maior parte dos sistemas corporativos que são utilizados nos mais diversos setores da Universidade. 
+
+Diante desse cenário, o \acrshort{CPD} vem trabalhando na modernização dos sistemas legados. Isso representa um desafio significativo, abrangendo várias áreas de Engenharia de Software, entre elas, os programas de compreensão do sistema e do banco de dados, desenvolvimento e testes \cite{S3_Bisbal:1999}. 
+
+\subsection{Características dos sistemas legados da UnB}
+
+A maioria dos sistemas estão sob diferentes linguagens de programação, arquiteturas e plataformas e não conversam entre si, a não ser, por meio da camada de banco de dados. Durante muitos anos, a linguagem de programação predominante foi o Visual Basic 4 (VB 4.0). Dois dos sistemas mais importantes da Universidade estão escritos nessa linguagem: Sistema de Informações e Gestão Acadêmica (SIGRA) e o Sistema de Informações de Pessoal (SIPES). Os demais sistemas foram desenvolvidos em outras versões de VB, além de VB.NET, C\#, PHP e Java. Nos últimos anos, o foco da equipe técnica tem sido migrar os sistemas legados para Java EE, iniciando pelos mais pequenos e de pouca criticidade. Para auxiliar essa atividade, o \acrshort{CPD} desenvolveu o seu próprio framework Java, chamado FastWeb, integrando diversas tecnologias e bibliotecas de Java modernas.
+
+\subsection{O alto custo de manutenção do legado}
+
+Como se verificou através do relatório de gestão do \acrshort{CPD} de 2010~\cite{PortalCPD:2015}, os custos com a manuten\c c\~{a}o dos sistemas legados são considerados elevados. Parte disso, é decorrente de vários fatores identificados: a) Quando ocorre uma mudança de requisito, frequentemente os ajustes devem ser feitos em mais de um local, onde as regras de negócios estão replicadas, o que aumenta as chances de serem introduzidos \textit{bugs} quando tais modificações não estão exatamente iguais. Por exemplo, o sistema \acrfull{SAE} que será modernizado neste trabalho (consulte o capítulo \ref{avaliacao}) possui dois módulos, um na linguagem \acrshort{VB} e outro em C\#, ambos sendo utilizados em produção, pois apresentam funcionalidades que se complementam mas com redundância de implementação das regras de negócio. b) o custo também está relacionado a falta de documentação atualizada dos sistemas e aos ambientes de desenvolvimento e produção, e dos bancos de dados. Constata-se que, quanto mais obsoletos tornam-se os sistemas da \acrshort{UnB}, mais difícil criar esses ambientes para possibilitar as manutenções evolutivas e corretivas solicitadas pelos usuários desses sistemas. E, atualmente, faz-se necessário o uso de máquinas virtuais para manter alguns sistemas, pois a versão dos sistemas operacionais instalados nos computadores das equipes de desenvolvimento já não suportam os softwares e bibliotecas de desenvolvimento dos sistemas legados. c) as bases de dados de muitos sistemas legados não possuem um padrão de qualidade adequado para os padrões atuais do \acrshort{CPD}, dificultando muito a modernização. Por exemplo, a falta de normalização, integridade referencial e de chaves primárias em muitas tabelas. Além disso, cada sistema desenvolvido tem o seu próprio banco de dados (é assim ainda hoje, por razões históricas) em vez de utilizar um banco de dados corporativo. É provável que o uso de um banco de dados para cada sistema possa ter inviabilizado até mesmo a integração dessas bases, face as antigas versões do \acrfull{SGBD} SQL\-Server não possuírem tantos os recursos para isso.
+
+
+\subsection{Estratégia de Migração e Experiências Obtidas}
+
+O \acrshort{CPD} não utiliza nenhum processo de modernização de sistemas legados conhecido na literatura, tendo desenvolvido um processo ad-hoc, baseado nas experiências adquiridas ao longo dos anos. Assim, como em muitas outras organizações, este é um dos problemas que provavelmente tem afetado o CPD/UnB: a inexistência de um processo documentado, bem definido e conhecido por todos, com as estratégias de modernização, as boas práticas e recomendações, impossibilitam um gerenciamento mais efetivo do processo de modernização dos sistemas legados. No caso específico da UnB, isso tem impactado negativamente na falta de sistemas devido aos altos custos envolvidos na migração e a demora na entrega dos novos sistemas.
+
+Tem-se utilizado uma estratégia híbrida na migração dos sistemas: A estratégia White-box, baseada nas técnicas de engenharia reversa para obter as regras de negócio direto no código fonte e assim conseguir gerar a documentação dos casos de uso; e a estratégia Black-box, para compreender os sistemas através das funcionalidades disponíveis na interface com o usuário e da análise dos inputs e outputs do banco de dados subjacente. 
+
+As experiências obtidas na modernização de alguns sistemas legados no CPD, como os sistemas de extensão (SIEX), de transportes (SITRAN) e de materiais (SIMAR), por exemplo, podem ser traduzidas tanto em termos gerenciais quanto em termos técnicos, de acordo com a lista a seguir:
+
+Muitos desses sistemas estão ultrapassados e precisam adaptar-se às mudanças nos 
+processos que eles automatizam. Este trabalho começou na \acrshort{SSI} em 2010 com alguns 
+sistemas sendo migrados para a linguagem Java. 
+
+Como exemplo deste trabalho, pode-se citar o sistema \acrshort{SIEX}, 
+concebido para o Decanato de Extensão (DEX) que visa auxiliar na gestão das 
+atividades acadêmicas e de extensão. Este sistema foi migrado para Java
+em 2011-2012 a partir de um sistema legado em VB. 
+
+Contudo, existem iniciativas que não são migração, mas ainda assim, 
+muito importantes para a Universidade, como é o caso do primeiro sistema do 
+Restaurante Universitário (\acrshort{SISRU}), 
+desenvolvido em 2011-2012 e somente colocado 
+em produção em 2013, por causa da complexidade da implantação desse sistema 
+e ao dimensionamento que foi necessário na infraestrutura do \acrshort{CPD} para atender ao 
+grande volume de transações. Para se ter uma ideia, em apenas 241 dias de funcionamento, 
+o sistema já havia processado mais de 1 milhão de refeições, para cerca 
+de 3200 estudantes \cite{PortalRU:2015}. 
+
+\vspace{0.2cm} 
+
+\textbf{a) Experiências Gerenciais}
+
+\vspace{0.2cm} 
+
+\begin{enumerate}
+
+\item
+As atividades de compreensão dos sistemas e os testes são as atividades que, normalmente, mais consomem tempo no dia-dia dos analistas, independente das atividades serem de manutenção ou modernização. De acordo com as questões respondidas neste MS, deve-se a falta de documentação e de analistas com domínio nos sistemas e na tecnologia subjacente;
+
+\item
+As manutenções dos sistemas legados ocupam grande parte dos recursos humanos do CPD. Em vista disso, os projetos de modernização, geralmente, permanecem em segundo-plano, causando vários problemas para a UnB, principalmente, a falta de sistemas.
+
+\item
+Em muitas ocasiões, quase a totalidade dos analistas de uma área de gestão, ocupam-se com as atividades de manutenção de um sistema para prepará-los para um evento específico, como a matrícula dos discentes, por exemplo;
+
+\item
+É muito comum, os usuários de um sistema solicitarem novas funcionalidades ou alterações nas regras de negócio existentes durante um projeto de modernização. Isso não é aconselhado segundo foi verificado neste \acrshort{MS} em \cite{Seacord:2003};
+
+\item
+Uma compreensão insuficiente sobre o domínio de um sistema legado pode levar a especificações incorretas no novo sistema, gerando retrabalho e atrasos no projeto de modernização, especialmente quando essas especificações são descobertas tardiamente. O \acrshort{CPD} passou por essa experiência na modernização do sistema SIEX, a qual foi também um dos primeiros sistemas críticos migrados para Java.
+
+\item
+Conforme verificado na literatura, os profissionais conhecedores dos sistemas legados deveriam fazer parte das equipes de modernização. Entretanto, como os sistemas legados da \acrshort{UnB} já possuem mais de 20 anos, a maior parte dos profissionais que ajudou a desenvolver esses sistemas na época já se aposentou;
+
+\item
+Por razões históricas, as equipes de manutenção e desenvolvimento sempre foram separadas, com os analistas conhecedores dos sistemas legados, ficando responsáveis pela sua manutenção e os analistas das equipes de desenvolvimento, constituído de pessoas mais jovens e recentes no CPD, sendo por esse motivo, ainda inexperientes no domínio do negócio das aplicações, responsáveis por  conduzir os projetos de modernização. Essa estrutura organizacional mudou em 2014 a fim de melhorar esse quadro. Como resultado, maximizou-se o fluxo de comunicação e a troca de conhecimento entre os colaboradores. Além disso, aliado a um movimento crescente de implantação de Metodologias Ágeis no setor, os projetos de modernização estão andando mais rápido e com qualidade.
+
+\item
+Há uma dificuldade em manter os stakeholders mais próximos das equipes de modernização. Os motivos são vários: a diversidade de usuários que esses sistemas atendem, a disponibilidade dos stakeholders que conhecem os sistemas e também o fato que muitos stakeholders já se aposentaram.
+
+
+\end{enumerate}
+
+\vspace{0.2cm} 
+
+\textbf{b) Experiências Técnicas}
+
+\vspace{0.2cm} 
+
+\begin{enumerate}
+
+\item
+Se a qualidade do esquema do banco não corresponde aos parâmetros de qualidade atuais do CPD, é necessário recriar primeiro. Foi constatado que em projetos onde foi usado o mesmo banco de dados (o SIMAR, por exemplo), a implementação da camada de acesso ao banco (DAO) em Java tornou-se bem mais complicada e consumidora de tempo, principalmente em decorrência das exigências da arquitetura do FastWeb. Para exemplificar, o Fastweb requer os objetos de modelo tenham uma propriedade do tipo Integer para identificação mas algumas tabelas antigas possuem chaves compostas, tipos char ou mesmo não possuem qualquer chave primária;
+
+\item
+Olhando o histórico de modificações no repositório de controle de versões (SVN) dos sistemas do CPD, percebe-se uma quantidade maior de commits referente a correções de bugs nos primeiros sistemas migrados para Java; De acordo com o observado em \cite{S3_Bisbal:1999}, isso pode ser explicado pela imaturidade das equipes técnicas com a nova tecnologia no início dos projetos de modernização e que aos poucos foram amadurecendo;
+
+
+\item
+Nas últimas reuniões no setor, tem-se discutido a possibilidade de ter uma equipe dedicada às atividades de arquitetura de software. Segundo a literatura pesquisada neste MS, isso poderia maximizar a qualidade dos componentes e sistemas desenvolvidos. Além disso, este grupo poderia ser responsável por documentar as arquiteturas de referências utilizadas e comunicá-las a todos os desenvolvedores, através de apresentações e reuniões de coaching \cite{merson2013ultimate};
+
+\item
+Localizar uma falha no código fonte, principalmente nos sistemas legados, pode levar mais tempo que a própria implementação da correção e isto nem sempre é percebido fora da equipe técnica.
+
+
+\end{enumerate}
+
+
+Código muito acoplado, com problemas em sistemas 
+
+
+
+
+
+
+%%@SuppressWarnings("unchecked")
+%%	@Override
+%%	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+%%	public void incluir(T entidade) {
+%%		resetError();
+%%		validarAnotacoes(entidade, true);
+%%		validacao(entidade, true);
+%%		if (verificarSeRegistroJaExiste(entidade)) {
+%%			addError(ConstantesWeb.MENSAGEM_REGISTRO_INCLUSAO_DUPLICATA);
+%%		}
+%%		checkErrors();		
+%%		preInclusao(entidade);
+%%		getDao().incluir(entidade);
+%%		posInclusao(entidade);
+%%	}
+	
+	
