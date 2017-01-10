@@ -23,4 +23,4 @@ The platform consists of a Enterprise Service Bus (ESB), called *EmsBus*, and a 
 
 * Dissertation of Master of Applied Computing graduate
 
-* Quick guide for Java developers on the erlangms platform
+* Quick guide for Java developers on the Erlangms platform
