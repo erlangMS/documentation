@@ -1,4 +1,4 @@
-Guia Rápido para Desenvolvedores Java na Arquitetura Erlangms
+Guia Rápido para Desenvolvedores Java
 ===
 
 Este guia sintetiza os conhecimentos que são necessários para trabalhar com a nova arquitetura 
