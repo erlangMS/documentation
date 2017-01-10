@@ -4,7 +4,7 @@ Quick Guide for Java Developers
 This guide summarizes the knowledge that is needed to work with the new architecture
 Erlangms in the Java environment. 
 
-## It will address in this guide
+## Will be covered in this guide
 
 * installation of the Java development environment
 * development of services with the ems-java SDK
