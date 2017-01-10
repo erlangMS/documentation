@@ -1,6 +1,12 @@
-Guia Rápido para Desenvolvedores Java
+Quick Guide for Java Developers
 ===
 
-Este guia sintetiza os conhecimentos que são necessários para trabalhar com a nova arquitetura 
-Erlangms no ambiente Java. Serão abordados a instalação do ambiente de desenvolvimento Java,  
-o desenvolvimento de serviços com o SDK ems-java e o deployment e execução dos serviços no barramento ems-bus.
+This guide summarizes the knowledge that is needed to work with the new architecture
+Erlangms in the Java environment. 
+
+## It will address in this guide
+
+* installation of the Java development environment
+* development of services with the ems-java SDK
+* deployment and execution of services on the ems-bus bus
+* writing Tests with Jasmine Javascript Framework
