@@ -1,12 +1,9 @@
-Quick Guide for Java Developers
+Quick Guide for LDAP Service
 ===
 
-This guide summarizes the knowledge that is needed to work with the new architecture
-Erlangms in the Java environment. 
+This guide summarizes the knowledge that is needed to work with LDAP v3 service
 
 ## Will be covered in this guide
 
-* installation of the Java development environment
-* development of services with the ems-java SDK
-* deployment and execution of services on the ems-bus bus
-* writing Tests with Jasmine Javascript Framework
+* Introduction
+* Installation and configuration of the bus 
