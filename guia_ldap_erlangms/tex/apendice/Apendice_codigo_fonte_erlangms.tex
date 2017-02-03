@@ -1,0 +1,713 @@
+\section{Módulo msbus\_server\_worker}
+
+
+
+\lstset{language=Erlang,
+        basicstyle=\footnotesize,
+        numbers=left,
+        numberstyle=\footnotesize,
+        tabsize=2,
+        numbers=none,
+        rulesepcolor=\color{blue}}
+             
+\begin{lstlisting} 
+
+%%****************************************************************************
+%% @title Module msbus_server_worker
+%% @version 1.0.0
+%% @doc Module responsible for processing \acrshort{HTTP} requests.
+%% @author Everton de Vargas Agilar <evertonagilar@gmail.com>
+%% @copyright ErlangMS Team
+%%****************************************************************************
+
+
+-module(msbus_server_worker).
+
+-behavior(gen_server). 
+-behaviour(poolboy_worker).
+
+-include("../include/msbus_config.hrl").
+-include("../include/msbus_schema.hrl").
+-include("../include/msbus_http_messages.hrl").
+
+%% Server API
+-export([start/1, start_link/1, stop/0]).
+
+%% gen_server callbacks
+-export([init/1, 
+		 handle_call/3, 
+		 handle_cast/2, 
+		 handle_info/1, 
+		 handle_info/2, 
+		 terminate/2, 
+		 code_change/3]).
+
+%% Client API
+-export([cast/1]).
+
+% State of server
+-record(state, {
+				worker_id = undefined,  	 %% identifier of worker
+				lsocket   = undefined,		 %% socket of listener
+				socket	  = undefined,		 %% socket of request
+				allowed_address = undefined, %% Range of IPs that can access the server
+				open_requests = []
+			}).
+
+-define(SERVER, ?MODULE).
+
+%%====================================================================
+%% Server API
+%%====================================================================
+
+start(Args) -> 
+    gen_server:start_link(?MODULE, Args, []).
+    
+start_link(Args) ->
+    gen_server:start_link(?MODULE, Args, []).
+    
+stop() ->
+    gen_server:cast(?SERVER, shutdown).
+ 
+
+%%====================================================================
+%% Client API
+%%====================================================================
+
+%% @doc Send message for worker
+cast(Msg) -> msbus_pool:cast(msbus_server_worker_pool, Msg).
+
+
+%%====================================================================
+%% gen_server callbacks
+%%====================================================================
+
+init({Worker_Id, LSocket, Allowed_Address}=Args) ->
+    State = #state{worker_id = Worker_Id, 
+				   lsocket = LSocket, 
+				   allowed_address = Allowed_Address,
+				   open_requests=[]},
+    {ok, State, 0};
+
+init(Args) ->
+    %fprof:trace([start, {procs, [self()]}]),
+    {ok, #state{}}.
+
+handle_cast(shutdown, State) ->
+    {stop, normal, State};
+
+handle_cast({Socket, RequestBin}, State) ->
+	NewState = trata_request(Socket, RequestBin, State),
+	{noreply, NewState, 0};
+	
+handle_cast({HttpCode, Request, Result}, State) ->
+	Worker = self(),
+	Socket = Request#request.socket,
+	inet:setopts(Socket,[{active,once}]),
+	case is_integer(HttpCode) of
+		true -> Code = HttpCode;
+		false -> Code = 200
+	end,
+	case Code >= 400 of
+		true -> Status = error;
+		false -> Status = ok
+	end,
+	CodeBin = integer_to_binary(Code), 
+	case Result of
+		<<>> -> 
+			Response = msbus_http_util:encode_response(<<"200">>, <<>>),
+			envia_response(Code, ok, Request, Response);
+		{ok, Content} -> 
+			Response = msbus_http_util:encode_response(CodeBin, Content),
+			case Status of
+				error -> envia_response(Code, Content, Request, Response);
+				_-> envia_response(Code, ok, Request, Response)
+			end;
+		{ok, Content, MimeType} -> 
+			Response = msbus_http_util:encode_response(CodeBin, Content, MimeType),
+			envia_response(Code, Status, Request, Response);
+		{error, _Reason} -> 
+			envia_response(Request, Result, State);
+		{error, _Reason, _} -> 
+			envia_response(Request, Result, State)
+	end,
+	{noreply, State#state{socket=undefined}}.
+
+handle_call(_Msg, _From, State) ->
+	{reply, _Msg, State}.
+
+handle_info(timeout, State=#state{lsocket = undefined}) ->
+	{noreply, State};
+
+handle_info(timeout, State=#state{lsocket = LSocket, 
+                                  allowed_address = Allowed_Address}) ->
+	case gen_tcp:accept(LSocket, ?TCP_ACCEPT_CONNECT_TIMEOUT) of
+		{ok, Socket} -> 
+			% connection is established
+			case inet:peername(Socket) of
+				{ok, {Ip,_Port}} -> 
+					case Ip of
+						{127, 0, _,_} -> 
+							{noreply, State#state{socket = Socket}};
+						_ -> 
+							case msbus_http_util:match_ip_address(Allowed_Address, Ip) of
+								true -> 
+									{noreply, State#state{socket = Socket}};
+								false -> 
+									gen_tcp:close(Socket),
+									{noreply, State, 0}
+							end
+					end;
+				_ -> 
+					gen_tcp:close(Socket),
+					{noreply, State, 0}
+			end;
+		{error, closed} -> 
+			% ListenSocket is closed
+			msbus_logger:info("Socket of listener is shutdown."),
+			{noreply, State#state{lsocket = undefined}}; 
+		{error, timeout} ->
+			% no connection is established within the specified time
+			%close_timeout_connections(State),
+			{noreply, State#state{open_requests = []}, 0};
+		{error, system_limit} ->
+			msbus_util:sleep(3000),
+			{noreply, State, 0};
+		{error, PosixError} ->
+			msbus_util:sleep(3000),
+			{noreply, State, 0}
+	end;
+
+handle_info({tcp, Socket, RequestBin}, State) ->
+	NewState = trata_request(Socket, RequestBin, State),
+	{noreply, NewState, 0};
+
+handle_info({tcp_closed, _Socket}, State) ->
+	{noreply, State#state{socket = undefined}};
+
+handle_info(_Msg, State) ->
+   {noreply, State}.
+
+handle_info(State) ->
+   {noreply, State}.
+
+terminate(_Reason, #state{socket = undefined}) ->
+    ok;
+
+terminate(Reason, #state{worker_id = Worker_id, socket = Socket}) ->
+	gen_tcp:close(Socket),
+    ok.
+
+code_change(_OldVsn, State, _Extra) ->
+    {ok, State}.
+
+	
+%%====================================================================
+%% Internal functions
+%%====================================================================
+
+close_timeout_connections(#state{open_requests = Open_requests}) ->
+	lists:foreach(fun(R) -> 
+						case gen_tcp:controlling_process(R#request.socket, self()) of
+							ok -> gen_tcp:close(R#request.socket);
+							_ -> ok
+						end
+				  end, Open_requests).
+	
+
+trata_request(Socket, RequestBin, State) -> 
+	Worker = msbus_pool:checkout(msbus_server_worker_pool),
+	case msbus_http_util:encode_request(Socket, RequestBin, Worker) of
+		 {ok, Request} -> 
+			case gen_tcp:controlling_process(Socket, Worker) of
+				ok -> 
+					msbus_dispatcher:dispatch_request(Request),
+					NewState = State#state{socket = undefined, 
+										   open_requests = [Request | State#state.open_requests]};
+				{error, closed} -> 
+					NewState = State#state{socket=undefined};
+				{error, not_owner} -> 
+					NewState = State#state{socket=undefined};
+				{error, PosixError} ->
+					gen_tcp:close(Socket),
+					NewState = State#state{socket=undefined}
+			end;
+		 {error, Request, Reason} -> 
+			envia_response(Request, {error, Reason}, State),
+			NewState = State#state{socket = undefined};
+		 {error, invalid_http_header} -> 
+			gen_tcp:close(Socket),
+			NewState = State#state{socket = undefined}
+	end,
+	msbus_pool:checkin(msbus_server_worker_pool, Worker),
+	NewState.
+
+envia_response(Request, {ok, Result, MimeType}, _State) ->
+	Response = msbus_http_util:encode_response(<<"200">>, Result, MimeType),
+	envia_response(200, ok, Request, Response);
+
+envia_response(Request, {error, notfound}, _State) ->
+	Response = msbus_http_util:encode_response(<<"404">>, ?HTTP_ERROR_404),
+	envia_response(404, notfound, Request, Response);
+
+envia_response(Request, {error, no_authorization}, _State) ->
+	Response = msbus_http_util:encode_response(<<"401">>, ?HTTP_ERROR_401),
+	envia_response(401, no_authorization, Request, Response);
+
+envia_response(Request, {error, invalid_payload}, _State) ->
+	Response = msbus_http_util:encode_response(<<"415">>, ?HTTP_ERROR_415),
+	envia_response(415, invalid_payload, Request, Response);
+
+\end{lstlisting}
+
+
+\section{Módulo msbus\_eventmgr}
+
+
+\begin{lstlisting} 
+
+
+%%********************************************************************
+%% @title Module msbus_eventmgr
+%% @version 1.0.0
+%% @doc Module publisher/subscribe of ErlangMS.
+%% @author Everton de Vargas Agilar <evertonagilar@gmail.com>
+%% @copyright erlangMS Team
+%%********************************************************************
+
+-module(msbus_eventmgr).
+
+-behavior(gen_server).
+
+%% Server API
+-export([start/0, stop/0]).
+
+%% Client API
+-export([adiciona_evento/1, 
+		 registra_interesse/2, 
+		 desregistra_interesse/2, 
+		 lista_evento/0, 
+		 lista_interesse/0, 
+		 notifica_evento/2,
+		 cancela_evento/1]).
+
+%% gen_server callbacks
+-export([init/1, 
+	     handle_call/3, 
+	     handle_cast/2, 
+	     handle_info/2, 
+	     terminate/2, 
+	     code_change/3]).
+
+-define(SERVER, ?MODULE).
+
+-record(state, {lista_evento = [], 
+			    lista_interesse = []}).
+
+
+%%====================================================================
+%% Server API
+%%====================================================================
+
+start() ->
+    Result = gen_server:start_link({local, ?SERVER}, ?MODULE, [], []),
+    Result.
+ 
+stop() ->
+    gen_server:cast(?SERVER, shutdown).
+ 
+ 
+%%====================================================================
+%% Client API
+%%====================================================================
+ 
+adiciona_evento(Evento) -> 
+	gen_server:call(?SERVER, {adiciona_evento, Evento}). 
+cancela_evento(Evento) -> 
+	gen_server:call(?SERVER, {cancela_evento, Evento}). 
+registra_interesse(Evento, Fun) -> 
+	gen_server:call(?SERVER, {registra_interesse, Evento, Fun}). 
+desregistra_interesse(Evento, Fun) -> 
+	gen_server:call(?SERVER, {desregistra_interesse, Evento, Fun}). 
+notifica_evento(QualEvento, Motivo) -> 
+	gen_server:cast(?SERVER, {notifica_evento, QualEvento, Motivo}). 
+lista_evento() -> 
+	gen_server:call(?SERVER, msg_lista_evento). 
+lista_interesse() -> 
+	gen_server:call(?SERVER, lista_interesse). 
+
+
+%%====================================================================
+%% gen_server callbacks
+%%====================================================================
+ 
+init([]) ->
+	%fprof:trace([start, {procs, [self()]}]),
+    {ok, #state{}}.
+    
+handle_cast({notifica_evento, QualEvento, Motivo}, State) ->
+	notifica_evento(State#state.lista_interesse, QualEvento, Motivo),
+	{noreply, State};
+    
+handle_cast(shutdown, State) ->
+    {stop, normal, State}.
+    
+handle_call({adiciona_evento, Evento}, _From, State) ->
+	{Reply, NewState} = novo_evento(Evento, State),
+	{reply, Reply, NewState};
+
+handle_call({cancela_evento, Evento}, _From, State) ->
+	{Reply, NewState} = cancela_evento(Evento, State),
+	{reply, Reply, NewState};
+
+handle_call({registra_interesse, Evento, Fun}, _From, State) ->
+	{Reply, NewState} = novo_interesse(Evento, Fun, State),
+	{reply, Reply, NewState};
+
+handle_call({desregistra_interesse, Evento, Fun}, _From, State) ->
+	{Reply, NewState} = remove_interesse(Evento, Fun, State),
+	{reply, Reply, NewState};
+    
+handle_call(msg_lista_evento, _From, State) ->
+	Reply = lista_evento(State),
+	{reply, Reply, State};
+
+handle_call(lista_interesse, _From, State) ->
+	Reply = lista_interesse(State),
+	{reply, Reply, State}.
+
+handle_info(_Info, State) ->
+    {noreply, State}.
+ 
+terminate(_Reason, _State) ->
+    ok.
+ 
+code_change(_OldVsn, State, _Extra) ->
+    {ok, State}.
+    
+    
+%%====================================================================
+%% Internal functions
+%%====================================================================
+    
+
+existe_evento(Evento, State) ->
+	lists:member(Evento, State#state.lista_evento).
+
+existe_interesse(Interesse, State) ->
+	lists:member(Interesse, State#state.lista_interesse).
+    
+novo_evento(Evento, State) ->
+	case existe_evento(Evento, State) of
+		true  -> {eeventojacadastrado, State};
+		false -> {ok, State#state{lista_evento=[Evento|State#state.lista_evento]}}
+	end.
+
+cancela_evento(Evento, State) ->
+	{ok, State#state{
+		lista_evento = State#state.lista_evento -- [Evento], 
+		lista_interesse = [I || {E,_} = I <- State#state.lista_interesse, E /= Evento]}}.
+
+novo_interesse(Evento, Fun, State) ->
+	case existe_evento(Evento, State) of
+		true -> 
+			case existe_interesse({Evento, Fun}, State) of
+				true  -> {einteressejacadastrado, State};
+				false -> {ok, State#state{
+							lista_interesse=[{Evento, Fun}|State#state.lista_interesse]}}
+			end;
+		false -> {eeventonaocadastrado, State}
+	end.
+
+remove_interesse(Evento, Fun, State) ->
+	case existe_interesse({Evento, Fun}, State) of
+		true  -> {ok, State#state{
+					lista_interesse = State#state.lista_interesse -- [{Evento, Fun}]}};
+		false -> {einteressenaocadastrado, State}
+	end.
+		
+notifica_evento([], _QualEvento, _Motivo) -> ok;
+notifica_evento([{Evento, Fun} = _H|T], QualEvento, Motivo) ->
+	case Evento == QualEvento of
+		true ->
+			try
+				Fun(QualEvento, Motivo)
+			after
+				notifica_evento(T, QualEvento, Motivo)		
+			end;
+		false ->
+			notifica_evento(T, QualEvento, Motivo)
+	end.
+	
+
+\end{lstlisting}
+
+\section{Módulo msbus\_dispatcher}
+
+\begin{lstlisting} 
+
+
+%%************************************************************************
+%% @title Module dispatcher
+%% @version 1.0.0
+%% @doc Responsible for forwarding the requests to / from the \acrshort{REST} services.
+%% @author Everton de Vargas Agilar <evertonagilar@gmail.com>
+%% @copyright ErlangMS Team
+%%************************************************************************
+
+-module(msbus_dispatcher).
+
+-behavior(gen_server). 
+-behaviour(poolboy_worker).
+
+-include("../include/msbus_config.hrl").
+-include("../include/msbus_schema.hrl").
+-include("../include/msbus_http_messages.hrl").
+
+%% Server API
+-export([start/0, start_link/1, stop/0]).
+
+%% Client API
+-export([dispatch_request/1]).
+
+%% gen_server callbacks
+-export([init/1, 
+	     handle_call/3, 
+	     handle_cast/2, 
+	     handle_info/1, 
+	     handle_info/2, 
+	     terminate/2, 
+	     code_change/3]).
+
+% estado do servidor
+-record(state, {}).
+
+-define(SERVER, ?MODULE).
+
+%%====================================================================
+%% Server API
+%%====================================================================
+
+start() -> 
+    gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
+ 
+start_link(Args) ->
+    gen_server:start_link(?MODULE, Args, []).
+
+stop() ->
+    gen_server:cast(?SERVER, shutdown).
+ 
+
+%%====================================================================
+%% Client API
+%%====================================================================
+
+dispatch_request(Request) -> 
+	msbus_pool:cast(msbus_dispatcher_pool, {dispatch_request, Request}).
+
+ 
+%%====================================================================
+%% gen_server callbacks
+%%====================================================================
+ 
+init(_Args) ->
+    createEtsControle(),
+    %fprof:trace([start, {procs, [self()]}]),
+    {ok, #state{}}.
+ 
+createEtsControle() ->
+    try
+		ets:new(ctrl_node_dispatch, [set, named_table, public])
+	catch
+		_:_ -> ok
+	end.
+ 
+handle_cast(shutdown, State) ->
+    {stop, normal, State};
+
+handle_cast({dispatch_request, Request}, State) ->
+	do_dispatch_request(Request),
+	{noreply, State};
+
+handle_cast(_Msg, State) ->
+	{noreply, State}.
+    
+handle_call(Msg, _From, State) ->
+	{reply, Msg, State}.
+
+handle_info(State) ->
+   {noreply, State}.
+
+handle_info({Code, RID, Reply}, State) ->
+	case msbus_request:get_request_em_andamento(RID) of
+		{ok, Request} -> 
+			msbus_request:registra_request(Request),
+			msbus_eventmgr:notifica_evento(ok_request, {Code, Request, Reply}),
+			{noreply, State};
+		{erro, notfound} -> {noreply, State}
+	end;
+
+handle_info(_Msg, State) ->
+   {noreply, State}.
+
+terminate(_Reason, _State) ->
+    ok.
+ 
+code_change(_OldVsn, State, _Extra) ->
+    {ok, State}.
+
+	
+%%====================================================================
+%% Internal functions
+%%====================================================================
+
+%% @doc Dispatches the request to the service registered in the catalog
+do_dispatch_request(Request) ->
+	case msbus_catalogo:lookup(Request) of
+		{Contract, ParamsMap, QuerystringMap} -> 
+			case msbus_auth_user:autentica(Contract, Request) of
+				{ok, User} ->
+					case get_work_node(Contract#servico.host, 
+									   Contract#servico.host,	
+									   Contract#servico.host_name, 
+									   Contract#servico.module_name, 1) of
+						{ok, Node} ->
+							Request2 = Request#request{user = User, 
+													   node_exec = Node,
+													   servico = Contract,
+													   params_url = ParamsMap,
+													   querystring_map = QuerystringMap},
+							msbus_request:registra_request(Request2),
+							msbus_eventmgr:notifica_evento(new_request, Request2),
+							case executa_servico(Node, Request2) of
+								ok -> ok;
+								Error -> msbus_eventmgr:notifica_evento(erro_request, 
+																		{servico, Request2, Error})
+							end;
+						Error -> 
+							msbus_eventmgr:notifica_evento(erro_request, 
+							                               {servico, Request, Error})
+					end;
+				{error, no_authorization} -> 
+					msbus_eventmgr:notifica_evento(erro_request, {servico, 
+					                                              Request, 
+					                                              {error, no_authorization}})
+			end;
+		notfound -> 
+			msbus_request:registra_request(Request),
+			msbus_eventmgr:notifica_evento(erro_request, {servico, Request, 
+			                                             {error, notfound}});
+		Erro ->
+			io:format("ERRO -> ~p\n", [Erro])
+	end,
+	ok.
+
+%% @doc Runs the local service (Service written in Erlang)
+executa_servico(_Node, Request=#request{servico=#servico{host='', 
+														 host_name = HostName,	
+														 module=Module, 
+														 module_name = ModuleName, 
+														 function_name = FunctionName, 
+														 function=Function}}) ->
+	try
+		case whereis(Module) of
+			undefined -> 
+				Module:start(),
+				apply(Module, Function, [Request, self()]);
+			_Pid -> 
+				apply(Module, Function, [Request, self()])
+		end,
+		msbus_logger:info("CAST ~s:~s em ~s {RID: ~p, URI: ~s}.", [ModuleName, 
+																   FunctionName, 
+																   HostName, 
+																   Request#request.rid, 
+																   Request#request.uri]),
+		ok
+	catch
+		_Exception:ErroInterno ->  {error, servico_falhou, ErroInterno}
+	end;
+
+%% @doc Performs a service remotely
+executa_servico(Node, Request=#request{servico=#servico{host = _HostList, 
+														host_name = _HostNames,	
+														module_name = ModuleName, 
+														function_name = FunctionName, 
+														module = Module}}) ->
+	% Sends an asynchronous message to the service
+	Msg = {{Request#request.rid, 
+					   Request#request.uri, 
+					   Request#request.type, 
+					   Request#request.params_url, 
+					   Request#request.querystring_map,
+					   Request#request.payload,	
+					   Request#request.content_type,	
+					   ModuleName,
+					   FunctionName}, 
+					   self()
+					  },
+	{Module, Node} ! {{Request#request.rid, 
+					   Request#request.uri, 
+					   Request#request.type, 
+					   Request#request.params_url, 
+					   Request#request.querystring_map,
+					   Request#request.payload,	
+					   Request#request.content_type,	
+					   ModuleName,
+					   FunctionName}, 
+					   self()
+					  },
+	msbus_logger:info("CAST ~s:~s em ~s {RID: ~p, URI: ~s}.", [ModuleName, 
+															   FunctionName, 
+															   atom_to_list(Node), 
+															   Request#request.rid, 
+															   Request#request.uri]),
+	ok.
+
+get_work_node('', _, _, _, _) -> {ok, node()};
+
+get_work_node([], HostList, HostNames, ModuleName, 1) -> 
+	get_work_node(HostList, HostList, HostNames, ModuleName, 2);
+
+get_work_node([], _HostList, HostNames, _ModuleName, 2) -> 
+	Motivo = lists:flatten(string:join(HostNames, ", ")),
+	{error, servico_fora, Motivo};
+
+get_work_node([_|T], HostList, HostNames, ModuleName, Tentativa) -> 
+	case ets:lookup(ctrl_node_dispatch, ModuleName) of
+		[] -> 
+			Index = 1;
+		[{_, Idx}] -> 
+			% found a name that was used previously, we will use the next
+			ets:delete(ctrl_node_dispatch, ModuleName),
+			Index = Idx+1
+	end,
+	case Index > length(HostList) of
+		true -> Index2 = 1;
+		false -> Index2 = Index
+	end,
+	ets:insert(ctrl_node_dispatch, {ModuleName, Index2}),
+	Node = lists:nth(Index2, HostList),
+	case net_adm:ping(Node) of
+		pong -> {ok, Node};
+		pang -> get_work_node(T, HostList, HostNames, ModuleName, Tentativa)
+	end.
+		
+%	
+%is_node_alive(Node) -> 
+%	case ets:lookup(ctrl_ping_cache, Node) of		
+%		[] -> 		
+%			Hit = net_adm:ping(Node);
+%		[{Node, Time, Hit2}] -> 		
+%			Time2 = calendar:datetime_to_gregorian_seconds(calendar:local_time()),			
+%			case (Time2 - Time) < 2 of		
+%				true -> io:format("hit\n\n"), Hit = Hit2;
+%				false -> Hit = net_adm:ping(Node)
+%			end		
+%	end,		
+%	NewTime = calendar:datetime_to_gregorian_seconds(calendar:local_time()),		
+%	ets:insert(ctrl_ping_cache, {Node, NewTime, Hit}),
+%	Hit.
+	
+
+
+\end{lstlisting}
