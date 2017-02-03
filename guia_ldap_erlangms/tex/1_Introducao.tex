@@ -96,27 +96,30 @@ ao banco de dados de usuários SCA da UnB.
 
 O Back-end é a implementação dos serviços. Tipicamente
 os serviços são implementados na linguagem Java no CPD/UnB
-mas podem ser desenvolvidos em qualquer linguagem que possua 
+mas podem ser desenvolvidos também em Erlang ou qualquer linguagem que possua 
 o SDK do barramento de serviços. 
 
 
 \subsection{Módulo Front-end}
 
-Consiste na interface da aplicação bem como a parte que o usuário vê. O front-end é o responsável por coletar os dados de entrada do usuário
+O front-end é o responsável por coletar os dados de entrada do usuário
 e realizar as chamadas para os serviços por meio do barramento de serviços.
+Em relação ao serviço LDAP, exemplos de clientes podem ser o 
+o Redmine, o SEI, o Joomla ou o sistema de webmail.
+
 
 \subsection{Servidor de Aplicação JBoss/Wildfly}
 
 O servidor de aplicação JBoss/Wildfly é onde são publicados (deployment)
-os projetos Java Web. Podem existir várias instâncias desses servidores para
+os projetos Java Web, que contém a implementação de serviços na linguagem Java. 
+Podem existir várias instâncias desses servidores para
 aumentar a escalabilidade dos serviços, sendo que o barramento despacha
-as requisições dos clientes utilizando um simples algoritmo round-robin.
+as requisições dos clientes utilizando um algoritmo round-robin.
 
 \subsection{Erlang Port Mapper Daemon}
 
-É um serviço que executa em 
-segundo plano em cada nó de um cluster e que age como um servidor de nome.
-É importante salientar que tanto o barramento quanto os
-servidores de aplicação JBoss/Wildfly são vistos como nós 
-na arquitetura. O cliente não faz parte do cluster pois é apenas um consumidor.
+É um processo que executa em 
+segundo plano em cada nó onde os serviços foram instalados e age 
+como um servidor de nome para que o barramento consiga
+enviar e receber mensagens dos serviços.
 
