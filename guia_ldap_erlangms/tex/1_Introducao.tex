@@ -4,38 +4,40 @@ com o serviço LDAP v3 no barramento de serviços ERLANGMS.
 O serviço LDAP v3 refere-se a implementação protocolo
 Lightweight Directory Access Protocol, ou LDAP, no barramento de serviços.
 O LDAP é um protocolo de aplicação aberto, livre de fornecedor e 
-padrão de indústria para ser utilizado para oferecer
-um "logon único" onde uma senha para um usuário é compartilhada entre muitos serviços.
+padrão de indústria e pode ser utilizado para oferecer
+um "logon único" onde uma senha para um usuário é
+compartilhada entre muitos serviços.
 
-O barramento de serviços ERLANGMS foi desenvolvido por Everton de Vargas Agilar
+O barramento de serviços ERLANGMS foi desenvolvido 
+pelo Analista em Tecnologia de Informação 
+Everton de Vargas Agilar
 no Mestrado Profissional em Computação Aplicada da UnB com 
 o intuíto de facilitar a criação e a integração de sistemas 
-através de uma abordagem orientada a serviços no estilo 
-arquitetural REST (Representational State Transfer). 
-No entanto, outros protocolos foram adicionados para suprir tal necessidade,
-entre eles, um serviço de autenticação de usuários através do protoloco LDAP.
+através de uma abordagem orientada a serviços. Entre 
+os serviços disponíveis no barramento, destaca-se
+o serviço de autenticação de usuários através do protoloco LDAP v3.
 
-No restante desta introdução, serão apresentados os principais 
-elementos de tempo de execução do barramento de serviços ERLANGMS, 
-para que o leitor possa ter uma visão geral do funcionamento
-do software antes de proseguir com a instalação e configuração.
+Neste guia serão apresentados os principais 
+elementos de tempo de execução
+bem como a instalação e configuração do barramento ERLANGMS,
+de modo que o leitor possa realizar a administração do serviço 
+de autenticação LDAP v3.
 
 
 \section{Componentes em Tempo de Execução}
 
 Os principais componentes da arquitetura do barramento de serviços 
 ERLANGMS de tempo de execução 
-estão listados a seguir com uma breve descrição sobre o seu objetivo
-sem entrar em muitos detalhes:
+estão listados a seguir com uma breve descrição de cada componente:
 
 
-\subsection{Barramento de serviços (ems-bus)}
+\subsection{Software do barramento de serviços (ems-bus)}
 
-É o software do servidor. Sua função é interligar os clientes (tipicamente os Front-ends) 
+O software do servidor ems-bus tem a função de interligar os clientes (tipicamente os Front-ends) 
 aos serviços que contém as regras de negócios da organização (como o logon do usuário). 
 Quando alguém faz uma requisição para um serviço, é o software do barramento 
 que intermedia o envio e o recebimento das mensagens, sendo que o cliente
-só precisa saber o endereço do barramento e o protocolo utilizado. A 
+só precisa saber o endereço do barramento e o formato da mensagem utilizado (ou protocolo). A 
 Figura \ref{fig:roteamento_mensagens} mostra o esquema típico de
 roteamento de mensagens HTTP/REST. Este esquem é em tudo semelhante
 para o protocolo LDAP também.
@@ -51,9 +53,10 @@ para o protocolo LDAP também.
 
 \subsection{Catálogo de serviços}
 
-Representa o componente chave da arquitetura do barramento de serviços pois permite
-dar visibilidade aos serviços disponibilizados na organização. É no catálogo que 
-os serviços são descritos e registrados. O exemplo a seguir expõem um serviço no catálogo 
+Representa um componente chave da arquitetura do barramento de serviços pois permite
+dar visibilidade aos serviços que serão disponibilizados. É no catálogo
+que são descritos e registrados as informações sobre os serviços
+que o cliente poderá consumir, por exemplo. O exemplo a seguir expõem um serviço no catálogo 
 para o serviço LDAP v3 utilizado na integração do software Redmine 
 ao banco de dados de usuários SCA da UnB.
 
@@ -96,16 +99,16 @@ ao banco de dados de usuários SCA da UnB.
 
 O Back-end é a implementação dos serviços. Tipicamente
 os serviços são implementados na linguagem Java no CPD/UnB
-mas podem ser desenvolvidos também em Erlang ou qualquer linguagem que possua 
+mas podem ser desenvolvidos também em Erlang ou qualquer outra linguagem que possua 
 o SDK do barramento de serviços. 
 
 
 \subsection{Módulo Front-end}
 
-O front-end é o responsável por coletar os dados de entrada do usuário
+O front-end é consumidor do serviço e o responsável por coletar os dados de entrada do usuário
 e realizar as chamadas para os serviços por meio do barramento de serviços.
-Em relação ao serviço LDAP, exemplos de clientes podem ser o 
-o Redmine, o SEI, o Joomla ou o sistema de webmail.
+Em relação ao serviço LDAP, pode-se citar como exemplos de front-end, 
+o Redmine, o SEI, o Joomla entre outros.
 
 
 \subsection{Servidor de Aplicação JBoss/Wildfly}
@@ -113,13 +116,14 @@ o Redmine, o SEI, o Joomla ou o sistema de webmail.
 O servidor de aplicação JBoss/Wildfly é onde são publicados (deployment)
 os projetos Java Web, que contém a implementação de serviços na linguagem Java. 
 Podem existir várias instâncias desses servidores para
-aumentar a escalabilidade dos serviços, sendo que o barramento despacha
+aumentar a escalabilidade dos serviços disponibilizados, 
+sendo que o barramento despacha
 as requisições dos clientes utilizando um algoritmo round-robin.
 
 \subsection{Erlang Port Mapper Daemon}
 
 É um processo que executa em 
-segundo plano em cada nó onde os serviços foram instalados e age 
+segundo plano no sistema operacional em cada nó onde os serviços foram instalados e age 
 como um servidor de nome para que o barramento consiga
 enviar e receber mensagens dos serviços.
 

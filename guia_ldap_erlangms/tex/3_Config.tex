@@ -1,0 +1,54 @@
+\label{config}
+
+Este capítulo aborda a configuração do barramento para habilitar o serviço LDAP v3. Os
+passos a seguir devem ser realizados após a instalação do barramento.
+
+
+\begin{itemize}
+
+
+	\item  Insert the FreeTDS driver configuration in /etc/odbcinst.ini 
+
+	
+		\lstset{language=bash,
+				basicstyle=\footnotesize,
+				numbers=left,
+				numberstyle=\footnotesize,
+				tabsize=2,
+				numbers=none,
+				rulesepcolor=\color{blue}}
+		\renewcommand{\lstlistingname}{Código}             
+		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+
+			[FreeTDS]
+			Description=FreeTDS Driver
+			Driver=/usr/lib64/libtdsodbc.so.0
+			
+		\end{lstlisting}	
+
+	
+	\item  Insert the datasource configuration to LDAP v3 service
+	
+		\lstset{language=bash,
+				basicstyle=\footnotesize,
+				numbers=left,
+				numberstyle=\footnotesize,
+				tabsize=2,
+				numbers=none,
+				rulesepcolor=\color{blue}}
+		\renewcommand{\lstlistingname}{Código}             
+		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+
+			[pessoa]
+			Driver = FreeTDS
+			Description = Pessoa
+			Trace = No
+			Server = your IP
+			Database = BDPessoa
+			Port = 1433			
+
+		\end{lstlisting}	
+	
+	
+\end{itemize}
+
