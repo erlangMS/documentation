@@ -1,46 +1,36 @@
-Este guia sintetiza os conhecimentos necessários para trabalhar
-com o serviço LDAP v3 no barramento de serviços ERLANGMS.
-
-O serviço LDAP v3 refere-se a implementação protocolo
-Lightweight Directory Access Protocol, ou LDAP, no barramento de serviços.
-O LDAP é um protocolo de aplicação aberto, livre de fornecedor e 
-padrão de indústria e pode ser utilizado para oferecer
+O serviço LDAP v3 do barramento de serviços ERLANGMS
+refere-se a implementação protocolo
+Lightweight Directory Access Protocol, ou LDAP,
+um protocolo de aplicação aberto, livre de fornecedor e 
+padrão de indústria que pode ser utilizado para oferecer
 um "logon único" onde uma senha para um usuário é
 compartilhada entre muitos serviços.
 
-O barramento de serviços ERLANGMS foi desenvolvido 
-pelo Analista em Tecnologia de Informação 
-Everton de Vargas Agilar
-no Mestrado Profissional em Computação Aplicada da UnB com 
-o intuíto de facilitar a criação e a integração de sistemas 
-através de uma abordagem orientada a serviços. Entre 
-os serviços disponíveis no barramento, destaca-se
-o serviço de autenticação de usuários através do protoloco LDAP v3.
+O barramento ERLANGMS foi desenvolvido 
+com o intuíto de facilitar a modernização e a integração de 
+sistemas por meio de uma abordagem orientada a serviços,
+através do qual, serviços podem ser implementados e
+disponibilizados aos usuários. Entre 
+os serviços disponíveis, destaca-se
+o serviço de autenticação de usuários LDAP v3.
 
-Neste guia serão apresentados os principais 
-elementos de tempo de execução
-bem como a instalação e configuração do barramento ERLANGMS,
-de modo que o leitor possa realizar a administração do serviço 
-de autenticação LDAP v3.
+Este capítulo aborda alguns conceitos que são
+necessários para que o leitor possa obter um entendimento geral 
+da arquitetura do barramento de serviços em tempo de execução.
 
 
-\section{Componentes em Tempo de Execução}
+\section{Software do barramento de serviços (ems-bus)}
 
-Os principais componentes da arquitetura do barramento de serviços 
-ERLANGMS de tempo de execução 
-estão listados a seguir com uma breve descrição de cada componente:
-
-
-\subsection{Software do barramento de serviços (ems-bus)}
-
-O software do servidor ems-bus tem a função de interligar os clientes (tipicamente os Front-ends) 
+O software do barramento denominado ems-bus 
+tem a função de interligar os clientes (tipicamente os front-ends) 
 aos serviços que contém as regras de negócios da organização (como o logon do usuário). 
 Quando alguém faz uma requisição para um serviço, é o software do barramento 
 que intermedia o envio e o recebimento das mensagens, sendo que o cliente
-só precisa saber o endereço do barramento e o formato da mensagem utilizado (ou protocolo). A 
+só precisa saber o endereço do barramento e o formato das mensagens utilizadas (ou protocolo). A 
 Figura \ref{fig:roteamento_mensagens} mostra o esquema típico de
-roteamento de mensagens HTTP/REST. Este esquem é em tudo semelhante
-para o protocolo LDAP também.
+roteamento de mensagens do principal protocolo do barramento, o HTTP/REST. 
+Convém salientar que este esquema é em tudo semelhante
+ao protocolo LDAP v3 também.
 
 \begin{figure}[htb]
 \centering
@@ -51,14 +41,14 @@ para o protocolo LDAP também.
 \FloatBarrier
 
 
-\subsection{Catálogo de serviços}
+\section{Catálogo de serviços}
 
 Representa um componente chave da arquitetura do barramento de serviços pois permite
-dar visibilidade aos serviços que serão disponibilizados. É no catálogo
-que são descritos e registrados as informações sobre os serviços
-que o cliente poderá consumir, por exemplo. O exemplo a seguir expõem um serviço no catálogo 
-para o serviço LDAP v3 utilizado na integração do software Redmine 
-ao banco de dados de usuários SCA da UnB.
+dar visibilidade aos serviços que serão disponibilizados aos clientes. É no catálogo
+que são descritos e registrados (como um contrato) todas as informações sobre os serviços
+que o cliente poderá consumir, por exemplo. A Figura~\ref{fig:catalogo_processo} exibe 
+o contrato de serviço no catálogo 
+de serviços do barramento para o LDAP v3.
 
 
 \lstset{
@@ -69,7 +59,7 @@ ao banco de dados de usuários SCA da UnB.
         numbers=none,
         rulesepcolor=\color{blue}}
 \renewcommand{\lstlistingname}{Código}             
-\begin{lstlisting}[caption=Exemplo de um serviço no catálogo de serviços., label=fig:catalogo_processo] 
+\begin{lstlisting}[caption=Contrato de serviço para o LDAP v3., label=fig:catalogo_processo] 
 {
 	"name": "ems_ldap_server",
 	"comment": "LDAP service for client integration to the SCA database",
@@ -95,23 +85,23 @@ ao banco de dados de usuários SCA da UnB.
 \end{lstlisting}
 
 
-\subsection{Módulo Back-end}
+\section{Módulo Back-end}
 
-O Back-end é a implementação dos serviços. Tipicamente
+O back-end é a implementação dos serviços. Tipicamente
 os serviços são implementados na linguagem Java no CPD/UnB
 mas podem ser desenvolvidos também em Erlang ou qualquer outra linguagem que possua 
 o SDK do barramento de serviços. 
 
 
-\subsection{Módulo Front-end}
+\section{Módulo Front-end}
 
 O front-end é consumidor do serviço e o responsável por coletar os dados de entrada do usuário
 e realizar as chamadas para os serviços por meio do barramento de serviços.
 Em relação ao serviço LDAP, pode-se citar como exemplos de front-end, 
-o Redmine, o SEI, o Joomla entre outros.
+o Redmine, o SEI, o Joomla, entre outros.
 
 
-\subsection{Servidor de Aplicação JBoss/Wildfly}
+\section{Servidor de Aplicação JBoss/Wildfly}
 
 O servidor de aplicação JBoss/Wildfly é onde são publicados (deployment)
 os projetos Java Web, que contém a implementação de serviços na linguagem Java. 
@@ -120,10 +110,10 @@ aumentar a escalabilidade dos serviços disponibilizados,
 sendo que o barramento despacha
 as requisições dos clientes utilizando um algoritmo round-robin.
 
-\subsection{Erlang Port Mapper Daemon}
+\section{Erlang Port Mapper Daemon}
 
 É um processo que executa em 
 segundo plano no sistema operacional em cada nó onde os serviços foram instalados e age 
 como um servidor de nome para que o barramento consiga
-enviar e receber mensagens dos serviços.
+enviar e receber mensagens dos processos de serviços.
 

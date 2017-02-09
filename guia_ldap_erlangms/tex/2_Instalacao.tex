@@ -1,13 +1,36 @@
-\label{instalacao}
-
-Este capítulo aborda a instalação do barramento nos sistemas operacionais Windows e Linux. 
-A instalação nesses ambientes podem ser realizadas de maneira manual ou automatizada
+Este capítulo aborda a instalação do barramento no sistema operacional Linux CentOS. 
+A instalação pode ser realizada de maneira manual ou automatizada
 através de instaladores ou gerenciadore de pacotes.
 
-\subsection(Instalação manual no Linux CentOS}
+\section{Instalação automatizada}
+
+Embora a instalação manual do barramento seja simples, pode ser utilizado o instalador 
+disponível para Linux CentOS 7. A Figura \ref{fig:inst_auto} exibe 
+o processo de instalação com o instalador:
+
+
+	\lstset{language=bash,
+			basicstyle=\footnotesize,
+			numbers=left,
+			numberstyle=\footnotesize,
+			tabsize=2,
+			numbers=none,
+			rulesepcolor=\color{blue}}
+	\renewcommand{\lstlistingname}{Código}             
+	\begin{lstlisting}[Adding Erlang repository entry, label=fig:inst_auto] 
+
+		$ wget https://github.com/erlangms/releases/blob/master/setup/setup_emsbus-1.0.11-el7.centos.x86_64.sh
+		$ sudo ./setup_emsbus-1.0.11-el7.centos.x86_64.sh
+		$ curl localhost:2301
+		{"message": "It works!!!"}
+	\end{lstlisting}
+
+
+
+\section{Instalação manual}
 
 Os seguintes passos devem ser realizados para realizar instalação manual do 
-barramento de serviços:
+barramento de serviços ERLANGMS:
 
 
 \begin{itemize}
@@ -23,7 +46,7 @@ barramento de serviços:
 				numbers=none,
 				rulesepcolor=\color{blue}}
 		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+		\begin{lstlisting}[Adding Erlang repository entry, label=add_erlang_repo] 
 
 			$ wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm
 			$ sudo rpm -Uvh erlang-solutions-1.0-1.noarch.rpm
@@ -41,7 +64,7 @@ barramento de serviços:
 					numbers=none,
 					rulesepcolor=\color{blue}}
 		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+		\begin{lstlisting}[Adding Erlang repository entry, label=install_erlang] 
 
 			$ sudo apt-get update
 			$ sudo yum -y install erlang-hipe-19.2-1.el7.centos.x86_64 \
@@ -87,7 +110,7 @@ barramento de serviços:
 				numbers=none,
 				rulesepcolor=\color{blue}}
 		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+		\begin{lstlisting}[Adding Erlang repository entry, label=install_py] 
 
 			$ sudo yum -y install yum-utils
 			$ sudo yum -y install epel-release 
@@ -108,7 +131,7 @@ barramento de serviços:
 				numbers=none,
 				rulesepcolor=\color{blue}}
 		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+		\begin{lstlisting}[Adding Erlang repository entry, label=install_openldaptools] 
 
 			$ sudo yum -y install openldap openldap-clients
 
@@ -125,55 +148,12 @@ barramento de serviços:
 				numbers=none,
 				rulesepcolor=\color{blue}}
 		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+		\begin{lstlisting}[Adding Erlang repository entry, label=install_freetds] 
 
 			$ sudo yum -y install freetds.x86_64 freetds-devel.x86_64
 			
 		\end{lstlisting}
 		
-	
-	\item  Insert the FreeTDS driver configuration in /etc/odbcinst.ini 
-
-	
-		\lstset{language=bash,
-				basicstyle=\footnotesize,
-				numbers=left,
-				numberstyle=\footnotesize,
-				tabsize=2,
-				numbers=none,
-				rulesepcolor=\color{blue}}
-		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
-
-			[FreeTDS]
-			Description=FreeTDS Driver
-			Driver=/usr/lib64/libtdsodbc.so.0
-			
-		\end{lstlisting}	
-
-	
-	\item  Insert the datasource configuration to LDAP v3 service
-	
-		\lstset{language=bash,
-				basicstyle=\footnotesize,
-				numbers=left,
-				numberstyle=\footnotesize,
-				tabsize=2,
-				numbers=none,
-				rulesepcolor=\color{blue}}
-		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
-
-			[pessoa]
-			Driver = FreeTDS
-			Description = Pessoa
-			Trace = No
-			Server = your IP
-			Database = BDPessoa
-			Port = 1433			
-
-		\end{lstlisting}	
-	
 	
 	\item Install ERLANGMS ESB
 	
@@ -185,7 +165,7 @@ barramento de serviços:
 				numbers=none,
 				rulesepcolor=\color{blue}}
 		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+		\begin{lstlisting}[Adding Erlang repository entry, label=install_emsbus] 
 
 			$ wget https://github.com/erlangMS/releases/raw/master/ems-bus_1.0.11/ems-bus-1.0.11-el7.centos.x86_64.rpm
 			$ sudo rpm -ihv ems-bus-1.0.11-el7.centos.x86_64.rpm 
@@ -196,27 +176,5 @@ barramento de serviços:
 \end{itemize}
 
 
-
-\subsection(Instalação automatizada no Linux CentOS}
-
-Embora a instalação manual do barramento seja simples, pode ser utilizado o instalador 
-disponível para Linux CentOS. A Figura \ref{fig:inst_auto} exibe 
-o processo de instalação com o instalador:
-
-
-		\lstset{language=bash,
-				basicstyle=\footnotesize,
-				numbers=left,
-				numberstyle=\footnotesize,
-				tabsize=2,
-				numbers=none,
-				rulesepcolor=\color{blue}}
-		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=fig:inst_auto] 
-
-			$ wget https://github.com/erlangMS/releases/raw/master/ems-bus_1.0.11/ems-bus-1.0.11-el7.centos.x86_64.rpm
-			$ sudo ./ems-bus-1.0.11-el7.centos.x86_64.rpm
-
-		\end{lstlisting}
 
 

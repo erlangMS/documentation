@@ -525,7 +525,7 @@
 			\@printfulltitle\vfill%
 			{\large\@author}\vfill%
 			\@mododeescrita\ %
-					\textbf{Manual de Arquitetura}
+					\textbf{ERLANGMS}
 			\vfill%
 			\vfill%
 		\end{center}%

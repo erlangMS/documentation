@@ -1,8 +1,5 @@
-\label{config}
-
 Este capítulo aborda a configuração do barramento para habilitar o serviço LDAP v3. Os
 passos a seguir devem ser realizados após a instalação do barramento.
-
 
 \begin{itemize}
 
@@ -18,7 +15,7 @@ passos a seguir devem ser realizados após a instalação do barramento.
 				numbers=none,
 				rulesepcolor=\color{blue}}
 		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+		\begin{lstlisting}[Adding Erlang repository entry, label=freetds_config] 
 
 			[FreeTDS]
 			Description=FreeTDS Driver
@@ -37,7 +34,7 @@ passos a seguir devem ser realizados após a instalação do barramento.
 				numbers=none,
 				rulesepcolor=\color{blue}}
 		\renewcommand{\lstlistingname}{Código}             
-		\begin{lstlisting}[Adding Erlang repository entry, label=passo1] 
+		\begin{lstlisting}[Adding Erlang repository entry, label=datasource_config] 
 
 			[pessoa]
 			Driver = FreeTDS
