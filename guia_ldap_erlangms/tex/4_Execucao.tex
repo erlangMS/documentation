@@ -1,0 +1,69 @@
+O barramento de
+serviços ERLANGMS está integrado ao serviço de inicialização Systemd das novas distribuições Linux. Dessa forma,
+para executar, parar ou consultar o status do barramento de serviços,
+é preciso utilizar o comando systemctl.
+
+\begin{itemize}
+
+
+	\item  Executar o barramento de serviços
+
+	
+		\lstset{language=bash,
+				basicstyle=\footnotesize,
+				numbers=left,
+				numberstyle=\footnotesize,
+				tabsize=2,
+				numbers=none,
+				rulesepcolor=\color{blue}}
+		\renewcommand{\lstlistingname}{Código}             
+		\begin{lstlisting}[Executar o barramento de serviços, label=exec_emsbus] 
+
+			$ systemctl start ems-bus
+			
+		\end{lstlisting}	
+
+	
+	\item  Parar o barramento de serviços
+	
+		\lstset{language=bash,
+				basicstyle=\footnotesize,
+				numbers=left,
+				numberstyle=\footnotesize,
+				tabsize=2,
+				numbers=none,
+				rulesepcolor=\color{blue}}
+		\renewcommand{\lstlistingname}{Código}             
+		\begin{lstlisting}[Parar o barramento de serviços, label=stop_emsbus] 
+
+			$ systemctl stop ems-bus
+
+		\end{lstlisting}	
+	
+
+	\item  Verificar o status do barramento de serviços
+	
+		\lstset{language=bash,
+				basicstyle=\footnotesize,
+				numbers=left,
+				numberstyle=\footnotesize,
+				tabsize=2,
+				numbers=none,
+				rulesepcolor=\color{blue}}
+		\renewcommand{\lstlistingname}{Código}             
+		\begin{lstlisting}[Verificar o status do barramento de serviços, label=status_emsbus] 
+
+			$ systemctl status ems-bus
+			● ems-bus.service - Barramento de serviços ERLANGMS
+			   Loaded: loaded (/usr/lib/ems-bus/priv/systemd/ems-bus.service; linked)
+			   Active: active (running) since Thu 2017-02-09 09:07:12 BRST; 3s ago
+			 Main PID: 558 ((ems-bus))
+			   CGroup: /system.slice/ems-bus.service
+					   └─558 (ems-bus)			
+
+		\end{lstlisting}	
+		
+		
+	
+\end{itemize}
+
