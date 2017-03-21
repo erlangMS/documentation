@@ -111,6 +111,26 @@ estudo empírico (Seção~\ref{estudo-empirico}) que está sendo
 conduzido com o envolvimento dos alunos matriculados em uma disciplina da pós-graduação 
 relacionada a análise estática e engenharia reversa de software. 
 
+\section{Metodos}
+Está seção visa mostrar uma das funcionalidades do barramento de serviços da Univeridade de Brasilia, que é a implementaçao do protocolo Oauth 2.
+
+Atualmente as aplicações presentes na Universidade de Brasília (UNB) não se comunicam, o que dificulta a disponibilização de serviços e o controle de acesso. O controle de acesso é feito utilizando o banco de dados. É definido o que o usuário pode acessar, armazenando a url do sistema e o as permissões de acesso a está url.
+
+Com a implantação do oauth 2, como protocolo de autorização, visa facilitar o controle de acesso as aplicação e facilitar a integração tanto para os sistemas da UNB quanto para sistemas externos que necessitem acessar informações.
+
+O oauth 2 é um framework que veio com a ideia de se padronizar a maneira como as aplicões cliente acessam conteúdo restrito. O oauth 2 se baseia em tokens de acesso. Ao se autenticar, uma aplicação cliente recebe do servidor de autorização um token de acesso. A aplicação cliente pode acessar os recursos restritos, basta apenas enviar o token recebido pelo servidor e este valida ou não o acesso aos dados requisitados.
+
+Outra importante característica do oauth 2 é a obrigatoriedade do uso de HTTPS para tráfego de informações entre o cliente e o servidor.
+
+Com a implementação desse framework proporciona um controle de acesso das aplicações da UNB de maneira centralizada, além de possibilitar uma autenticação única e integrada dos sistemas internos e de algum sistema externo que precise de informações restritas da Universidade de Brasília.
+
+Diversos serviços já estão disponibilizados como: a declaração de aluno, o catálogo de aluno, os cursos dos alunos, dentre outros. Todos os serviços ultilizam o barramento como comunicação entre as aplicações cliente e os dados armazenados no servidor.
+
+Os serviços seguem um padrão, chamado de catálogos, que fornecem a url de acesso, qual a linguagem do serviço, onde está o código do serviço, seu método HTTP de acesso e a forma de autorização. 
+
+Segue abaixo um exemplo de um dos serviços já disponibilizados.
+
+
 \section{References}
 
 \bibliographystyle{sbc}
