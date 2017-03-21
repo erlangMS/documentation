@@ -1,0 +1,12 @@
+\section{Avaliação}\label{estudo-empirico}
+
+Para que seja possível avaliar a abordagem proposta, surge a necessidade de aplicação em um ambiente real, de modo a investigar como a arquitetura comporta-se, quais os desafios técnicos e gerenciais, as dificuldades e os benefícios que podem ser obtidos com o seu uso.
+
+Os estudos de caso tem sido utilizados normalmente para estes fins, de acordo com \cite{runeson2012case}, uma vez que, dão a oportunidade para que um aspecto de um problema seja estudado em profundidade, dentro de um período de tempo limitado (4 meses neste estudo). Além disso, parece ser apropriado como método de investigação, já que existem alguns fatores que devem ser observados quanto ao uso de uma abordagem orientada a serviço.
+
+De forma resumida, o estudo visa modernizar o Sistema de Assistência Estudantil  (SAE) da UnB. Este sistema divide-se em dois módulos (1 módulo em VB e outro em C\#), ambos com duplicidades de implementação de regras de negócio e que o CPD tem interesse em modernizar. O trabalho que será realizado, envolve fazer uma análise estática dos códigos fontes para compreender o sistema, extrair a lógica negocial para uma camada de negócio que será criada em Java, desenvolver a fachada de serviços e registrar no catálogo de serviço. Por fim, a camada \textit{front-end} será modificada (ou reescrita a critério dos participantes do estudo de caso) para consumirem os serviços disponíveis no catálogo de serviços através do barramento.
+
+A avaliação será aplicada com 9 pessoas: 7 analistas do CPD e 2 alunos da Universidade. Todos os participantes estão cursando a disciplina \textit{Modernização de Software} do Mestrado Acadêmico em Informática da UnB, que vai apoiar este estudo. Os papéis serão delineados no decorrer da avaliação, conforme o perfil de cada integrante. Será avaliado a produtividade alcançada a partir de um questionário aplicado com os integrantes do estudo e estimado o tamanho do código fonte através da métrica LOC (\textit{Line of Code)} para fazer comparações com o sistema legado e verificar algumas questões modularidade (coesão, acoplamento) e possível redução de duplicidade de implementação das regras de negócio.
+
+
+

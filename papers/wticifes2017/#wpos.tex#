@@ -1,0 +1,46 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+
+\title{Uma Abordagem Orientada a Serviços para a Modernização dos Sistemas Legados da UnB}%
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{
+\IEEEauthorblockN{Everton de Vargas Agilar}
+\IEEEauthorblockA{Computer Centre of UnB\\
+University of Brasília\\
+Brasília, Brazil\\
+evertonagilar@unb.br}
+
+\and
+
+\IEEEauthorblockN{Rodrigo Bonifacio de Almeida}
+\IEEEauthorblockA{Department of Computer Science\\
+University of Brasília\\
+Brasília, Brazil\\
+rbonifacio@unb.br}
+}
+
+
+\maketitle
+
+% As a general rule, do not put math, special symbols or citations
+% in the abstract
+\input{resumo}
+\input{introducao}
+\input{ms}
+\input{arquitetura}
+
+
+\bibliographystyle{plain}
+\bibliography{bibliografia}
+
+% that's all folks
+\end{document}
+
