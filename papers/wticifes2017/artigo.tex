@@ -16,15 +16,13 @@ Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviços n
 \author{
 	Everton Agilar\inst{1},
 	Alysson Ribeiro\inst{1},
-	Renato Ribeiro\inst{1}, 
-	Rodrigo Bonifácio\inst{1},
-	Edna Canedo\inst{1}
+	Renato Ribeiro\inst{1}
 }
 
 
 \address{Universidade de Brasília -- Campus Universitário Darcy Ribeiro\\
    Caixa Postal -- 70910-90  -- Brasília -- DF -- Brasil
-  \email{\{evertonagilar,rcarauta,alyssondsr,rbonifacio,ednacanedo\}@unb.br}
+  \email{\{evertonagilar,rcarauta,alyssondsr\}@unb.br}
 }
 
 
@@ -47,28 +45,33 @@ prioridade para o CPD/UnB.
 A Arquitetura Orientada a Serviços (SOA) surge como uma maneira de solucionar 
 este problema, disponibilizando uma abstração de alto nível entre as aplicações e a camada de negócio ou serviço.
 Este artigo aborda este tema e descreve alguns resultados obtidos com o uso 
-da plataforma ERLANGMS desenvolvido na UnB sob 
+da plataforma ERLANGMS desenvolvido pelo CPD/UnB sob 
 uma abordagem orientada a serviços que compreende um processo 
 de moderniza\c c\~{a}o e um barramento aderente ao estilo 
 arquitetural \textit{Representational State Transfer} (REST). 
-Mais especificamente, são discutidos os principais resultados alcançados 
-até esse momento, as quais destacam-se um barramento de serviços 
-multi uso orientado a contrato de serviços; 
+Mais especificamente, são discutidos os principais resultados alcançados, 
+as quais destacam-se um barramento de serviços 
+orientado a contrato de serviços; 
 um kit de desenvolvimento (SDK) para criação de serviços; 
 um processo denominado SMSOC para guiar as 
-atividades de migração de sistemas; e alguns serviços de apoio 
-como um proxy LDAP para unificar o login de usuários e um serviço de autenticação/autorização
-para controle de permissões dos serviços REST.
+atividades de migração de sistemas legados; 
+e alguns serviços de apoio 
+como um proxy LDAP para unificar o login de usuários e um serviço de autenticação/autorização OAuth2
+para os serviços em REST.
 \end{resumo}
 
 
 \section{Introdução}
 
 Os sistemas legados correspondem às aplicações que sustentam o funcionamento 
-negocial de uma Instituição e que consolidam a maior parte das informações corporativas~\cite{S4_bennett1995legacy,S3_Bisbal:1999}. 
-Na Universidade de Brasília (UnB), há uma gama considerável de sistemas legados desenvolvidos 
-ao longo dos últimos 30 anos pelo CPD/UnB e que consistem em um arcabouço 
-de regras de negócios que são de vital importância para o pleno funcionamento da Instituição. Entretanto, com as sucessivas revisões nas regras de negócios para mantê-los alinhados com as necessidades e a obsolescência tecnológica desses sistemas, tornaram-se rígidos e inflexíveis, a ponto de serem de difícil manutenção e evolução. 
+negocial de uma Instituição e consolidam a maior parte das informações corporativas~\cite{S4_bennett1995legacy,S3_Bisbal:1999}. 
+Na Universidade de Brasília (UnB), há uma gama considerável de sistemas legados desenvolvido 
+ao longo dos últimos 30 anos pelo CPD/UnB que consistem em um arcabouço 
+de regras de negócios que são de vital importância para o 
+pleno funcionamento da Instituição. Entretanto, com as 
+sucessivas revisões nas regras de negócios para mantê-los alinhados
+com as necessidades e a obsolescência tecnológica desses sistemas, 
+tornaram-se rígidos e inflexíveis, a ponto de serem de difícil manutenção e evolução. 
 
 De forma geral, os sistemas da UnB dividem-se em
 três áreas de negócio: área acadêmica, administrativa e de pessoal.
@@ -76,57 +79,59 @@ A maioria desses sistemas foram construídos em diferentes linguagens de programa
 arquiteturas e plataformas que não conversam entre
 si, a não ser, por meio do banco de dados. Durante muitos anos,
 a linguagem de programação VB foi a predominante. Os dois sistemas mais
-importantes escrito nessa linguagem são o Sistema Acadêmico (SIGRA) e
-o Sistema de Pessoal (SIPES), sendo os demais sistemas escritos
+importantes escritos em VB são o \emph{Sistema Acadêmico (SIGRA)} e
+o \emph{Sistema de Pessoal (SIPES)}, sendo os demais sistemas escritos
 em VB.Net, C\#, PHP, ASP e Java (a plataforma atual). 
 
 Neste cenário, as tradicionais práticas de manutenção deixam 
 de atender \`{a}s organizações, que buscam formas de reduzir 
-os custos com a manutenção, maximizar a integração entre os sistemas;  
+os custos com a manutenção, maximizar a integração entre os sistemas,
 torná-los mais flexíveis às mudanças de forma para prolongar sua vida útil e facilitar a evolução
 desses sistemas~\cite{S4_bennett1995legacy,S3_Bisbal:1999,S15_Comella-DordaASurvey2000}. 
 
 
-Ao conduzir a modernização dos sistemas legados na \emph{UnB},
+Ao conduzir a modernização dos sistemas legados na UnB,
 optou-se por experimentar com a arquitetura orientada a servi\c cos, particularmente 
-seguindo o estilo arquitetural \emph{REST}, adotado em muitas Instituições 
-para prover seus serviços na web devido ao aproveitamento da infraestrutura web existente e ao
-esforço de aprendizado menor se comparado a outras tecnologias existentes~\cite{fielding2000architectural,kalin2013java}. 
-Assim, a plataforma apresentada, denominada \emph{ERLANGMS}, 
-impõem o uso de um barramento de serviços desenvolvido em \emph{Erlang/OTP}
-para possibilitar a publicação de serviços; de um processo 
+seguindo o estilo arquitetural \emph{REST}, já adotado 
+em muitas Instituições devido ao aproveitamento da infraestrutura web existente e 
+a facilidade para invocar serviços REST a apartir de qualquer sistema~\cite{fielding2000architectural,kalin2013java}. 
+Assim, foi criada a plataforma \emph{ERLANGMS}, 
+que compreende um barramento de serviços desenvolvido na linguagem \emph{Erlang/OTP}
+para possibilitar a publicação de serviços; de um processo de modernização
 denominado \emph{Software Modernization through Service Oriented Computing (SMSOC)}, 
-proposto para auxiliar os trabalhos de modernização.
-Em síntese, a plataforma consiste nas ferramentas para desenvolvimento de serviços (barramento e SDK)
-e um processo documentado para auxiliar na migração dos sistemas legados. 
+para guiar os trabalhos de modernização e disponibilizar uma arquitetura de 
+software padronizada para criação dos serviços.
 
 Salienta-se que embora \emph{SOA} seja um tema
 de crescente interesse por parte dos pesquisadores e da indústria, identificou-se 
 a necessidade prévia de condução de um mapeamento sistemático para 
 caracterizar a modernização de sistemas legados no 
 contexto da manutenção de software~\cite{desystematic2016}. 
-Desse modo, a plataforma desenvolvida reflete muitas decisões de design
-refletidas a partir deste estudo, onde verificou-se
+Desse modo, muitas decisões de design da plataforma proposta
+foram definidas a partir deste estudo prévio onde verificou-se
 que a maior parte das contribuições na literatura
 estão relacionados aos aspectos gerenciais da modernização de software (55,88\% das
-publicações) e que há poucos relatos de contribuições que descrevem (ou validem)
+publicações) e há poucos relatos de contribuições que descrevem (ou validem)
 técnicas ou ferramentas de modernização de software.
 
 
 Este artigo apresenta a plataforma ERLANGMS e discute as
-experiências obtidas na implantação no CPD/UnB. Mais especificamente, são 
-descritos os principais resultados alcançados 
-até esse momento, as quais destacam-se:
+experiências obtidas na implantação do barramento de serviços no CPD/UnB. Mais especificamente, são 
+descritos os principais resultados alcançados, as quais destacam-se:
 
 \begin{itemize}
 
-\item O uso do processo de modernização SMSOC e o design de arquitetura proposto,
-nos novos sistemas em desenvolvimento pelo CPD/UnB; 
+\item Desenvolvimento de vários serviços web na linguagem Java para atender as demandas da UnB 
+com o uso do processo de modernização SMSOC e o design de arquitetura subjacente, denominado de
+kit de desenvolvimento (SDK).
 
-\item Um serviço que age como um proxy LDAP ou  Lightweight Directory Access Protocol para unificar o acesso dos usuários ao oferecer um "logon único" para os sistemas da UnB, como o Redmine, Webmail ou SEI, que se utilizam do protocolo LDAP para autenticação de usuários;
+\item Desenvolvimento de um serviço proxy LDAP ou Lightweight Directory Access Protocol 
+para unificar o acesso dos usuários ao oferecer um "logon único" para os sistemas da UnB, 
+como o Redmine, Webmail ou SEI, que se utilizam do protocolo LDAP para autenticação de usuários;
 
-\item Um serviço de autenticação OAuth2, 
-integrado ao Sistema de Controle de Acesso (SCA) da UnB, para que os serviços desenvolvidos utilizem 
+\item Desenvolvimento de um serviço de autenticação OAuth2, 
+integrado ao Sistema de Controle de Acesso (SCA) da UnB, que permite 
+que os serviços possam ser consumidos pelos clientes utilizando 
 a mesma infraestrutura de segurança já existente.
 
 \end{itemize} 
