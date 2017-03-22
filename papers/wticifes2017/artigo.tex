@@ -10,14 +10,21 @@
      
 \sloppy
 
-\title{Uma Abordagem Orientada a Serviços para a\\Modernização dos Sistemas Legados da UnB}
+\title{ERLANGMS: Uma Plataforma em Erlang/OTP para 
+Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviços na UnB}
 
-\author{Renato Carauta Ribeiro\inst{1}, Everton de Vargas Agilar\inst{1}}
+\author{
+	Everton Agilar\inst{1},
+	Alysson Ribeiro\inst{1},
+	Renato Ribeiro\inst{1}, 
+	Rodrigo Bonifácio\inst{1},
+	Edna Canedo\inst{1}
+}
 
 
 \address{Universidade de Brasília -- Campus Universitário Darcy Ribeiro\\
    Caixa Postal -- 70910-90  -- Brasília -- DF -- Brasil
-  \email{rcarauta@unb.br, evertonagilar@unb.br}
+  \email{\{evertonagilar,rcarauta,alyssondsr,rbonifacio,ednacanedo\}@unb.br}
 }
 
 
@@ -25,93 +32,115 @@
 
 \maketitle
 
-\begin{abstract}
-  This meta-paper describes the style to be used in articles and short papers
-  for SBC conferences. For papers in English, you should add just an abstract
-  while for the papers in Portuguese, we also ask for an abstract in
-  Portuguese (``resumo''). In both cases, abstracts should not have more than
-  10 lines and must be in the first page of the paper.
-\end{abstract}
+%\begin{abstract}
+%  This meta-paper describes the style to be used in articles and short papers
+%  for SBC conferences. For papers in English, you should add just an abstract
+%  while for the papers in Portuguese, we also ask for an abstract in
+%  Portuguese (``resumo''). In both cases, abstracts should not have more than
+%  10 lines and must be in the first page of the paper.
+%\end{abstract}
+
      
 \begin{resumo} 
-A modernização dos sistemas legados é um processo que vem ganhando 
-cada vez mais interesse na Universidade de Brasília (UnB). 
-Entre os desafios envolvidos na condução da modernização na UnB, 
-pelo seu Centro de Informática (CPD), destaca-se a ausência de 
-integração entre as aplicações e as duplicidades de componentes que implementam lógica de negócio. Assim, 
-é imprescindível que, enquanto a modernização seja realizada, os novos sistemas sejam integrados aos antigos, de forma a 
-interagir e compartilhar os seus fluxos de negócios. A Arquitetura Orientada a Serviços (SOA) surge como uma maneira de solucionar 
-este problema, disponibilizando uma abstração de alto nível entre as aplicações e a camada de negócio.
-Este artigo descreve os resultados preliminares de uma 
-dissertação de mestrado que objetiva propor e validar uma 
-abordagem orientada a serviços que compreende um processo 
+Nos últimos anos, a modernização dos sistemas legados da Universidade de Brasília (UnB) tem sido 
+prioridade para o CPD/UnB. 
+A Arquitetura Orientada a Serviços (SOA) surge como uma maneira de solucionar 
+este problema, disponibilizando uma abstração de alto nível entre as aplicações e a camada de negócio ou serviço.
+Este artigo aborda este tema e descreve alguns resultados obtidos com o uso 
+da plataforma ERLANGMS desenvolvido na UnB sob 
+uma abordagem orientada a serviços que compreende um processo 
 de moderniza\c c\~{a}o e um barramento aderente ao estilo 
 arquitetural \textit{Representational State Transfer} (REST). 
-Esta abordagem visa sustentar a integração dos fluxos de informações e minimizar 
-as duplicidades de lógica de negócios existentes entre as aplicações, através de um barramento  orientado a serviço, 
-para que possa auxiliar o CPD na modernização dos sistemas legados da Instituição, que estão em uso há mais de 20 anos.\end{resumo}
+Mais especificamente, são discutidos os principais resultados alcançados 
+até esse momento, as quais destacam-se um barramento de serviços 
+multi uso orientado a contrato de serviços; 
+um kit de desenvolvimento (SDK) para criação de serviços; 
+um processo denominado SMSOC para guiar as 
+atividades de migração de sistemas; e alguns serviços de apoio 
+como um proxy LDAP para unificar o login de usuários e um serviço de autenticação/autorização
+para controle de permissões dos serviços REST.
+\end{resumo}
 
 
 \section{Introdução}
 
-A modernização dos sistemas 
-legados tem lugar quando as 
-tradicionais práticas de manutenção deixam de 
-atender \`{a}s organizações. Entre os objetivos que se buscam com a modernização, 
-podem-se citar a redução dos custos com manutenção, maior integração entre os sistemas e torná-los mais flexíveis às mudanças, 
-de forma a prolongar sua vida útil~\cite{S4_bennett1995legacy,S3_Bisbal:1999,S15_Comella-DordaASurvey2000}. 
+Os sistemas legados correspondem às aplicações que sustentam o funcionamento 
+negocial de uma Instituição e que consolidam a maior parte das informações corporativas~\cite{S4_bennett1995legacy,S3_Bisbal:1999}. 
+Na Universidade de Brasília (UnB), há uma gama considerável de sistemas legados desenvolvidos 
+ao longo dos últimos 30 anos pelo CPD/UnB e que consistem em um arcabouço 
+de regras de negócios que são de vital importância para o pleno funcionamento da Instituição. Entretanto, com as sucessivas revisões nas regras de negócios para mantê-los alinhados com as necessidades e a obsolescência tecnológica desses sistemas, tornaram-se rígidos e inflexíveis, a ponto de serem de difícil manutenção e evolução. 
 
-Do ponto de vista das organizações, os sistemas legados correspondem às aplicações que sustentam o funcionamento 
-negocial de uma instituição e que consolidam a maior parte das informações corporativas~\cite{S3_Bisbal:1999}. 
-Nesse contexto, a modernização dos sistemas legados ganha cada vez mais importância 
-para a Universidade de Brasília (UnB), uma vez que, 
-nos últimos 20 anos, uma gama considerável de sistemas foi desenvolvida. 
-São sistemas com um arcabouço de regras de negócio que foram sendo 
-construídas ao longo dos anos e que são de vital importância para o pleno funcionamento da Universidade. 
-Entretanto, durante o ciclo de vida desses sistemas, 
-ocorreram várias revisões para mantê-los alinhados com as necessidades da Instituição, 
-tornando-os mais rígidos e inflexíveis, 
-a ponto de serem de difícil manutenção. 
+De forma geral, os sistemas da UnB dividem-se em
+três áreas de negócio: área acadêmica, administrativa e de pessoal.
+A maioria desses sistemas foram construídos em diferentes linguagens de programação,
+arquiteturas e plataformas que não conversam entre
+si, a não ser, por meio do banco de dados. Durante muitos anos,
+a linguagem de programação VB foi a predominante. Os dois sistemas mais
+importantes escrito nessa linguagem são o Sistema Acadêmico (SIGRA) e
+o Sistema de Pessoal (SIPES), sendo os demais sistemas escritos
+em VB.Net, C\#, PHP, ASP e Java (a plataforma atual). 
 
-Os sistemas da Universidade dividem-se em três áreas de negócio: área de gestão acadêmica, administrativa e de pessoal. 
-A maioria desses sistemas estão sob diferentes linguagens de programação, arquiteturas e plataformas; e não conversam entre
-si, a não ser, por meio do banco de dados. Durante muitos anos, a linguagem de programação predominante foi o Visual Basic. 
-Dois dos sistemas mais importantes estão escritos nessa linguagem: Sistema de
-Informações e Gestão Acadêmica (SIGRA) e o Sistema de
-Informações de Pessoal (SIPES). Os demais sistemas foram
-desenvolvidos em VB.NET, C\#, PHP, ASP e Java (plataforma atual). 
+Neste cenário, as tradicionais práticas de manutenção deixam 
+de atender \`{a}s organizações, que buscam formas de reduzir 
+os custos com a manutenção, maximizar a integração entre os sistemas;  
+torná-los mais flexíveis às mudanças de forma para prolongar sua vida útil e facilitar a evolução
+desses sistemas~\cite{S4_bennett1995legacy,S3_Bisbal:1999,S15_Comella-DordaASurvey2000}. 
 
-Este artigo apresenta os resultados iniciais de uma disserta\c c\~{a}o 
-de mestrado que tem como objetivo propor uma abordagem para apoiar 
-a modernização dos sistemas legados da Universidade, 
-com vistas a diminuir a duplicidade de implementa\c c\~{a}o 
-de regras de negócio entre as aplicações (um dos problemas mais 
-críticos relacionados à qualidade do software desenvolvido pelo 
-CPD). Essa abordagem deve atender a alguns requisitos, tais como: (a) 
-seguir uma estrat\'{e}gia orientada a serviço e  
-aderente a arquitetura \textit{Representational State Transfer} (REST); 
-(b) apresentar uma curva de aprendizagem aceitável, para que possa ser 
-realmente implantada no CPD; e oferecer bons mecanismos de disponibilidade, 
-escalabilidade e monitoramento.
 
-Mais especificamente, aqui são descritos os principais resultados alcançados 
-até esse momento:
+Ao conduzir a modernização dos sistemas legados na \emph{UnB},
+optou-se por experimentar com a arquitetura orientada a servi\c cos, particularmente 
+seguindo o estilo arquitetural \emph{REST}, adotado em muitas Instituições 
+para prover seus serviços na web devido ao aproveitamento da infraestrutura web existente e ao
+esforço de aprendizado menor se comparado a outras tecnologias existentes~\cite{fielding2000architectural,kalin2013java}. 
+Assim, a plataforma apresentada, denominada \emph{ERLANGMS}, 
+impõem o uso de um barramento de serviços desenvolvido em \emph{Erlang/OTP}
+para possibilitar a publicação de serviços; de um processo 
+denominado \emph{Software Modernization through Service Oriented Computing (SMSOC)}, 
+proposto para auxiliar os trabalhos de modernização.
+Em síntese, a plataforma consiste nas ferramentas para desenvolvimento de serviços (barramento e SDK)
+e um processo documentado para auxiliar na migração dos sistemas legados. 
+
+Salienta-se que embora \emph{SOA} seja um tema
+de crescente interesse por parte dos pesquisadores e da indústria, identificou-se 
+a necessidade prévia de condução de um mapeamento sistemático para 
+caracterizar a modernização de sistemas legados no 
+contexto da manutenção de software~\cite{desystematic2016}. 
+Desse modo, a plataforma desenvolvida reflete muitas decisões de design
+refletidas a partir deste estudo, onde verificou-se
+que a maior parte das contribuições na literatura
+estão relacionados aos aspectos gerenciais da modernização de software (55,88\% das
+publicações) e que há poucos relatos de contribuições que descrevem (ou validem)
+técnicas ou ferramentas de modernização de software.
+
+
+Este artigo apresenta a plataforma ERLANGMS e discute as
+experiências obtidas na implantação no CPD/UnB. Mais especificamente, são 
+descritos os principais resultados alcançados 
+até esse momento, as quais destacam-se:
 
 \begin{itemize}
-\item a caracterização do termo modernização de software, alcançado com a 
-condução de um mapeamento sistemático (Seção~\ref{ms}). 
 
-\item a implementação de um protótipo arquitetural de um barramento 
-orientado a serviços (Seção~\ref{arquitetura}), cujas decisões de projeto atende aos 
-requisitos de alta disponibilidade, escalabilidade e monitoramento.  
+\item A utilização do processo SMSOC e de um design da arquitetura subjacente 
+nos novos sistemas em desenvolvimento pelo CPD/UnB; 
+
+\item Um serviço que age como um proxy LDAP ou  Lightweight Directory Access Protocol para unificar o acesso dos usuários ao oferecer um "logon único" para os sistemas da UnB, como o Redmine, Webmail ou SEI, que se utilizam do protocolo LDAP para autenticação de usuários;
+
+\item Um serviço de autenticação/autorização OAuth2, integrado ao Sistema de Controle de Acesso (SCA) da UnB, para que os serviços desenvolvidos na abordagem SOA utilizem a mesma infraestrutura de segurança já existente.
+
 \end{itemize} 
 
-Este artigo também apresenta o planejamento de um 
-estudo empírico (Seção~\ref{estudo-empirico}) que está sendo 
-conduzido com o envolvimento dos alunos matriculados em uma disciplina da pós-graduação 
-relacionada a análise estática e engenharia reversa de software. 
+
+
+ATÉ AQUI
 
 \section{Metodos}
+
+Nesta seção é apresentado o que foi feito para alcançar a resolução
+do problema. Tem como objetivo mostrar o fluxo, desde a
+aplicação utilizada para gerenciar os dispositivos físicos no chip
+do Arduino até a utilização da arquitetura REST para encapsular
+os dispositivos em Serviços Web. 
+
 Está seção visa mostrar uma das funcionalidades do barramento de serviços da Univeridade de Brasilia, que é a implementaçao do protocolo Oauth 2.
 
 Atualmente as aplicações presentes na Universidade de Brasília (UNB) não se comunicam, o que dificulta a disponibilização de serviços e o controle de acesso. O controle de acesso é feito utilizando o banco de dados. É definido o que o usuário pode acessar, armazenando a url do sistema e o as permissões de acesso a está url.
