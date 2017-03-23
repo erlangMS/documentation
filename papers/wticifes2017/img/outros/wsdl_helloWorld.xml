@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions 
+   xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+   xmlns:impl="http://helloworld.webservice.unb.br" 
+   xmlns:intf="http://helloworld.webservice.unb.br" 
+   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+   xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" 
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+   targetNamespace="http://helloworld.webservice.unb.br">
+   <wsdl:types>
+	  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+			  elementFormDefault="qualified" 
+			  targetNamespace="http://helloworld.webservice.unb.br">
+	   <element name="hello_world">
+		  <complexType>
+		     <sequence>
+		        <element name="name" type="xsd:string"/>
+		     </sequence>
+		  </complexType>
+	   </element>
+	   <element name="hello_worldResponse">
+		 <complexType>
+	 	   <sequence>
+		        <element name="hello_worldReturn" type="xsd:string"/>
+		   </sequence>
+		 </complexType>
+	   </element>
+	  </schema>
+   </wsdl:types>
+   <wsdl:message name="hello_worldResponse">
+	  <wsdl:part element="impl:hello_worldResponse" name="parameters">
+	  </wsdl:part>
+   </wsdl:message>
+   <wsdl:message name="hello_worldRequest">
+	  <wsdl:part element="impl:hello_world" name="parameters">
+	  </wsdl:part>
+   </wsdl:message>
+   <wsdl:portType name="HelloWorld">
+	  <wsdl:operation name="hello_world">
+		   <wsdl:input message="impl:hello_worldRequest" name="hello_worldRequest">
+	    </wsdl:input>
+		   <wsdl:output message="impl:hello_worldResponse" name="hello_worldResponse">
+		</wsdl:output>
+	  </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="HelloWorldSoapBinding" type="impl:HelloWorld">
+	  <wsdlsoap:binding style="document" 
+	                    transport="http://schemas.xmlsoap.org/soap/http"/>
+	  <wsdl:operation name="hello_world">
+		 <wsdlsoap:operation soapAction=""/>
+		 <wsdl:input name="hello_worldRequest">
+			<wsdlsoap:body use="literal"/>
+ 	     </wsdl:input>
+		 <wsdl:output name="hello_worldResponse">
+			<wsdlsoap:body use="literal"/>
+		 </wsdl:output>
+	  </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="HelloWorldService">
+		  <wsdl:port binding="impl:HelloWorldSoapBinding" name="HelloWorld">
+			 <wsdlsoap:address location="http://localhost:2301/HelloWorld"/>
+		  </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

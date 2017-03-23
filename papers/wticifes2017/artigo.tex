@@ -16,13 +16,14 @@ Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviços n
 \author{
 	Everton Agilar\inst{1},
 	Alysson Ribeiro\inst{1},
-	Renato Ribeiro\inst{1}
+	Renato Ribeiro\inst{1},
+	Eliene Vieira\inst{1},
 }
 
 
 \address{Universidade de Brasília -- Campus Universitário Darcy Ribeiro\\
    Caixa Postal -- 70910-90  -- Brasília -- DF -- Brasil
-  \email{\{evertonagilar,rcarauta,alyssondsr\}@unb.br}
+  \email{\{evertonagilar,rcarauta,alyssondsr,elienev\}@unb.br}
 }
 
 
@@ -121,13 +122,13 @@ descritos os principais resultados alcançados, as quais destacam-se:
 
 \begin{itemize}
 
-\item Desenvolvimento de vários serviços web na linguagem Java para atender as demandas da UnB 
-com o uso do processo de modernização SMSOC e o design de arquitetura subjacente, denominado de
-kit de desenvolvimento (SDK).
+\item Utilização do processo de modernização SMSOC
 
-\item Desenvolvimento de um serviço proxy LDAP ou Lightweight Directory Access Protocol 
-para unificar o acesso dos usuários ao oferecer um "logon único" para os sistemas da UnB, 
-como o Redmine, Webmail ou SEI, que se utilizam do protocolo LDAP para autenticação de usuários;
+\item Logon único para os sistemas da UnB
+
+\item Controle de acesso aos serviços
+
+\item 
 
 \item Desenvolvimento de um serviço de autenticação OAuth2, 
 integrado ao Sistema de Controle de Acesso (SCA) da UnB, que permite 
@@ -135,6 +136,112 @@ que os serviços possam ser consumidos pelos clientes utilizando
 a mesma infraestrutura de segurança já existente.
 
 \end{itemize} 
+
+
+
+\section{Plataforma ERLANGMS}
+
+A plataforma ERLANGMS é constituído por 
+um barramento de serviços (\textit{Enterprise Service Bus}-- ESB) multiplataforma,
+de um kit de desenvolvimento (SDK) para 
+implementar os serviços na linguagem 
+Java\footnote{Está em desenvolvimento o SDK .Net para implementação de serviços nas linguagens C\# eVB.Net.} e
+um processo de modernização denominado SMSOC. 
+O barramento de serviços
+foi idealizado para servir de elo entre os 
+sistemas da Universidade e a camada de serviço (tipicamente 
+implementada usando a linguagem Java). 
+De acordo com \cite{SOAPractice:2007}, um barramento permite unificar o acesso aos serviços 
+através de uma camada intermediadora entre componentes de software (denominados serviços) e 
+as aplicações que consomem estes serviços. 
+A implementa\c c\~{a}o 
+de um novo barramento (em vez da ado\c c\~{a}o de um barramento existente), 
+possibilitou uma melhor compreens\~{a}o do estilo arquitetural REST e o dom\'{i}nio de alguns 
+elementos chave propostos no ErlangMS, como a estrutura de eventos e os recursos de toler\^{a}ncia 
+a falha. 
+
+A arquitetura segue o conceito de \textit{Service Oriented Computing} (SOC), 
+um paradigma que promove a composição de serviços \emph{em uma rede de serviços} 
+fracamente acoplados, com o objetivo de criar processos de negócio dinâmicos 
+e flexíveis através da interconexão de sistemas computacionais~\cite{SOAIntBlueprint:2010}. 
+Dessa forma, o barramento suporta a mediação, roteamento, 
+transformação de dados e a orquestração dos serviços. Para isso, adotou-se o 
+estilo arquitetural REST e o formato JSON para o envio e 
+recebimento das mensagens do cliente. Essa restrição de design teve o 
+objetivo de facilitar a implementação do barramento e mantê-lo simples. 
+
+O esquema de comunicação da arquitetura ocorre por meio de 
+duas vias distintas, como ilustra a Figura~\ref{fig:roteamento_mensagens}: Na primeira via, 
+existe a comunicação do cliente para 
+consumir algum serviço no barramento. Essa comunicação é via uma 
+interface REST, razão pela qual o cliente (que pode ser qualquer sistema, 
+independente da sua linguagem de programação ou plataforma) 
+precisa suportar chamadas de serviços em REST. Na segunda via, tem a comunicação 
+do barramento com o serviço, que está implementado em 
+alguma linguagem de programação (Erlang, Java, etc.). Essa comunicação dá-se via
+sistema de mensageria disponível em Erlang que possibilita uma comunicação assíncrona 
+com várias linguagens de programação de forma muito rápida por trafegar os dados 
+no formato binário e com baixa latência na rede\cite{Armstrong:2013:PES:2566708}.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.9]{img/arquitetura/roteamento_mensagens.pdf}
+\caption{Esquema do roteamento das mensagens na plataforma ERLANGMS.}
+\label{fig:roteamento_mensagens}
+\end{figure}
+
+
+Uma das vantagens que se observou na abordagem proposta foi permitir que tanto 
+os sistemas novos quanto os sistemas legados possam coexistir, invocando os mesmos serviços e
+maximizando o compartilhamento das regras de negócio.
+
+
+\section{Resultados}
+
+\subsection{Utilização do processo de modernização SMSOC}
+
+A introdução de um processo surgiu devido a necessidade
+de documentar um processo de modernização 
+para auxiliar os trabalhos de modernização.
+O processo SMSOC é 
+aderente à arquitetura SOA 
+e foi validado como  
+resultado de um estudo de caso
+conduzido em uma disciplina de Pós-Graduação
+do Mestrado Acadêmico em Informática da UnB,
+através do qual foi modernizado 
+o Sistema de Estudo Socio Economico (SAE)
+que faz a gestão do processo de 
+avaliação socioeconômica dos estudantes.
+
+O processo de moderização compreende também a documentação sobre a arquitetura e o design
+dos serviços implementados, denominado de kit de desenvolvimento (SDK). 
+
+
+\subsection{Logon único para os sistemas da UnB}
+
+A UnB tem buscado desde 2013 uma forma de unificar o acesso dos usuários aos
+sistemas e a rede corporativa (Webmail e UnB Wireless), uma vez que existem muitos
+silos de dados de usuários que dificultam a centralização dessas informações. 
+Para suprir esta demanda e subsidiar a concretização do acesso 
+unificado ao ambiente da UnB bem como o compartilhamento de informações 
+com várias as aplicações,
+até mesmo os sistemas não desenvolvidos pelo CPD/UnB, como é o caso do SEI e o Redmine,
+foi implementado um serviço proxy LDAP ou Lightweight Directory Access Protocol 
+no barramento de serviços que permite que a base de usuários possa
+estar em um banco relacional onde os sistemas da UnB tem acesso direto mas
+permite que os demais sistemas desenvolvidos ou não pelo CPD e os sites institucionais
+possam autenticar os usuários e consultar informações desses usuários através
+de um protocolo padrão.
+
+
+\subsection{Controle de acesso aos serviços}
+
+Com o desenvolvimento de sistemas com uma abordagem SOA, torna-se
+importante controlar o acesso e a autorização no acesso aos dados disponibilizados como serviço.
+Nesse sentido, foi desenvolvimento suporte para autenticação OAuth2. Este protocolo
+ainda está em desenvolvimento e está sendo integrado ao sistema de controle de acesso 
+da UnB.
 
 
 
