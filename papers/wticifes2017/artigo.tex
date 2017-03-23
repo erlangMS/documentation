@@ -142,18 +142,21 @@ ATÉ AQUI
 
 \section{Metodos}
 
+Atualmente, os sistemas da Universidade de Brasília (UNB) são protegidos por meio de um sistema de controle de acesso (SCA). Esse sistema proporciona a criação de permissões atráves de usuários que tem perfis e estes tem transações. Um dos problemas enfrentados com essa abordagem é o fato de que as aplicações da UNB estão vinculadas a pessoa, ou seja, uma pessoa pode ter diversos usuários diferentes. Outro problema enfrentado é o fato desse sistema, por ter sido implementado de forma proprietária, não está em conformidade com os padrões do mercado no que se refere a autenticação e autorização, o que impossibilita que sistemas externos a universidade possam compartilhar dessas informações.
 
-Está seção visa mostrar uma das funcionalidades do barramento de serviços da Univeridade de Brasilia, que é a implementaçao do protocolo Oauth 2.
-
-Atualmente as aplicações presentes na Universidade de Brasília (UNB) não se comunicam, o que dificulta a disponibilização de serviços e o controle de acesso. O controle de acesso é feito utilizando o banco de dados. É definido o que o usuário pode acessar, armazenando a url do sistema e o as permissões de acesso a está url.
-
-Com a implantação do oauth 2, como protocolo de autorização, visa facilitar o controle de acesso as aplicação e facilitar a integração tanto para os sistemas da UNB quanto para sistemas externos que necessitem acessar informações.
+A implementação de um framework padrão de mercado se torna necessária para a resolução dos diversos problemas mencionados. Com isso foi escolhido o oauth 2 por ser um framework autamente utilizado pelas maiores empresas de informatica e por ser hoje um padrão de mercado.
 
 O oauth 2 é um framework que veio com a ideia de se padronizar a maneira como as aplicões cliente acessam conteúdo restrito. O oauth 2 se baseia em tokens de acesso. Ao se autenticar, uma aplicação cliente recebe do servidor de autorização um token de acesso. A aplicação cliente pode acessar os recursos restritos, basta apenas enviar o token recebido pelo servidor e este valida ou não o acesso aos dados requisitados.
 
-Outra importante característica do oauth 2 é a obrigatoriedade do uso de HTTPS para tráfego de informações entre o cliente e o servidor.
+Para a implantação do oauth 2 é necessário seguir uma série de passos preconizados pela rfc. Uma importante caracteristica, que faz com que o oauth 2 seja amplamente utilizado é sua obrigatoriedade de uso junto com o HTTS. 
 
-Com a implementação desse framework proporciona um controle de acesso das aplicações da UNB de maneira centralizada, além de possibilitar uma autenticação única e integrada dos sistemas internos e de algum sistema externo que precise de informações restritas da Universidade de Brasília.
+O trabalho que foi realizado teve como objetivo vincular o perfil a pessoa. Atualmente o perfil está vinculado ao usuário, e vários usuários podem estar ligado a uma mesma pessoa. Para se ter um controle de acesso único e integrado, com uso de single sign-on (SSO), é necessário associar todos os perfis a pessoa. Os seguintes passos foram feitos para padronização desse cenário.
+
+    Foi criado uma consulta que retornasse todos os perfis da pessoa.
+    Os perfis foram armazenados em uma tabela em memória para acelerar as buscas.
+
+Após esses passos foi criado um modelo de autenticação simples ao qual o usuário se autentica em uma aplciação cliente, que envia os dados de login e senha de acesso, por meio do SSL, então o servidor autentica o usuário, caso o login seja válido, e retorna o token de acesso criptografado. Esse modelo permite que o usuário se autentique apenas uma vez e tenha acesso a todos os serviços que são definidos nos perfis de acesso que esta pessoa tem acesso.
+
 
 Diversos serviços já estão disponibilizados como: a declaração de aluno, o catálogo de aluno, os cursos dos alunos, dentre outros. Todos os serviços ultilizam o barramento como comunicação entre as aplicações cliente e os dados armazenados no servidor.
 
