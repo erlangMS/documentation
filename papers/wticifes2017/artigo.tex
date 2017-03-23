@@ -168,8 +168,55 @@ O trabalho que foi realizado teve como objetivo vincular o perfil a pessoa. Atua
 
 Após esses passos foi criado um modelo de autenticação simples ao qual o usuário se autentica em uma aplciação cliente, que envia os dados de login e senha de acesso, por meio do SSL, então o servidor autentica o usuário, caso o login seja válido, e retorna o token de acesso criptografado. Esse modelo permite que o usuário se autentique apenas uma vez e tenha acesso a todos os serviços que são definidos nos perfis de acesso que esta pessoa possue.
 
+\subsection{Solução de Autorização}
+\label{authz}
+\subsubsection{Requisitos}
+Os requisitos da solução de autorização propostos neste trabalho, são: 
+\begin{description}
+	\item[Req1] \textbf {Autorização}. O protocolo deverá conceder autorizações apenas aos recursos que o cliente autenticado tenha direito. As autorizações serão válidas por um período de tempo finito.  
+    \item[Req2] \textbf{Administrador}. O administrador do recurso deve ser capaz de revogar autorizações concedidas a qualquer momento.
+	\item[Req3] \textbf{Integridade}. Deve ser possível detectar alterações ilícitas nas mensagens durante o processo de autenticação e autorização.
+    \item[Req4] \textbf{Privacidade}. Dados restritos trocados durante o processo de autorização devem ser mantidos em sigilo de pessoas e serviços não autorizados;
+    \item[Req5] \textbf{Compatibilidade com o barramento ErlangMS}. O protocolo deve usar a arquitetura REST e o formato JSON para troca de mensagens.
+\end{description}
 
-\section{References}
+As soluções encontradas no Mapeamento Sistemático apresentado em \cite{7521451} e os requisitos definidos para a solução de segurança que será utilizada no barramento ErlangMS serviram de apoio para a escolha do protocolo de autorização.
+
+Desta forma, foi implementado no protocolo  de autorização Oauth 2 como um serviço do ErlangMS. A implementação do OAuth  foi facilitada pelo uso das bibliotecas disponibilizadas no barramento e na linguagem Erlang para tratar requisições HTTP/REST. O ErlangMS já possui suporte ao uso de TLS, desta forma, o OAuth 2 foi implementado respeitando os requisitos de integridade e privacidade.
+
+\subsubsection{OAuth 2}
+O OAuth (\textit{Open Authorization Protocol}) é um protocolo de autorização que permite que um aplicativo de terceiros possa obter acesso limitado a um serviço através de trocas de mensagens e \textit{tokens} de acesso \cite{torroglosa2013integration}. O protocolo utiliza a arquitetura REST e mensagens JSON \cite{noureddine2013authentication}.
+
+
+A versão do Oauth 2.0 traz um protocolo completamente novo em relação a versão 1.0, publicado em dezembro de 2007, não sendo compatível com o mesmo \cite{hammer2010introducing,hammer2010oauth}. O OAuth 2.0 define quatro entidades:
+
+\begin{itemize}
+\item \textit{Resource Owner}: é o usuário que autoriza uma aplicação a acessar seus dados;
+\item \textit{Client}: aplicação que deseja acessar os dados do usuário;
+\item \textit{Resource Server}: Servidor que hospeda os recursos protegidos, recebe e responde às solicitações de acesso aos  recursos com os \textit{tokens} do protocolo ;
+\item \textit{Authorization Server}:  Servidor que concede o \textit{token} de acesso após verificar a identidade do usuário e a concessão da autorização ao cliente.
+\end{itemize}
+
+A Figura \ref{fun:fig:oauth} apresenta o fluxo abstrato do Oauth 2.0.
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[scale = 0.8]{figuras/oauth.jpg}
+		\caption{ Abstract Flux of Oauth 2.0 \cite{hardt2012oauth}}
+		\label{fun:fig:oauth}
+	\end{center}
+\end{figure}  
+
+As etapas do diagrama incluem:
+\begin{description}
+\item [(A) ] O cliente solicita uma autorização para acessar os recursos do usuário;
+\item [(B) ] O usuário autoriza o pedido e o cliente recebe a concessão da autorização;
+\item [(C) ] O cliente requisita o \textit{token} de acesso apresentando a concessão da autorização e suas credenciais ao servidor de autorização;
+\item [(D) ] O servidor de autorização autentica o cliente, valida a concessão da autorização e emite o \textit{token} de acesso;
+\item [(E) ] O cliente requisita o recurso protegido e apresenta o \textit{token} de acesso;
+\item [(F) ] O servidor do recurso valida o \textit{token} de acesso e concede o acesso aos recursos solicitados.
+\end{description}
+
 
 \bibliographystyle{sbc}
 \bibliography{bibliografia}
