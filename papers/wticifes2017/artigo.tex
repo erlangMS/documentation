@@ -243,6 +243,18 @@ Nesse sentido, foi desenvolvimento suporte para autenticação OAuth2. Este protoc
 ainda está em desenvolvimento e está sendo integrado ao sistema de controle de acesso 
 da UnB.
 
+\subsection{ serviço de autenticação OAuth2, integrado ao Sistema de Controle de Acesso (SCA) da UnB}
+
+Para a integração do (SCA) com o protocolo oauth 2, o trabalho realizado teve como objetivo a criação de uma autenticação única e integrada para cada pessoa. Atualmente os perfis de acesso estão vinculados a um usuário, e vários usuários estão ligados a uma única pessoa. Para se ter um controle de acesso único e integrado é necessário associar todos os usuários a uma pessoa. Os seguintes passos foram feitos para padronização desse cenário.
+
+\begin{itemize}
+\item Foi criado uma consulta que retornasse todos os perfis e usuários da pessoa.
+\item O resultado da consulta foi armazenado em um banco de dados interno do barramento para proporcionar maior velocidade na autenticação.
+\item Foi desenvolvida um sistema cliente de autenticação para o acesso único e integrado aos sistemas da UNB. 
+\end{itemize}
+   
+Os passos para a autenticação entre a aplicação cliente e o servidor de autorização seguem o seguinte fluxo. O usuário se autentica em uma aplciação cliente, que envia os dados de login e senha de acesso, por meio do SSL, ao receber o login e a senha o servidor autentica o usuário caso o login seja válido e retorna o token de acesso criptografado, que é armazenado pela aplicação cliente. Esse modelo permite que o usuário se autentique apenas uma vez e tenha acesso a todos os serviços que os perfis de acesso permitem.
+
 
 
 ATÉ AQUI
@@ -267,13 +279,7 @@ Segue abaixo um exemplo de um dos serviços já disponibilizados.
 
 COLOCAR O OAUTH ACIMA
 
-Para a integração do (SCA) com o protocolo oauth 2, o trabalho realizado teve como objetivo a criação de uma autenticação única e integrada para cada pessoa. Atualmente os perfis de acesso estão vinculados a um usuário, e vários usuários estão ligados a uma única pessoa. Para se ter um controle de acesso único e integrado é necessário associar todos os usuários a uma pessoa. Os seguintes passos foram feitos para padronização desse cenário.
 
-    Foi criado uma consulta que retornasse todos os perfis e usuários da pessoa.
-    O resultado da consulta foi armazenado em um banco de dados interno do barramento para proporcionar maior velocidade na autenticação.
-    Foi desenvolvida um sistema cliente de autenticação para o acesso único e integrado aos sistemas da UNB. 
-
-Os passos para a autenticação entre a aplicação cliente e o servidor de autorização seguem o seguinte fluxo. O usuário se autentica em uma aplciação cliente, que envia os dados de login e senha de acesso, por meio do SSL, ao receber o login e a senha o servidor autentica o usuário caso o login seja válido e retorna o token de acesso criptografado, que é armazenado pela aplicação cliente. Esse modelo permite que o usuário se autentique apenas uma vez e tenha acesso a todos os serviços que os perfis de acesso permitem.
 
 
 \section{References}
