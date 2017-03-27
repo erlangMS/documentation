@@ -16,13 +16,14 @@ Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviç
 \author{
 	Everton Agilar\inst{1},
 	Alysson Ribeiro\inst{1},
-	Renato Ribeiro\inst{1}
+	Renato Ribeiro\inst{1},
+	Eduardo Teixeira1\inst{1},
 }
 
 
 \address{Universidade de Brasília -- Campus Universitário Darcy Ribeiro\\
    Caixa Postal -- 70910-90  -- Brasília -- DF -- Brasil
-  \email{\{evertonagilar,rcarauta,alyssonribeiro\}@unb.br}
+  \email{\{evertonagilar,rcarauta,alyssonribeiro,eduhenr\}@unb.br}
 }
 
 
@@ -65,7 +66,7 @@ para controlar o acesso aos serviços REST.
 Os sistemas legados correspondem às aplicações que sustentam o funcionamento 
 negocial de uma Instituição e consolidam a maior parte das informações corporativas~\cite{S4_bennett1995legacy}. 
 Na Universidade de Brasília (UnB), há uma gama considerável de sistemas legados desenvolvido 
-ao longo dos últimos 30 anos pelo CPD/UnB que consistem em um arcabouço 
+ao longo dos últimos 20 anos pelo CPD/UnB que consistem em um arcabouço 
 de regras de negócios que são de vital importância para o 
 pleno funcionamento da Instituição. Entretanto, com as 
 sucessivas revisões nas regras de negócios para mantê-los alinhados
@@ -89,16 +90,13 @@ torná-los mais flexíveis às mudanças de forma para prolongar sua vida útil 
 desses sistemas~\cite{S3_Bisbal:1999}. 
 
 
-Este artigo apresenta a plataforma ERLANGMS desenvolvida 
+Este artigo apresenta a plataforma ERLANGMS desenvolvido pelo CPD/UnB 
 para apoiar a modernização de sistemas legados na UnB. Mais
-especificamente, o artigo discute as
-experiências obtidas na implantação de um barramento de serviços no CPD/UnB e
-a implementação de alguns serviços, as quais,
-destacam-se:
+especificamente, o artigo discute os seguintes resultados:
 
 \begin{itemize}
 
-\item Desenvolvimento de serviços utilizando o processo SMSOC
+\item Desenvolvimento de serviços utilizando o processo de modernização SMSOC
 
 \item Autenticação de usuários através um serviço proxy LDAP
 
@@ -110,21 +108,21 @@ destacam-se:
 \section{Método}
 
 
-Para conduzir a modernização dos sistemas legados na UnB,
+Com o objetivo de conduzir a modernização dos sistemas legados na UnB,
 optou-se por experimentar com a arquitetura orientada a servi\c cos, particularmente 
 seguindo o \emph{estilo arquitetural REST}, adotado 
 em muitas Instituições por causa
-da facilidade para invocar serviços 
+da facilidade de se invocar serviços 
 web a apartir de qualquer sistema~\cite{fielding2000architectural}. 
 
-Assim, foi criada a \emph{plataforma ERLANGMS}, 
-que compreende: (a) um barramento de serviços 
-desenvolvido em \emph{Erlang/OTP} para publicar os serviços;
+Para isso, foi proposta a \emph{plataforma ERLANGMS}, 
+que compreende: (a) um barramento de serviços próprio 
+desenvolvido em \emph{Erlang/OTP} para publicação de serviços REST;
 (b) um processo de modernização
 denominado \emph{Software Modernization through Service Oriented Computing (SMSOC)} 
 para guiar os trabalhos de modernização e disponibilizar uma arquitetura de 
 software padronizada para criação dos serviços e;
-(c) um kit de desenvolvimento (SDK) para desenvolver os serviços na linguagem Java
+(c) um kit de desenvolvimento (SDK) para desenvolvimento de serviços na linguagem Java
 \footnote{Está em desenvolvimento o SDK .Net para implementação de serviços nas linguagens C\# eVB.Net.}.
 
 Embora \emph{SOA} seja um tema
@@ -137,7 +135,7 @@ foram definidas a partir deste estudo prévio onde verificou-se
 que a maior parte das contribuições na literatura
 estão relacionados aos aspectos gerenciais da modernização de software (55,88\% das
 publicações) e há poucos relatos de contribuições que descrevem (ou validem)
-técnicas ou ferramentas de modernização de software, como ERLANGMS.
+técnicas ou ferramentas de modernização de software como ERLANGMS.
 
 
 \section{Resultados}
@@ -205,7 +203,7 @@ no formato binário e com baixa latência na rede\cite{Armstrong:2013:PES:256670
 
 
 
-\subsection{Desenvolvimento de serviços utilizando o processo SMSOC}\label{smsoc}
+\subsection{Desenvolvimento de serviços utilizando o processo de modernização SMSOC}\label{smsoc}
 
 A introdução de um processo surgiu devido a necessidade
 de documentar um processo de modernização 
@@ -313,8 +311,22 @@ os sistemas internos da UnB.
 
 
 
-\section{Conclusões}
+\section{Conclusão}
 
+A modernização dos sistemas legados ganha cada vez mais importância
+para a UnB.
+Nesse sentido, o trabalho que está sendo realizado
+no CPD/UnB tem como finalidade subsidiar
+a migração
+dos sistemas legados de forma sistemática 
+e incremental, mantendo os sistemas legados
+em funcionamento enquanto os novos sistemas
+são desenvolvidos.
+
+Um ponto importante
+da solução proposta foi validá-la em um estudo de caso
+através do qual permitiu refinar o processo de modernização e a 
+sua arquitetura subjacente.
 Uma das vantagens que se observou na abordagem proposta foi permitir que tanto 
 os sistemas novos quanto os sistemas legados possam coexistir, invocando os mesmos serviços e
 maximizando o compartilhamento das regras de negócio.
