@@ -241,21 +241,25 @@ documentação da arquitetura. Outro benefício observado é quanto a facilidade
 de uso, principalmente da arquitetura definida no processo para o desenvolvimento dos serviços. 
 Por exemplo, em Dezembro de 2016 houve o treinamento
 da equipe de desenvolvedores do setor administrativo. Após este treinamento,
-a equipe iniciou o desenvolvimento de vários serviços solicitados pela UnB. 
+a equipe já implementou vários serviços solicitados pela UnB. 
 Por outro lado, identificou-se certa resistência por desenvolvedores com 
-mais experiência na arquitetura antiga utilizada pelo CPD/UnB, 
+mais experiência na arquitetura antiga utilizada pelo CPD/UnB 
 em virtude dos sistemas legados trabalharem com 
-a abordagem \textit{TransactionScript} enquanto que 
-ERLANGMS adota a abordagem DDD. Uma comparação
-destas duas abordagens pode ser encontrada em~\cite{agilar2016}.
+a abordagem \textit{TransactionScript} 
+a qual organiza as lógica de negócio em procedimentos na camada de negócio. 
+Uma comparação
+destas duas abordagens pode ser encontrada em~\cite{agilar2016},
+através do qual foi realizado uma análise destas duas abordagens
+para verificar qual das duas seria a ideal para o CPD/UnB.
 
 
 
 
 \subsection{Autenticação de usuários através um serviço proxy LDAP}\label{ldap}
 
-A UnB tem buscado desde 2013 uma forma de unificar o acesso dos usuários aos
-sistemas de informação e a rede corporativa, uma vez que existem muitos
+Desde 2013, busca-se uma forma de unificar o acesso dos usuários aos
+sistemas de informação e a rede corporativa da UnB, 
+uma vez que existem muitos
 silos de dados de usuários que dificultam a centralização dessas informações. 
 
 De modo a suprir esta demanda e subsidiar a concretização do acesso 
@@ -266,11 +270,12 @@ O LDAP ou Lightweight Directory Access Protocol é um
 protocolo padrão comumente utilizado pelas aplicações para autenticar os usuários,
 sendo um dos protocolos de autenticação mais utilizados no ambiente da UnB.
 
-Desde que este serviço foi colocado em produção para 
-autenticar alguns sistemas na UnB (como é o caso do Redmine e muito em breve o SEI 3.0),
+Desde que o serviço foi colocado em produção para 
+autenticar alguns sistemas na UnB, como é o caso do Redmine (Sistema de gerenciamento de projetos) e 
+muito em breve o SEI 3.0 (Sistema Eletrônico de Informações do Governo Federal) que está em homologação,
 o proxy LDAP tem sido visto pela Direção do CPD/UnB como uma ferramenta
-com alto potencial para integrar não somente os sistemas da Universidade
-mas também a rede corporativa (Webmail e UnB Wireless).
+com alto potencial para integrar não somente os sistemas 
+mas também a rede corporativa (Webmail e UnB Wireless) da Universidade.
 
 Note que a maior vantagem de se utilizar um serviço que entende LDAP
 em vez de uma instância OpenLDAP convencional por exemplo, 
