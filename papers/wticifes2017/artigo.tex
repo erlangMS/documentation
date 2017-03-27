@@ -290,18 +290,17 @@ da mesma forma que faria se fosse um servidor OpenLDAP.
 
 \subsection{Autenticação e autorização de serviços REST com um serviço OAuth2}\label{oauth2}
 
-Com o desenvolvimento de sistemas com uma abordagem SOA, torna-se
-importante controlar o acesso e a autorização das chamadas de serviços REST.
+Com a modernização de sistemas através de uma abordagem SOA, torna-se
+importante controlar o acesso e a autorização das chamadas de serviços.
 Nesse sentido, está em desenvolvimento suporte nativo para autenticação OAuth2
 no barramento de serviços. 
 
 
 O OAuth (\textit{Open Authorization Protocol}) é um protocolo de autorização 
-que permite as aplicações possam obter 
+que permite que os usuários tenham 
 acesso limitado a um serviço através de trocas de 
-mensagens e \textit{tokens} de acesso. 
-Este protocolo ainda está em desenvolvimento sendo que 
-um estudo prévio foi conduzido para escolher o protocolo a ser adotado
+mensagens e \textit{tokens} de acesso. Um estudo prévio foi conduzido para
+escolher o protocolo a ser adotado
 na solução ERLANGMS~\cite{7521451}.
 
 
@@ -320,7 +319,7 @@ os sistemas internos da UnB.
 \section{Conclusão}
 
 A modernização dos sistemas legados ganha cada vez mais importância
-para a UnB.
+para a Universidade de Brasília.
 Nesse sentido, o trabalho que está sendo realizado
 no CPD/UnB tem como finalidade subsidiar
 a migração
@@ -335,7 +334,10 @@ através do qual permitiu refinar o processo de modernização e a
 sua arquitetura subjacente.
 Uma das vantagens que se observou na abordagem proposta foi permitir que tanto 
 os sistemas novos quanto os sistemas legados possam coexistir, invocando os mesmos serviços e
-maximizando o compartilhamento das regras de negócio.
+maximizando o compartilhamento das regras de negócio. Isso foi comprovado 
+recentemente quando foi incluída em uma aplicação em C\# uma nova funcionalidade
+para impressão da declaração de aluno regular. No caso, foi disponibilizado 
+um serviço escrito em Java que a aplicação C\# consumiu.
 
 
 \bibliographystyle{sbc}
