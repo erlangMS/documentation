@@ -165,8 +165,8 @@ as aplicações que consomem estes serviços.
 A implementa\c c\~{a}o 
 de um novo barramento (em vez da ado\c c\~{a}o de um barramento existente), 
 possibilitou uma melhor compreens\~{a}o do estilo arquitetural REST e o dom\'{i}nio de alguns 
-elementos chave propostos no ERLANGMS, como a estrutura de eventos e os recursos de toler\^{a}ncia 
-a falha. 
+elementos chave definidos em ERLANGMS, como a estrutura de eventos
+e os recursos de toler\^{a}ncia a falha. 
 
 A arquitetura segue o conceito de \textit{Service Oriented Computing} (SOC), 
 um paradigma que promove a composição de serviços \emph{em uma rede de serviços} 
@@ -189,7 +189,7 @@ do barramento com o serviço, que está implementado em
 alguma linguagem de programação (Erlang, Java, etc.). Essa comunicação dá-se via
 sistema de mensageria disponível em Erlang que possibilita uma comunicação assíncrona 
 com várias linguagens de programação de forma muito rápida por trafegar os dados 
-no formato binário e com baixa latência na rede\cite{Armstrong:2013:PES:2566708}.
+no formato binário e com baixa latência na rede~\cite{Armstrong:2013:PES:2566708}.
 
 \begin{figure}[htb]
 \centering
@@ -205,7 +205,7 @@ no formato binário e com baixa latência na rede\cite{Armstrong:2013:PES:256670
 
 \subsection{Desenvolvimento de serviços utilizando o processo de modernização SMSOC}\label{smsoc}
 
-A introdução de um processo surgiu devido a necessidade
+A introdução de um processo surgiu com a necessidade
 de documentar um processo de modernização 
 para auxiliar os trabalhos de modernização.
 O processo SMSOC é 
@@ -227,24 +227,25 @@ O SMSOC documenta também a arquitetura e o design
 para implementação dos serviços e adota uma 
 abordagem de desenvolvimento Domain-Driven
 Design (DDD), introduzido no livro \textit{Domain-Driven Design: Tackling Complexity in the
-Heart of Software}, para o desenvolvimento de sistemas complexos centrado no domínio
+Heart of Software} para o desenvolvimento de sistemas complexos centrado no domínio
 do negócio e no trabalho cooperativo entre especialistas do negócio e desenvolvedores~\cite{evans2004domain}.
 
-Há vários benefícios observados com o SMSOC,
-por exemplo, por ser um processo enxuto para as 
-necessidades da UnB, possibilita
+Há vários benefícios observados com o SMSOC.
+Como é um processo enxuto, possibilita
 a sua execução até mesmo em projetos ou equipes muito pequenas. Além disso
 o processo apresenta diretrizes e boas práticas recomendadas além de conter
 um design padronizado 
-da arquitetura dos serviços, o que facilita o aprendizado por novos membros na equipe
-de desenvolvimento e serve como 
-uma excelente documentação. Em Dezembro de 2016, após três semanas de 
-treinamento, a equipe de desenvolvedores da área de sistemas administrativos 
-iniciou o desenvolvimento de vários serviços solicitados pela UnB. 
-Em contraposição aos benefícios,
-identificou-se certa resistência por desenvolvedores com 
-mais experiência na arquitetura antiga, em virtude dos sistemas
-legados trabalharem com a abordagem \textit{TransactionScript} enquanto que 
+da arquitetura dos serviços para facilitar o aprendizado por novos membros na equipe
+de desenvolvimento e servir como 
+documentação da arquitetura. Outro benefício observado é quanto a facilidade 
+de uso, principalmente da arquitetura definida no processo para o desenvolvimento dos serviços. 
+Por exemplo, em Dezembro de 2016 houve o treinamento
+da equipe de desenvolvedores do setor administrativo. Após este treinamento,
+a equipe iniciou o desenvolvimento de vários serviços solicitados pela UnB. 
+Por outro lado, identificou-se certa resistência por desenvolvedores com 
+mais experiência na arquitetura antiga utilizada pelo CPD/UnB, 
+em virtude dos sistemas legados trabalharem com 
+a abordagem \textit{TransactionScript} enquanto que 
 ERLANGMS adota a abordagem DDD. Uma comparação
 destas duas abordagens pode ser encontrada em~\cite{agilar2016}.
 
