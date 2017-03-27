@@ -5,13 +5,13 @@
 \usepackage{graphicx,url}
 
 \usepackage[brazil]{babel}   
-\usepackage[latin1]{inputenc}  
+\usepackage[utf8]{inputenc}
 
      
 \sloppy
 
 \title{ERLANGMS: Uma Plataforma em Erlang/OTP para 
-Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviços na UnB}
+ModernizaÃ§Ã£o de Sistemas Legados atravÃ©s de uma Abordagem Orientada a ServiÃ§os na UnB}
 
 \author{
 	Everton Agilar\inst{1},
@@ -20,8 +20,8 @@ Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviços n
 }
 
 
-\address{Universidade de Brasília -- Campus Universitário Darcy Ribeiro\\
-   Caixa Postal -- 70910-90  -- Brasília -- DF -- Brasil
+\address{Universidade de BrasÃ­lia -- Campus UniversitÃ¡rio Darcy Ribeiro\\
+   Caixa Postal -- 70910-90  -- BrasÃ­lia -- DF -- Brasil
   \email{\{evertonagilar,rcarauta,alyssonribeiro\}@unb.br}
 }
 
@@ -40,131 +40,130 @@ Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviços n
 
      
 \begin{resumo} 
-Nos últimos anos, a modernização dos sistemas legados da Universidade de Brasília (UnB) tem sido 
+Nos Ãºltimos anos, a modernizaÃ§Ã£o dos sistemas legados da Universidade de BrasÃ­lia (UnB) tem sido 
 prioridade para o CPD/UnB. 
-A Arquitetura Orientada a Serviços (SOA) surge como uma maneira de solucionar 
-este problema, disponibilizando uma abstração de alto nível entre as aplicações e a camada de negócio ou serviço.
+A Arquitetura Orientada a ServiÃ§os (SOA) surge como uma maneira de solucionar 
+este problema, disponibilizando uma abstraÃ§Ã£o de alto nÃ­vel entre as aplicaÃ§Ãµes e a camada de serviÃ§o.
 Este artigo aborda este tema e descreve alguns resultados obtidos com o uso 
-da plataforma ERLANGMS desenvolvido pelo CPD/UnB sob 
-uma abordagem orientada a serviços que compreende um processo 
-de moderniza\c c\~{a}o e um barramento aderente ao estilo 
+da plataforma ERLANGMS desenvolvido sob 
+uma abordagem orientada a serviÃ§os que compreende um processo 
+de moderniza\c c\~{a}o e um barramento de serviÃ§os aderente ao estilo 
 arquitetural \textit{Representational State Transfer} (REST). 
-Mais especificamente, são discutidos os principais resultados alcançados, 
-as quais destacam-se um barramento de serviços 
-orientado a contrato de serviços; 
-um kit de desenvolvimento (SDK) para criação de serviços; 
-um processo denominado SMSOC para guiar as 
-atividades de migração de sistemas legados; 
-e alguns serviços de apoio 
-como um proxy LDAP para unificar o login de usuários e um serviço de autenticação/autorização OAuth2
-para os serviços em REST.
+Mais especificamente, sÃ£o discutidos os principais resultados alcanÃ§ados, 
+as quais destacam-se a definiÃ§Ã£o de um processo de modernizaÃ§Ã£o denominado SMSOC 
+para guiar as atividades de 
+migraÃ§Ã£o de sistemas legados 
+e alguns serviÃ§os de apoio 
+como um proxy LDAP para unificar o login de usuÃ¡rios e 
+um serviÃ§o de autenticaÃ§Ã£o/autorizaÃ§Ã£o OAuth2
+para controlar o acesso aos serviÃ§os REST.
 \end{resumo}
 
 
-\section{Introdução}
+\section{IntroduÃ§Ã£o}
 
-Os sistemas legados correspondem às aplicações que sustentam o funcionamento 
-negocial de uma Instituição e consolidam a maior parte das informações corporativas~\cite{S4_bennett1995legacy}. 
-Na Universidade de Brasília (UnB), há uma gama considerável de sistemas legados desenvolvido 
-ao longo dos últimos 30 anos pelo CPD/UnB que consistem em um arcabouço 
-de regras de negócios que são de vital importância para o 
-pleno funcionamento da Instituição. Entretanto, com as 
-sucessivas revisões nas regras de negócios para mantê-los alinhados
-com as necessidades e a obsolescência tecnológica desses sistemas, 
-tornaram-se rígidos e inflexíveis, a ponto de serem de difícil manutenção e evolução. 
+Os sistemas legados correspondem Ã s aplicaÃ§Ãµes que sustentam o funcionamento 
+negocial de uma InstituiÃ§Ã£o e consolidam a maior parte das informaÃ§Ãµes corporativas~\cite{S4_bennett1995legacy}. 
+Na Universidade de BrasÃ­lia (UnB), hÃ¡ uma gama considerÃ¡vel de sistemas legados desenvolvido 
+ao longo dos Ãºltimos 30 anos pelo CPD/UnB que consistem em um arcabouÃ§o 
+de regras de negÃ³cios que sÃ£o de vital importÃ¢ncia para o 
+pleno funcionamento da InstituiÃ§Ã£o. Entretanto, com as 
+sucessivas revisÃµes nas regras de negÃ³cios para mantÃª-los alinhados
+com as necessidades e a obsolescÃªncia tecnolÃ³gica desses sistemas, 
+tornaram-se rÃ­gidos e inflexÃ­veis, a ponto de serem de difÃ­cil manutenÃ§Ã£o e evoluÃ§Ã£o. 
 
 De forma geral, os sistemas da UnB dividem-se em
-três áreas de negócio: área acadêmica, administrativa e de pessoal.
-A maioria desses sistemas foram construídos em diferentes linguagens de programação,
-arquiteturas e plataformas que não conversam entre
-si, a não ser, por meio do banco de dados. Durante muitos anos,
-a linguagem de programação VB foi a predominante. Os dois sistemas mais
-importantes escritos em VB são o \emph{Sistema Acadêmico (SIGRA)} e
+trÃªs Ã¡reas de negÃ³cio: Ã¡rea acadÃªmica, administrativa e de pessoal.
+A maioria desses sistemas foram construÃ­dos em diferentes linguagens de programaÃ§Ã£o,
+arquiteturas e plataformas que nÃ£o conversam entre
+si, a nÃ£o ser, por meio do banco de dados. Durante muitos anos,
+a linguagem de programaÃ§Ã£o VB foi a predominante. Os dois sistemas mais
+importantes escritos em VB sÃ£o o \emph{Sistema AcadÃªmico (SIGRA)} e
 o \emph{Sistema de Pessoal (SIPES)}, sendo os demais escritos
 em VB.Net, C\#, PHP, ASP e Java (a plataforma atual). 
 
-Neste cenário, as tradicionais práticas de manutenção deixam 
-de atender \`{a}s organizações, que buscam formas de reduzir 
-os custos com a manutenção, maximizar a integração entre os sistemas,
-torná-los mais flexíveis às mudanças de forma para prolongar sua vida útil e facilitar a evolução
+Neste cenÃ¡rio, as tradicionais prÃ¡ticas de manutenÃ§Ã£o deixam 
+de atender \`{a}s organizaÃ§Ãµes, que buscam formas de reduzir 
+os custos com a manutenÃ§Ã£o, maximizar a integraÃ§Ã£o entre os sistemas,
+tornÃ¡-los mais flexÃ­veis Ã s mudanÃ§as de forma para prolongar sua vida Ãºtil e facilitar a evoluÃ§Ã£o
 desses sistemas~\cite{S3_Bisbal:1999}. 
 
 
 Este artigo apresenta a plataforma ERLANGMS desenvolvida 
-para apoiar a modernização de sistemas legados na UnB. Mais
+para apoiar a modernizaÃ§Ã£o de sistemas legados na UnB. Mais
 especificamente, o artigo discute as
-experiências obtidas na implantação de um barramento de serviços no CPD/UnB e
-a implementação de alguns serviços, as quais,
+experiÃªncias obtidas na implantaÃ§Ã£o de um barramento de serviÃ§os no CPD/UnB e
+a implementaÃ§Ã£o de alguns serviÃ§os, as quais,
 destacam-se:
 
 \begin{itemize}
 
-\item Desenvolvimento de serviços utilizando o processo SMSOC
+\item Desenvolvimento de serviÃ§os utilizando o processo SMSOC
 
-\item Autenticação de usuários através um serviço proxy LDAP
+\item AutenticaÃ§Ã£o de usuÃ¡rios atravÃ©s um serviÃ§o proxy LDAP
 
-\item Autenticação e autorização de serviços REST com um serviço OAuth2
+\item AutenticaÃ§Ã£o e autorizaÃ§Ã£o de serviÃ§os REST com um serviÃ§o OAuth2
 
 \end{itemize} 
 
 
-\section{Método}
+\section{MÃ©todo}
 
 
-Para conduzir a modernização dos sistemas legados na UnB,
+Para conduzir a modernizaÃ§Ã£o dos sistemas legados na UnB,
 optou-se por experimentar com a arquitetura orientada a servi\c cos, particularmente 
 seguindo o \emph{estilo arquitetural REST}, adotado 
-em muitas Instituições por causa
-da facilidade para invocar serviços 
+em muitas InstituiÃ§Ãµes por causa
+da facilidade para invocar serviÃ§os 
 web a apartir de qualquer sistema~\cite{fielding2000architectural}. 
 
 Assim, foi criada a \emph{plataforma ERLANGMS}, 
-que compreende: (a) um barramento de serviços 
-desenvolvido em \emph{Erlang/OTP} para publicar os serviços;
-(b) um processo de modernização
+que compreende: (a) um barramento de serviÃ§os 
+desenvolvido em \emph{Erlang/OTP} para publicar os serviÃ§os;
+(b) um processo de modernizaÃ§Ã£o
 denominado \emph{Software Modernization through Service Oriented Computing (SMSOC)} 
-para guiar os trabalhos de modernização e disponibilizar uma arquitetura de 
-software padronizada para criação dos serviços e;
-(c) um kit de desenvolvimento (SDK) para desenvolver os serviços na linguagem Java
-\footnote{Está em desenvolvimento o SDK .Net para implementação de serviços nas linguagens C\# eVB.Net.}.
+para guiar os trabalhos de modernizaÃ§Ã£o e disponibilizar uma arquitetura de 
+software padronizada para criaÃ§Ã£o dos serviÃ§os e;
+(c) um kit de desenvolvimento (SDK) para desenvolver os serviÃ§os na linguagem Java
+\footnote{EstÃ¡ em desenvolvimento o SDK .Net para implementaÃ§Ã£o de serviÃ§os nas linguagens C\# eVB.Net.}.
 
 Embora \emph{SOA} seja um tema
-de crescente interesse por parte dos pesquisadores e da indústria, identificou-se 
-a necessidade prévia de condução de um mapeamento sistemático para 
-caracterizar a modernização de sistemas legados no 
-contexto da manutenção de software~\cite{desystematic2016}. 
-Desse modo, muitas decisões de design da plataforma
-foram definidas a partir deste estudo prévio onde verificou-se
-que a maior parte das contribuições na literatura
-estão relacionados aos aspectos gerenciais da modernização de software (55,88\% das
-publicações) e há poucos relatos de contribuições que descrevem (ou validem)
-técnicas ou ferramentas de modernização de software, como ERLANGMS.
+de crescente interesse por parte dos pesquisadores e da indÃºstria, identificou-se 
+a necessidade prÃ©via de conduÃ§Ã£o de um mapeamento sistemÃ¡tico para 
+caracterizar a modernizaÃ§Ã£o de sistemas legados no 
+contexto da manutenÃ§Ã£o de software~\cite{desystematic2016}. 
+Desse modo, muitas decisÃµes de design da plataforma
+foram definidas a partir deste estudo prÃ©vio onde verificou-se
+que a maior parte das contribuiÃ§Ãµes na literatura
+estÃ£o relacionados aos aspectos gerenciais da modernizaÃ§Ã£o de software (55,88\% das
+publicaÃ§Ãµes) e hÃ¡ poucos relatos de contribuiÃ§Ãµes que descrevem (ou validem)
+tÃ©cnicas ou ferramentas de modernizaÃ§Ã£o de software, como ERLANGMS.
 
 
 \section{Resultados}
 
-Nesta seção são descritos os resultados deste trabalho, A Subseção~\ref{plataforma}
-apresenta uma visão geral da plataforma ERLANGMS, a Subseção~\ref{smsoc}
-discute as experiências como o uso do processo SMSOC. A Subseção~\ref{ldap}
-descreve a solução encontrada pelo CPD/UnB para unificar
-o login de usuários com o uso de um proxy LDAP e por fim, 
-a Subseção~\ref{oauth2}
-descreve o esquema de autenticação e autorização proposto 
-para os serviços REST.
+Nesta seÃ§Ã£o sÃ£o descritos os resultados deste trabalho, A SubseÃ§Ã£o~\ref{plataforma}
+apresenta uma visÃ£o geral da plataforma ERLANGMS, a SubseÃ§Ã£o~\ref{smsoc}
+discute as experiÃªncias como o uso do processo SMSOC. A SubseÃ§Ã£o~\ref{ldap}
+descreve a soluÃ§Ã£o encontrada pelo CPD/UnB para unificar
+o login de usuÃ¡rios com o uso de um proxy LDAP e por fim, 
+a SubseÃ§Ã£o~\ref{oauth2}
+descreve o esquema de autenticaÃ§Ã£o e autorizaÃ§Ã£o proposto 
+para os serviÃ§os REST.
 
 
 \subsection{Plataforma ERLANGMS}\label{plataforma}
 
-A plataforma ERLANGMS é constituído 
-por um barramento de serviços (\textit{Enterprise Service Bus}-- ESB) 
-multiplataforma orientado a contratos de serviços
+A plataforma ERLANGMS Ã© constituÃ­do 
+por um barramento de serviÃ§os (\textit{Enterprise Service Bus}-- ESB) 
+multiplataforma orientado a contratos de serviÃ§os
 idealizado para servir de elo entre os 
-sistemas da Universidade e a camada de serviço (tipicamente 
+sistemas da Universidade e a camada de serviÃ§o (tipicamente 
 implementada usando a linguagem Java). 
 De acordo com \cite{ModelDriApproRest:2014}, 
-um barramento permite unificar o acesso aos serviços 
-através de uma camada intermediadora entre componentes de software (denominados serviços) e 
-as aplicações que consomem estes serviços. 
+um barramento permite unificar o acesso aos serviÃ§os 
+atravÃ©s de uma camada intermediadora entre componentes de software (denominados serviÃ§os) e 
+as aplicaÃ§Ãµes que consomem estes serviÃ§os. 
 A implementa\c c\~{a}o 
 de um novo barramento (em vez da ado\c c\~{a}o de um barramento existente), 
 possibilitou uma melhor compreens\~{a}o do estilo arquitetural REST e o dom\'{i}nio de alguns 
@@ -172,27 +171,27 @@ elementos chave propostos no ERLANGMS, como a estrutura de eventos e os recursos
 a falha. 
 
 A arquitetura segue o conceito de \textit{Service Oriented Computing} (SOC), 
-um paradigma que promove a composição de serviços \emph{em uma rede de serviços} 
-fracamente acoplados, com o objetivo de criar processos de negócio dinâmicos 
-e flexíveis através da interconexão de sistemas computacionais~\cite{ModelDriApproRest:2014}. 
-Dessa forma, o barramento suporta a mediação, roteamento, 
-transformação de dados e a orquestração dos serviços. Para isso, adotou-se o 
+um paradigma que promove a composiÃ§Ã£o de serviÃ§os \emph{em uma rede de serviÃ§os} 
+fracamente acoplados, com o objetivo de criar processos de negÃ³cio dinÃ¢micos 
+e flexÃ­veis atravÃ©s da interconexÃ£o de sistemas computacionais~\cite{ModelDriApproRest:2014}. 
+Dessa forma, o barramento suporta a mediaÃ§Ã£o, roteamento, 
+transformaÃ§Ã£o de dados e a orquestraÃ§Ã£o dos serviÃ§os. Para isso, adotou-se o 
 estilo arquitetural REST e o formato JSON para o envio e 
-recebimento das mensagens do cliente. Essa restrição de design teve o 
-objetivo de facilitar a implementação do barramento e mantê-lo simples. 
+recebimento das mensagens do cliente. Essa restriÃ§Ã£o de design teve o 
+objetivo de facilitar a implementaÃ§Ã£o do barramento e mantÃª-lo simples. 
 
-O esquema de comunicação da arquitetura ocorre por meio de 
+O esquema de comunicaÃ§Ã£o da arquitetura ocorre por meio de 
 duas vias distintas, como ilustra a Figura~\ref{fig:roteamento_mensagens}: Na primeira via, 
-existe a comunicação do cliente para 
-consumir algum serviço no barramento. Essa comunicação é via uma 
-interface REST, razão pela qual o cliente (que pode ser qualquer sistema, 
-independente da sua linguagem de programação ou plataforma) 
-precisa suportar chamadas de serviços em REST. Na segunda via, tem a comunicação 
-do barramento com o serviço, que está implementado em 
-alguma linguagem de programação (Erlang, Java, etc.). Essa comunicação dá-se via
-sistema de mensageria disponível em Erlang que possibilita uma comunicação assíncrona 
-com várias linguagens de programação de forma muito rápida por trafegar os dados 
-no formato binário e com baixa latência na rede\cite{Armstrong:2013:PES:2566708}.
+existe a comunicaÃ§Ã£o do cliente para 
+consumir algum serviÃ§o no barramento. Essa comunicaÃ§Ã£o Ã© via uma 
+interface REST, razÃ£o pela qual o cliente (que pode ser qualquer sistema, 
+independente da sua linguagem de programaÃ§Ã£o ou plataforma) 
+precisa suportar chamadas de serviÃ§os em REST. Na segunda via, tem a comunicaÃ§Ã£o 
+do barramento com o serviÃ§o, que estÃ¡ implementado em 
+alguma linguagem de programaÃ§Ã£o (Erlang, Java, etc.). Essa comunicaÃ§Ã£o dÃ¡-se via
+sistema de mensageria disponÃ­vel em Erlang que possibilita uma comunicaÃ§Ã£o assÃ­ncrona 
+com vÃ¡rias linguagens de programaÃ§Ã£o de forma muito rÃ¡pida por trafegar os dados 
+no formato binÃ¡rio e com baixa latÃªncia na rede\cite{Armstrong:2013:PES:2566708}.
 
 \begin{figure}[htb]
 \centering
@@ -206,119 +205,119 @@ no formato binário e com baixa latência na rede\cite{Armstrong:2013:PES:2566708}
 
 
 
-\subsection{Desenvolvimento de serviços utilizando o processo SMSOC}\label{smsoc}
+\subsection{Desenvolvimento de serviÃ§os utilizando o processo SMSOC}\label{smsoc}
 
-A introdução de um processo surgiu devido a necessidade
-de documentar um processo de modernização 
-para auxiliar os trabalhos de modernização.
-O processo SMSOC é 
-aderente à arquitetura SOA 
+A introduÃ§Ã£o de um processo surgiu devido a necessidade
+de documentar um processo de modernizaÃ§Ã£o 
+para auxiliar os trabalhos de modernizaÃ§Ã£o.
+O processo SMSOC Ã© 
+aderente Ã  arquitetura SOA 
 e foi validado como  
 resultado de um estudo de caso
-conduzido em uma disciplina de Pós-Graduação
-do Mestrado Acadêmico em Informática da UnB,
-através do qual foi modernizado 
-o Sistema de Estudo SocioEconômico (SAE)
-que faz a gestão do processo de 
-avaliação socioeconômica dos estudantes da UnB.
+conduzido em uma disciplina de PÃ³s-GraduaÃ§Ã£o
+do Mestrado AcadÃªmico em InformÃ¡tica da UnB,
+atravÃ©s do qual foi modernizado 
+o Sistema de Estudo SocioEconÃ´mico (SAE)
+que faz a gestÃ£o do processo de 
+avaliaÃ§Ã£o socioeconÃ´mica dos estudantes da UnB.
 
-Para guiar as atividades de modernização, o processo 
-divide-se em 4 fluxos de trabalho com atividades gerenciais e técnicas. Cada
+Para guiar as atividades de modernizaÃ§Ã£o, o processo 
+divide-se em 4 fluxos de trabalho com atividades gerenciais e tÃ©cnicas. Cada
 atividade apresenta um conjunto de diretrizes para
-a migração dos sistemas legados para um ambiente distribuído. 
-O SMSOC documenta também a arquitetura e o design
-para implementação dos serviços e adota uma 
+a migraÃ§Ã£o dos sistemas legados para um ambiente distribuÃ­do. 
+O SMSOC documenta tambÃ©m a arquitetura e o design
+para implementaÃ§Ã£o dos serviÃ§os e adota uma 
 abordagem de desenvolvimento Domain-Driven
 Design (DDD), introduzido no livro \textit{Domain-Driven Design: Tackling Complexity in the
-Heart of Software}, para o desenvolvimento de sistemas complexos centrado no domínio
-do negócio e no trabalho cooperativo entre especialistas do negócio e desenvolvedores~\cite{evans2004domain}.
+Heart of Software}, para o desenvolvimento de sistemas complexos centrado no domÃ­nio
+do negÃ³cio e no trabalho cooperativo entre especialistas do negÃ³cio e desenvolvedores~\cite{evans2004domain}.
 
-Há vários benefícios observados com o SMSOC,
+HÃ¡ vÃ¡rios benefÃ­cios observados com o SMSOC,
 por exemplo, por ser um processo enxuto para as 
 necessidades da UnB, possibilita
-a sua execução até mesmo em projetos ou equipes muito pequenas. Além disso
-o processo apresenta diretrizes e boas práticas recomendadas além de conter
+a sua execuÃ§Ã£o atÃ© mesmo em projetos ou equipes muito pequenas. AlÃ©m disso
+o processo apresenta diretrizes e boas prÃ¡ticas recomendadas alÃ©m de conter
 um design padronizado 
-da arquitetura dos serviços, o que facilita o aprendizado por novos membros na equipe
+da arquitetura dos serviÃ§os, o que facilita o aprendizado por novos membros na equipe
 de desenvolvimento e serve como 
-uma excelente documentação. Em Dezembro de 2016, após três semanas de 
-treinamento, a equipe de desenvolvedores da área de sistemas administrativos 
-iniciou o desenvolvimento de vários serviços solicitados pela UnB. 
-Em contraposição aos benefícios,
-identificou-se certa resistência por desenvolvedores com 
-mais experiência na arquitetura antiga, em virtude dos sistemas
+uma excelente documentaÃ§Ã£o. Em Dezembro de 2016, apÃ³s trÃªs semanas de 
+treinamento, a equipe de desenvolvedores da Ã¡rea de sistemas administrativos 
+iniciou o desenvolvimento de vÃ¡rios serviÃ§os solicitados pela UnB. 
+Em contraposiÃ§Ã£o aos benefÃ­cios,
+identificou-se certa resistÃªncia por desenvolvedores com 
+mais experiÃªncia na arquitetura antiga, em virtude dos sistemas
 legados trabalharem com a abordagem \textit{TransactionScript} enquanto que 
-ERLANGMS adota a abordagem DDD. Uma comparação
+ERLANGMS adota a abordagem DDD. Uma comparaÃ§Ã£o
 destas duas abordagens pode ser encontrada em~\cite{agilar2016}.
 
 
 
 
-\subsection{Autenticação de usuários através um serviço proxy LDAP}\label{ldap}
+\subsection{AutenticaÃ§Ã£o de usuÃ¡rios atravÃ©s um serviÃ§o proxy LDAP}\label{ldap}
 
-A UnB tem buscado desde 2013 uma forma de unificar o acesso dos usuários aos
-sistemas de informação e a rede corporativa, uma vez que existem muitos
-silos de dados de usuários que dificultam a centralização dessas informações. 
+A UnB tem buscado desde 2013 uma forma de unificar o acesso dos usuÃ¡rios aos
+sistemas de informaÃ§Ã£o e a rede corporativa, uma vez que existem muitos
+silos de dados de usuÃ¡rios que dificultam a centralizaÃ§Ã£o dessas informaÃ§Ãµes. 
 
-De modo a suprir esta demanda e subsidiar a concretização do acesso 
-unificado bem como o compartilhamento de informações de usuários
-com as aplicações (até mesmo com sistemas não desenvolvidos pelo CPD/UnB), 
-foi implementado um serviço proxy LDAP no barramento de serviços.
-O LDAP ou Lightweight Directory Access Protocol é um 
-protocolo padrão comumente utilizado pelas aplicações para autenticar os usuários,
-sendo um dos protocolos de autenticação mais utilizados no ambiente da UnB.
+De modo a suprir esta demanda e subsidiar a concretizaÃ§Ã£o do acesso 
+unificado bem como o compartilhamento de informaÃ§Ãµes de usuÃ¡rios
+com as aplicaÃ§Ãµes (atÃ© mesmo com sistemas nÃ£o desenvolvidos pelo CPD/UnB), 
+foi implementado um serviÃ§o proxy LDAP no barramento de serviÃ§os.
+O LDAP ou Lightweight Directory Access Protocol Ã© um 
+protocolo padrÃ£o comumente utilizado pelas aplicaÃ§Ãµes para autenticar os usuÃ¡rios,
+sendo um dos protocolos de autenticaÃ§Ã£o mais utilizados no ambiente da UnB.
 
-Desde que este serviço foi colocado em produção para 
-autenticar alguns sistemas na UnB (como é o caso do Redmine e muito em breve o SEI 3.0),
-o proxy LDAP tem sido visto pela Direção do CPD/UnB como uma ferramenta
-com alto potencial para integrar não somente os sistemas da Universidade
-mas também a rede corporativa (Webmail e UnB Wireless).
+Desde que este serviÃ§o foi colocado em produÃ§Ã£o para 
+autenticar alguns sistemas na UnB (como Ã© o caso do Redmine e muito em breve o SEI 3.0),
+o proxy LDAP tem sido visto pela DireÃ§Ã£o do CPD/UnB como uma ferramenta
+com alto potencial para integrar nÃ£o somente os sistemas da Universidade
+mas tambÃ©m a rede corporativa (Webmail e UnB Wireless).
 
-Note que a maior vantagem de se utilizar um serviço que entende LDAP
-em vez de uma instância OpenLDAP convencional por exemplo, 
-é permitir que base de usuários possa
-estar em um banco de dados relacional onde tipicamente os sistemas da própria Instituição
-já tem acesso direto. Os demais sistemas (internos ou não), sites institucionais 
-e gerenciadores de conteúdo (Joomla, Wordpress, etc.)
-poderiam consultar e autenticar os usuários através do serviço proxy LDAP 
+Note que a maior vantagem de se utilizar um serviÃ§o que entende LDAP
+em vez de uma instÃ¢ncia OpenLDAP convencional por exemplo, 
+Ã© permitir que base de usuÃ¡rios possa
+estar em um banco de dados relacional onde tipicamente os sistemas da prÃ³pria InstituiÃ§Ã£o
+jÃ¡ tem acesso direto. Os demais sistemas (internos ou nÃ£o), sites institucionais 
+e gerenciadores de conteÃºdo (Joomla, Wordpress, etc.)
+poderiam consultar e autenticar os usuÃ¡rios atravÃ©s do serviÃ§o proxy LDAP 
 exatamente da mesma forma que faria se fosse um servidor OpenLDAP.
 
 
 
-\subsection{Autenticação e autorização de serviços REST com um serviço OAuth2}\label{oauth2}
+\subsection{AutenticaÃ§Ã£o e autorizaÃ§Ã£o de serviÃ§os REST com um serviÃ§o OAuth2}\label{oauth2}
 
 Com o desenvolvimento de sistemas com uma abordagem SOA, torna-se
-importante controlar o acesso e a autorização das chamadas de serviços REST.
-Nesse sentido, foi desenvolvimento suporte nativo para autenticação OAuth2
-no barramento de serviços. 
+importante controlar o acesso e a autorizaÃ§Ã£o das chamadas de serviÃ§os REST.
+Nesse sentido, foi desenvolvimento suporte nativo para autenticaÃ§Ã£o OAuth2
+no barramento de serviÃ§os. 
 
 
-O OAuth (\textit{Open Authorization Protocol}) é um protocolo de autorização 
-que permite as aplicações possam obter 
-acesso limitado a um serviço através de trocas de 
+O OAuth (\textit{Open Authorization Protocol}) Ã© um protocolo de autorizaÃ§Ã£o 
+que permite as aplicaÃ§Ãµes possam obter 
+acesso limitado a um serviÃ§o atravÃ©s de trocas de 
 mensagens e \textit{tokens} de acesso. 
-Este protocolo ainda está em desenvolvimento sendo que 
-um estudo prévio foi conduzido para escolher o protocolo a ser adotado
-na solução ERLANGMS~\cite{7521451}.
+Este protocolo ainda estÃ¡ em desenvolvimento sendo que 
+um estudo prÃ©vio foi conduzido para escolher o protocolo a ser adotado
+na soluÃ§Ã£o ERLANGMS~\cite{7521451}.
 
 
-Resumidamente, o suporte da autenticação OAuth2 foi dividido em duas partes no barramento de serviços.
-Na primeira parte realizou-se a implementação
-da geração do token que não é uma operação trivial.
+Resumidamente, o suporte da autenticaÃ§Ã£o OAuth2 foi dividido em duas partes no barramento de serviÃ§os.
+Na primeira parte realizou-se a implementaÃ§Ã£o
+da geraÃ§Ã£o do token que nÃ£o Ã© uma operaÃ§Ã£o trivial.
 A segunda parte, que representa 
-o desafio atual, é fazer a integração com o Sistema de Controle de Acesso (SCA)
-de maneira agnóstica, uma vez que o barramento pode ser utilizado 
-por qualquer organização, sendo portanto, preferível não acoplar com 
+o desafio atual, Ã© fazer a integraÃ§Ã£o com o Sistema de Controle de Acesso (SCA)
+de maneira agnÃ³stica, uma vez que o barramento pode ser utilizado 
+por qualquer organizaÃ§Ã£o, sendo portanto, preferÃ­vel nÃ£o acoplar com 
 os sistemas internos da UnB.
 
 
-\end{description}
 
-\section{Conclusões}
+
+\section{ConclusÃµes}
 
 Uma das vantagens que se observou na abordagem proposta foi permitir que tanto 
-os sistemas novos quanto os sistemas legados possam coexistir, invocando os mesmos serviços e
-maximizando o compartilhamento das regras de negócio.
+os sistemas novos quanto os sistemas legados possam coexistir, invocando os mesmos serviÃ§os e
+maximizando o compartilhamento das regras de negÃ³cio.
 
 
 \bibliographystyle{sbc}
