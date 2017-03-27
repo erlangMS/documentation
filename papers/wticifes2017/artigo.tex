@@ -17,13 +17,13 @@ Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviç
 	Everton Agilar\inst{1},
 	Alysson Ribeiro\inst{1},
 	Renato Ribeiro\inst{1},
-	Eduardo Teixeira1\inst{1},
+	Eduardo Teixeira\inst{1},
 }
 
 
 \address{Universidade de Brasília -- Campus Universitário Darcy Ribeiro\\
    Caixa Postal -- 70910-90  -- Brasília -- DF -- Brasil
-  \email{\{evertonagilar,rcarauta,alyssonribeiro,eduhenr\}@unb.br}
+  \email{\{evertonagilar,alyssonribeiro,rcarauta,eduhenr\}@unb.br}
 }
 
 
@@ -56,7 +56,7 @@ para guiar as atividades de
 migração de sistemas legados 
 e alguns serviços de apoio 
 como um proxy LDAP para unificar o login de usuários e 
-um serviço de autenticação/autorização OAuth2
+um serviço de autorização OAuth 2
 para controlar o acesso aos serviços REST.
 \end{resumo}
 
@@ -288,25 +288,22 @@ da mesma forma que faria se fosse um servidor OpenLDAP.
 
 
 
-\subsection{Autenticação e autorização de serviços REST com um serviço OAuth2}\label{oauth2}
+\subsection{Autenticação e Autorização de serviços REST com um serviço OAuth2}\label{oauth2}
 
 Com a modernização de sistemas através de uma abordagem SOA, torna-se
 importante controlar o acesso e a autorização das chamadas de serviços.
-Nesse sentido, está em desenvolvimento suporte nativo para autenticação OAuth2
-no barramento de serviços. 
-
-
-O OAuth (\textit{Open Authorization Protocol}) é um protocolo de autorização 
-que permite que os usuários tenham 
+Nesse sentido, está em desenvolvimento suporte nativo para autenticação utilizando o OAuth 2. 
+O OAuth 2 é um protocolo de autorização 
+que permite que clientes tenham 
 acesso limitado a um serviço através de trocas de 
 mensagens e \textit{tokens} de acesso. Um estudo prévio foi conduzido para
 escolher o protocolo a ser adotado
 na solução ERLANGMS~\cite{7521451}.
 
 
-Resumidamente, o suporte da autenticação OAuth2 foi dividido em duas partes no barramento de serviços.
+Resumidamente, o suporte da autenticação utilizando o OAuth 2 foi dividido em duas partes no barramento de serviços.
 Na primeira parte realizou-se a implementação
-da geração do token que não é uma operação trivial.
+da geração do \textit{token} de acordo com \cite{hardt2012oauth}.
 A segunda parte, que representa 
 o desafio atual, é fazer a integração com o Sistema de Controle de Acesso (SCA)
 de maneira agnóstica, uma vez que o barramento pode ser utilizado 
