@@ -16,7 +16,7 @@ Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviç
 \author{
 	Everton Agilar\inst{1},
 	Alysson Ribeiro\inst{1},
-	Renato Ribeiro\inst{1},
+	Renato Carauta\inst{1},
 	Eduardo Teixeira\inst{1},
 }
 
@@ -44,7 +44,7 @@ Modernização de Sistemas Legados através de uma Abordagem Orientada a Serviç
 Nos últimos anos, a modernização dos sistemas legados da Universidade de Brasília (UnB) tem sido 
 prioridade para o CPD/UnB. 
 A Arquitetura Orientada a Serviços (SOA) surge como uma maneira de solucionar 
-este problema, disponibilizando uma abstração de alto nível entre as aplicações e a camada de serviço.
+esse problema, disponibilizando uma abstração de alto nível entre as aplicações e a camada de serviço.
 Este artigo aborda esse tema e descreve alguns resultados obtidos com o uso 
 da plataforma ERLANGMS desenvolvido sob 
 uma abordagem orientada a serviços que compreende um processo 
@@ -240,7 +240,7 @@ de desenvolvimento e servir como
 documentação da arquitetura. Outro benefício observado é quanto a facilidade 
 de uso, principalmente da arquitetura definida no processo para o desenvolvimento dos serviços. 
 Por exemplo, em Dezembro de 2016 houve o treinamento
-da equipe de desenvolvedores do setor administrativo. Após este treinamento,
+da equipe de desenvolvedores do setor administrativo. Após esse treinamento,
 a equipe já implementou vários serviços solicitados pela UnB. 
 Por outro lado, identificou-se certa resistência por desenvolvedores com 
 mais experiência na arquitetura antiga utilizada pelo CPD/UnB 
@@ -266,7 +266,7 @@ De modo a suprir esta demanda e subsidiar a concretização do acesso
 unificado bem como o compartilhamento de informações de usuários
 com as aplicações (até mesmo com sistemas não desenvolvidos pelo CPD/UnB), 
 foi implementado um serviço proxy LDAP no barramento de serviços.
-O LDAP ou Lightweight Directory Access Protocol é um 
+O LDAP ou \textit{Lightweight Directory Access Protocol} é um 
 protocolo padrão comumente utilizado pelas aplicações para autenticar os usuários,
 sendo um dos protocolos de autenticação mais utilizados no ambiente da UnB.
 
@@ -294,8 +294,7 @@ Com a modernização de sistemas utilizando SOA, torna-se
 importante controlar o acesso e a autorização das chamadas de serviços.
 Nesse sentido, está em desenvolvimento suporte nativo para autenticação com o OAuth 2 no barramento de serviços. 
 O OAuth é um protocolo de autorização 
-que permite que clientes tenham 
-acesso limitado a um serviço através de trocas de 
+que permite aos clientes acesso limitado a um serviço através de trocas de 
 mensagens e \textit{tokens} de acesso. Um estudo prévio foi conduzido para
 escolher o protocolo a ser adotado
 na solução ERLANGMS~\cite{7521451}.
