@@ -51,13 +51,29 @@
   \frametitle{Plano}
 
     \begin{itemize}
-  	  \item<1-> Contexto
-   	  \item<1-> Objetivos
-    	  \item<1-> Justificativa
-  	  \item<1-> Research Questions
-  	  \item<1-> Search Strategy
-  	  \item<1-> Results
-   	  \item<1-> Conclusions/Future Works
+
+	    \item<1-> Introdução
+		    \begin{itemize}
+		  	  \item<1-> Contexto 
+		    	  \item<1-> Objetivos e Justificativa
+		     \end{itemize}
+
+		 \item<1-> Plataforma agnóstica de serviços
+		    \begin{itemize}
+				\item<1-> Sobre o projeto ERLANGMS
+				\item<1-> Modelo baseado em atores e a linguagem ERLANG/OTP
+				\item<1-> Benefícios que podem ser obtidos com o barramento
+		     \end{itemize}
+
+  	  	 \item<1-> Principais Resultados do Trabalho
+		    \begin{itemize}
+				\item<1-> Desenvolvimento de serviços utilizando com o SDK
+				\item<1-> Autenticação de usuários com o proxy LDAP
+				\item<1-> Autenticação e Autorização de serviços REST com OAuth2
+  		     \end{itemize}
+  	  
+	   	  \item<1-> Conclusões/Trabalhos Futuros
+	   	  
     \end{itemize}
 
 \end{frame}
@@ -73,7 +89,7 @@
 \section{Introdução}
 
 
-\subsection{Contexto}
+\subsection{Introdução}
 
 
 \begin{frame}
@@ -106,8 +122,6 @@
 
 
 
-\subsection{Contexto}
-
 
 \begin{frame}
   \frametitle{Contexto}
@@ -133,21 +147,6 @@ integração de seus fluxos.” ... [cpd.unb.br/transparencia]
 
 
 
-%%##############################################################
-
-
-
-
-
-
-%%##############################################################
-
-
-
-
-\subsection{Objetivos}
-
-
 \begin{frame}
   \frametitle{Objetivos}
   
@@ -156,10 +155,9 @@ integração de seus fluxos.” ... [cpd.unb.br/transparencia]
 forma orientada a serviços (SOA) composto por:
 
     \begin{itemize}
-       \item<1->barramento de serviços próprio desenvolvido em Erlang/OTP;
-       \item<1->processo de modernização para guiar os trabalhos de modernização 
-       e disponibilizar uma arquitetura de software padronizada;
-       \item<1->kit de desenvolvimento (SDK) para implementar serviços independente da
+       \item<1->um barramento de serviços desenvolvido em Erlang/OTP;
+       \item<1->um processo de modernização para guiar os trabalhos de modernização de software; 
+       \item<1->um kit de desenvolvimento (SDK) para implementar serviços independente da
        linguagem de programação.
     \end{itemize}
 				
@@ -169,11 +167,6 @@ forma orientada a serviços (SOA) composto por:
 
 
 
-%%##############################################################
-
-
-
-\subsection{Justificativa}
 
 
 \begin{frame}
@@ -184,39 +177,73 @@ forma orientada a serviços (SOA) composto por:
 modularidade das aplicações;
        \item<1-> Experimentar SOA (Service Oriented Architecture);
        \item<1-> Obter uma arquitetura documentada e padronizada para modernização de software.
-
 				
     \end{itemize}
     
 \end{frame}
 
 
+\subsection{Panorama geral sobre modernização na literatura}
+
+
+\begin{frame}
+  \frametitle{Justificativa \\ \small{Panorama geral sobre modernização na literatura}}
+
+ 	%% Mostra o diagrama de bolhas
+  	
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.4]{img/bubble_diagram.png}
+	\end{figure}
+  
+\end{frame}
+
 
 
 %%##############################################################
 
 
+\section{Plataforma agnóstica de serviços}
 
 
-\section{Results}
+\begin{frame}[c]{ }
+\centering
+  \huge{Plataforma agnóstica de serviços}
+\end{frame}
 
 
-\subsection{Research Questions}
+
+\subsection{Sobre}
 
 
 \begin{frame}
-  \frametitle{Research Questions}
+  \frametitle{Sobre}
 
-  \begin{exampleblock}{Research Questions}
+  \begin{exampleblock}{O que é o ERLANGMS}
+  
+É uma plataforma de software desenvolvida para facilitar a integração de sistemas por meio de um barramento 
+de serviços multiplataforma orientado a contratos de serviços.
+
+  \end{exampleblock}
+
+  
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+  \frametitle{Algumas questões de design e arquitetura}
+
+  \begin{exampleblock}{}
   
 	  \begin{itemize}
-	    \item<1->(QP1) What characterizes the modernization of legacy 
-	    				  systems according to the existing literature?
-    	\item<2->(QP2) What processes, techniques, and tools have been
-				   suggested in the literature to support modernization
-				   activities of legacy systems?
-		\item<3->(QP3) What are the reasons that lead organizations to 
-					  modernize their legacy systems?
+		\item<1->(QP1) Porque o barramento foi desenvolvido com 
+		uma linguagem pouco conhecida (Erlang/OTP) em vez de uma linguagem mais tradicional como C, C++ ou Java?
+	    \item<1->(QP2) Porque o desenvolvimento de um novo barramento em vez de utilizar um existente?
+	    \item<1->(QP3) Porque não implementar os web services usando somente Java e seus frameworks?
 	  \end{itemize}
   
   \end{exampleblock}
@@ -225,81 +252,41 @@ modularidade das aplicações;
 \end{frame}
 
 
-
-%%##############################################################
-
-
-
-\subsection{Search Strategy}
-
-
 \begin{frame}
-  \frametitle{Search Strategy}
+  \frametitle{QP1-- Porque Erlang OTP}
 
-  	\begin{itemize}
-	    \item<1->Analyzed 44 publications in major
-				conferences and journals Engineering area
-				Software (CMRS, ICSE, ICSM, among others);
-	    \item<2->The search strategy consists of a manual search 
-	    			activity for articles complemented 
-	    			by technical "snowball";
-		\item<3->Selected publications between 1995 and 2015.
-	\end{itemize}
-  
-  	%% Mostra o esquema do protocolo de pesquisa
-  	
-	\begin{figure}
-	\centering
-		\includegraphics[scale=0.6]{img/protocolo_pesquisa_ms.pdf}
-		\caption{Scheme of the research protocol.}
-	\end{figure}
+    \begin{itemize}
+       \item<1-> Suporta aplicações distribuídas e tolerantes a falhas a serem executadas em um ambiente de tempo real e ininterrupto;
+       \item<1-> Possui um ambiente de execução que realmente facilita o desenvolvimento de software de rede e de clusters de serviços;
+       
+       \item<1-> Possui um modelo de arquitetura baseado em atores (Actor Model) onde os processos podem 
+       se comunicar apenas por mensagens;
+       
+    \end{itemize}
   
 \end{frame}
 
 
-
-
-
-%%##############################################################
-
-
-
-\subsection{View of the studies identified}
-
-
 \begin{frame}
-  \frametitle{View of the studies identified}
+  \frametitle{QP1-- Quem usa Erlang OTP}
 
- 	%% Mostra o diagrama de bolhas
-  	
-	\begin{figure}
-	\centering
-		\includegraphics[scale=0.5]{img/bubble_diagram.png}
-	\end{figure}
+	  \begin{itemize}
+		\item<1->Facebook, no backend de seu sistema de chat, lidando com 100 milhõs de usuários ativos e
+		Whatapps, nos servidores de mensageria, lidando com 2 milhões de usuários conectados por servidor;
+		\item<1->Yahoo em seu serviço de bookmark, Delicious, que tem mais de 5 milhões de usuários e mais de 150 milhões de bookmarks;
+		\item<1->Amazon SimpleDB, o serviço de dados do Amazon EC2;
+		\item<1->GitHub, no seu sistema de backend, lidando com milhares de transações concorrentes;
+		\item<1->T-Mobile nos seus sistemas de SMS e autenticação;
+		\item<1->Motorola, CouchDB, RabbitMQ, Ejabbed, entre outros.
+						
+	   \end{itemize}
   
 \end{frame}
 
 
-
-
 %%##############################################################
 
 
-
-\subsection{Terms most frequently cited in selected publications}
-
-
-
-\begin{frame}
-  \frametitle{Terms most frequently cited in selected publications}
-
- 	%% Mostra o diagrama de bolhas
-  	
-	\begin{figure}
-		\includegraphics[scale=0.4]{img/word_cloud.png}
-	\end{figure}
-
-\end{frame}
 
 
 
@@ -307,46 +294,12 @@ modularidade das aplicações;
 %%##############################################################
 
 
+\subsection{Perguntas}
 
-\section{Conclusions and Future Work}
-
-
-\subsection{Conclusions and Future Work}
-
-
-\begin{frame}
-  \frametitle{Conclusions and Future Work}
-
-  \begin{itemize}
-    \item<1->We have presented the results of a mapping study (MS) that 
-    			consolidates the main contributions to the field;
-    \item<1->We found that the majority of the publications 
-    			relies on a kind white-box modernization 
-    			approach;
-	\item<1->We also find that the managerial aspects are most 
-			relevant, which reinforces the idea of a good
-			strategy of modernization;
-	\item<1->However, we found just a few studies reporting success 
-			experiences in modernizing legacy systems;
-	\item<1->As future work, we planned a service-oriented approach to 
-			modernizing legacy systems of UnB.
-  \end{itemize}
-  
-\end{frame}
-
-
-
-
-%%##############################################################
-
-
-\subsection{Questions}
-
-%% Principais Desafios do CPD/UnB
 
 \begin{frame}[c]{ }
 \centering
-  \huge{Questions and remarks ?}
+  \huge{Perguntas ?}
 \end{frame}
 
 
