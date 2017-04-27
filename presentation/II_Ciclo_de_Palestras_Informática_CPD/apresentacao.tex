@@ -155,7 +155,7 @@ integração de seus fluxos.” ... [cpd.unb.br/transparencia]
 forma orientada a serviços (SOA) composto por:
 
     \begin{itemize}
-       \item<1->um barramento de serviços desenvolvido em Erlang/OTP;
+       \item<1->um barramento de serviços desenvolvido;
        \item<1->um processo de modernização para guiar os trabalhos de modernização de software; 
        \item<1->um kit de desenvolvimento (SDK) para implementar serviços independente da
        linguagem de programação.
@@ -173,10 +173,10 @@ forma orientada a serviços (SOA) composto por:
   \frametitle{Justificativa}
   
     \begin{itemize}
-       \item<1-> Permitir maior reuso dos fluxos de negócios e maximização da
+       \item<1->Maior reuso dos fluxos de negócios e maximização da
 modularidade das aplicações;
-       \item<1-> Experimentar SOA (Service Oriented Architecture);
-       \item<1-> Obter uma arquitetura documentada e padronizada para modernização de software.
+       \item<1->Permitir a modernização das aplicações com menor dependência tecnológica;
+       \item<1->Experimentar SOA (Service Oriented Architecture).
 				
     \end{itemize}
     
@@ -219,10 +219,10 @@ modularidade das aplicações;
 \begin{frame}
   \frametitle{Sobre}
 
-  \begin{exampleblock}{O que é o ERLANGMS}
+  \begin{exampleblock}{ERLANGMS}
   
 É uma plataforma de software desenvolvida para facilitar a integração de sistemas por meio de um barramento 
-de serviços multiplataforma orientado a contratos de serviços.
+de serviços multiplataforma orientado a contratos de serviços + SDK + Processo Documentado (SMSOC).
 
   \end{exampleblock}
 
@@ -230,12 +230,69 @@ de serviços multiplataforma orientado a contratos de serviços.
 \end{frame}
 
 
+\begin{frame}
+  \frametitle{Sobre}
 
+  \begin{exampleblock}{ERLANGMS: Características do Barramento}
+  
+	  \begin{itemize}
+		\item<1->Arquitetura Modular, multiplataforma e microserviços;
+	    \item<1->Serviços são especificados em catálogos de serviços (Formato JSON);
+	    \item<1->Podem haver vários nodes (ex.: Erlang nodes, JBoss Containers) formando um cluster)
+	    			para evitar um ponto único de falhas;
+    	    \item<1->Design RESTful;
+    	    \item<1->Desenvolvimento de serviços em Erlang, Java e .Net (em progresso);
+   	    \item<1->Modelo de concorrência: Actor Model;
+    	    \item<1->Escalável com baixo uso de recursos e tolerante a falhas (supervisores);
+    	    \item<1->Fácil compilação e instalação.
+	  \end{itemize}
 
+  \end{exampleblock}
+
+  
+\end{frame}
 
 
 \begin{frame}
-  \frametitle{Algumas questões de design e arquitetura}
+  \frametitle{Sobre}
+
+  \begin{exampleblock}{ERLANGMS: Principais recursos/features}
+  
+	  \begin{itemize}
+		\item<1->HTTP/2, HTTP/1.1, HTTPS (Secure TLS Listener);
+	    \item<1->LDAP v3 -- Proxy LDAP;
+	    \item<1->HTTP Basic authentication;
+    	    \item<1->OAuth2 authentication (em progresso);
+		\item<1->SDK para criar serviços em Java;
+		\item<1->Api query padrão -- filter, fields, sort
+	  \end{itemize}
+
+  \end{exampleblock}
+
+  
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Sobre}
+
+  \begin{exampleblock}{ERLANGMS: Principais recursos/features experimentais}
+  
+	  \begin{itemize}
+		\item<1->Implementação de serviços para consulta de arquivos csv;
+ 	    \item<1->Implementação de serviços para consulta de dados SQL-Server;
+	    \item<1->Suporte para Django template (processamento de template no back-end)
+    	    \item<1->JSON Schema Draft 4 para descrever/validar a entrada/saída de dados;
+	  \end{itemize}
+
+  \end{exampleblock}
+
+  
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Algumas questões sobre design e arquitetura}
 
   \begin{exampleblock}{}
   
