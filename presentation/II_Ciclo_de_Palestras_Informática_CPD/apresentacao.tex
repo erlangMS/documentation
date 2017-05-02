@@ -54,25 +54,25 @@
 
 	    \item<1-> Introdução
 		    \begin{itemize}
-		  	  \item<1-> Contexto 
-		    	  \item<1-> Objetivos e Justificativa
+		  	  \item<1->Contexto
+		    	  \item<1->Objetivos e Justificativa
 		     \end{itemize}
 
 		 \item<1-> Plataforma agnóstica de serviços
 		    \begin{itemize}
-				\item<1-> Sobre o projeto ERLANGMS
-				\item<1-> Modelo baseado em atores e a linguagem ERLANG/OTP
-				\item<1-> Benefícios que podem ser obtidos com o barramento
+				\item<1->Características do Barramento
+				\item<1->Principais recursos/features
+				\item<1->Principais recursos/features experimentais
 		     \end{itemize}
 
   	  	 \item<1-> Principais Resultados do Trabalho
 		    \begin{itemize}
-				\item<1-> Desenvolvimento de serviços utilizando com o SDK
-				\item<1-> Autenticação de usuários com o proxy LDAP
-				\item<1-> Autenticação e Autorização de serviços REST com OAuth2
+				\item<1->Desenvolvimento de serviços com o SDK
+				\item<1->Autenticação de usuários com o proxy LDAP
+				\item<1->Autenticação e Autorização de serviços REST com OAuth2
   		     \end{itemize}
   	  
-	   	  \item<1-> Conclusões/Trabalhos Futuros
+	   	  \item<1-> Trabalhos Futuros
 	   	  
     \end{itemize}
 
@@ -121,32 +121,6 @@
 
 
 
-
-
-\begin{frame}
-  \frametitle{Contexto}
-
-  \begin{exampleblock}{Relatório de Gestão do CPD/UnB 2010-2012}
-  
-		“Foi identificada a necessidade de remodelação de todos os sistemas
-da UnB visando uma atualização tecnológica e uma melhor
-integração de seus fluxos.” ... [cpd.unb.br/transparencia]
-
-    \begin{itemize}
-  	  \item<1-> Alto custo de manutenção para manter os sistemas legados;
-   	  \item<1-> Duplicação das regras de negócio entre os sistemas;
-  	  \item<1-> Dificuldades para integrar os sistemas.
-    \end{itemize}
-
-
-  \end{exampleblock}
-
-  
-\end{frame}
-
-
-
-
 \begin{frame}
   \frametitle{Objetivos}
   
@@ -155,7 +129,7 @@ integração de seus fluxos.” ... [cpd.unb.br/transparencia]
 forma orientada a serviços (SOA) composto por:
 
     \begin{itemize}
-       \item<1->um barramento de serviços desenvolvido;
+       \item<1->um barramento de serviços;
        \item<1->um processo de modernização para guiar os trabalhos de modernização de software; 
        \item<1->um kit de desenvolvimento (SDK) para implementar serviços independente da
        linguagem de programação.
@@ -173,11 +147,10 @@ forma orientada a serviços (SOA) composto por:
   \frametitle{Justificativa}
   
     \begin{itemize}
-       \item<1->Maior reuso dos fluxos de negócios e maximização da
-modularidade das aplicações;
-       \item<1->Permitir a modernização das aplicações com menor dependência tecnológica;
+       \item<1->Maximizar o reuso dos fluxos de negócios e a modularidade das aplicações;
+       \item<1->Modernizar os sistemas de maneira sistemática e incremental;
+       \item<1->Menor dependência tecnológica; 
        \item<1->Experimentar SOA (Service Oriented Architecture).
-				
     \end{itemize}
     
 \end{frame}
@@ -217,12 +190,12 @@ modularidade das aplicações;
 
 
 \begin{frame}
-  \frametitle{Sobre}
+  \frametitle{Plataforma agnóstica de serviços}
 
   \begin{exampleblock}{ERLANGMS}
   
 É uma plataforma de software desenvolvida para facilitar a integração de sistemas por meio de um barramento 
-de serviços multiplataforma orientado a contratos de serviços + SDK + Processo Documentado (SMSOC).
+de serviços multiplataforma orientado a contratos de serviços + SDK + Processo de modernização e arquitetura documentado (SMSOC).
 
   \end{exampleblock}
 
@@ -231,19 +204,16 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 
 
 \begin{frame}
-  \frametitle{Sobre}
+  \frametitle{Plataforma agnóstica de serviços}
 
-  \begin{exampleblock}{ERLANGMS: Características do Barramento}
+  \begin{exampleblock}{Características do Barramento}
   
 	  \begin{itemize}
-		\item<1->Arquitetura Modular, multiplataforma e microserviços;
-	    \item<1->Serviços são especificados em catálogos de serviços (Formato JSON);
-	    \item<1->Podem haver vários nodes (ex.: Erlang nodes, JBoss Containers) formando um cluster)
-	    			para evitar um ponto único de falhas;
-    	    \item<1->Design RESTful;
-    	    \item<1->Desenvolvimento de serviços em Erlang, Java e .Net (em progresso);
+		\item<1->Multiplataforma e arquitetura modular;
+	    \item<1->Serviços especificados em catálogos de serviços;
+	    \item<1->Cluster de serviços (Ex.: Erlang nodes, JBoss Containers) para evitar ponto único de falhas;
+    	    \item<1->Suporta serviços RESTful;
    	    \item<1->Modelo de concorrência: Actor Model;
-    	    \item<1->Escalável com baixo uso de recursos e tolerante a falhas (supervisores);
     	    \item<1->Fácil compilação e instalação.
 	  \end{itemize}
 
@@ -254,17 +224,17 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 
 
 \begin{frame}
-  \frametitle{Sobre}
+  \frametitle{Plataforma agnóstica de serviços}
 
-  \begin{exampleblock}{ERLANGMS: Principais recursos/features}
+  \begin{exampleblock}{Principais recursos/features}
   
 	  \begin{itemize}
 		\item<1->HTTP/2, HTTP/1.1, HTTPS (Secure TLS Listener);
 	    \item<1->LDAP v3 -- Proxy LDAP;
 	    \item<1->HTTP Basic authentication;
     	    \item<1->OAuth2 authentication (em progresso);
-		\item<1->SDK para criar serviços em Java;
-		\item<1->Api query padrão -- filter, fields, sort
+		\item<1->SDK para criar serviços em Java e .Net (suspenso);
+		\item<1->Api query -- filter, fields, sort, limit.
 	  \end{itemize}
 
   \end{exampleblock}
@@ -274,15 +244,14 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 
 
 \begin{frame}
-  \frametitle{Sobre}
+  \frametitle{Plataforma agnóstica de serviços}
 
-  \begin{exampleblock}{ERLANGMS: Principais recursos/features experimentais}
+  \begin{exampleblock}{Principais recursos/features experimentais}
   
 	  \begin{itemize}
-		\item<1->Implementação de serviços para consulta de arquivos csv;
- 	    \item<1->Implementação de serviços para consulta de dados SQL-Server;
-	    \item<1->Suporte para Django template (processamento de template no back-end)
-    	    \item<1->JSON Schema Draft 4 para descrever/validar a entrada/saída de dados;
+ 	    \item<1->Suporte para Dados Abertos;
+    	    \item<1->JSON Schema Draft 4 para descrever/validar a entrada/saída no payload das mensagens REST;
+	    \item<1->Django template (processamento de template no back-end)
 	  \end{itemize}
 
   \end{exampleblock}
@@ -291,60 +260,33 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 \end{frame}
 
 
-\begin{frame}
-  \frametitle{Algumas questões sobre design e arquitetura}
-
-  \begin{exampleblock}{}
-  
-	  \begin{itemize}
-		\item<1->(QP1) Porque o barramento foi desenvolvido com 
-		uma linguagem pouco conhecida (Erlang/OTP) em vez de uma linguagem mais tradicional como C, C++ ou Java?
-	    \item<1->(QP2) Porque o desenvolvimento de um novo barramento em vez de utilizar um existente?
-	    \item<1->(QP3) Porque não implementar os web services usando somente Java e seus frameworks?
-	  \end{itemize}
-  
-  \end{exampleblock}
-
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{QP1-- Porque Erlang OTP}
-
-    \begin{itemize}
-       \item<1-> Suporta aplicações distribuídas e tolerantes a falhas a serem executadas em um ambiente de tempo real e ininterrupto;
-       \item<1-> Possui um ambiente de execução que realmente facilita o desenvolvimento de software de rede e de clusters de serviços;
-       
-       \item<1-> Possui um modelo de arquitetura baseado em atores (Actor Model) onde os processos podem 
-       se comunicar apenas por mensagens;
-       
-    \end{itemize}
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{QP1-- Quem usa Erlang OTP}
-
-	  \begin{itemize}
-		\item<1->Facebook, no backend de seu sistema de chat, lidando com 100 milhõs de usuários ativos e
-		Whatapps, nos servidores de mensageria, lidando com 2 milhões de usuários conectados por servidor;
-		\item<1->Yahoo em seu serviço de bookmark, Delicious, que tem mais de 5 milhões de usuários e mais de 150 milhões de bookmarks;
-		\item<1->Amazon SimpleDB, o serviço de dados do Amazon EC2;
-		\item<1->GitHub, no seu sistema de backend, lidando com milhares de transações concorrentes;
-		\item<1->T-Mobile nos seus sistemas de SMS e autenticação;
-		\item<1->Motorola, CouchDB, RabbitMQ, Ejabbed, entre outros.
-						
-	   \end{itemize}
-  
-\end{frame}
 
 
 %%##############################################################
 
 
 
+\section{Principais Resultados do Trabalho}
+
+
+\begin{frame}[c]{ }
+\centering
+  \huge{Principais Resultados do Trabalho}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Desenvolvimento de serviços com o SDK}
+
+ 	%% Mostra o diagrama de bolhas
+  	
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.4]{img/sdk.png}
+	\end{figure}
+  
+\end{frame}
 
 
 
@@ -359,6 +301,88 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
   \huge{Perguntas ?}
 \end{frame}
 
+
+\begin{frame}
+  \frametitle{Perguntas}
+
+  \begin{exampleblock}{}
+  
+	  \begin{itemize}
+		\item<1->(QP1) Porque Erlang/OTP?
+		\item<1->(QP2) Quem usa Erlang/OTP?
+	    \item<1->(QP3) Porque o desenvolvimento de um novo barramento em vez de utilizar um existente?
+	    \item<1->(QP4) Porque não implementar web services usando somente Java e seus frameworks?
+	  \end{itemize}
+  
+  \end{exampleblock}
+
+  
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{QP1-- Porque Erlang/OTP?}
+
+    \begin{itemize}
+       \item<1-> Suporta aplicações distribuídas e tolerantes a falhas a serem executadas em um ambiente de tempo real e ininterrupto;
+       \item<1-> Possui um ambiente de execução que realmente facilita o desenvolvimento de software de rede e de clusters de serviços;
+       
+       \item<1-> Possui um modelo de arquitetura baseado em atores (Actor Model) onde os processos podem 
+       se comunicar apenas por mensagens.
+       
+    \end{itemize}
+  
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{QP2-- Quem usa Erlang/OTP?}
+
+	  \begin{itemize}
+		\item<1->Facebook (Backend do chat-- 100 milhões de usuários ativos);
+		\item<1->Whatapps (Servidores de mensagens-- 2 milhões de usuários/servidor);
+		\item<1->Yahoo (Delicious-- 5 milhões de usuários e mais de 150 milhões de bookmarks);
+		\item<1->Amazon SimpleDB, o serviço de dados do Amazon EC2;
+		\item<1->GitHub (Backend-- milhares de transações concorrentes);
+		\item<1->T-Mobile nos seus sistemas de SMS e autenticação;
+		\item<1->Motorola, CouchDB, RabbitMQ, Ejabbed, entre outros.
+						
+	   \end{itemize}
+  
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{QP3-- Porque um novo barramento?}
+
+	  \begin{itemize}
+		\item<1->Obter domínio sobre as tecnologias e o design RESTful;
+		\item<1->Barramento de serviços são produtos caros e complexos;
+		\item<1->Disponibilizar um produto simples (contém somente 10 mil linhas de código atualmente).
+					
+	   \end{itemize}
+  
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{QP4-- Porque não implementar web services em Java com frameworks?}
+
+	  \begin{itemize}
+		\item<1->É uma opção mas exige ferramentas para gerenciar;
+		\item<1->Não é orientado a contrato de serviços;
+		\item<1->Não é independente de linguagem de programação;
+		\item<1->Não é escalável apenas usando os frameworks.
+	   \end{itemize}
+  
+\end{frame}
+
+
+
+\begin{frame}[c]{ }
+\centering
+  \huge{Obrigado!}
+\end{frame}
 
 
 \end{document}
