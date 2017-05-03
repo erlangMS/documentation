@@ -60,19 +60,19 @@
 
 		 \item<1-> Plataforma agnóstica de serviços
 		    \begin{itemize}
-				\item<1->Características do Barramento
+				\item<1->Características do barramento
 				\item<1->Principais recursos/features
 				\item<1->Principais recursos/features experimentais
 		     \end{itemize}
 
-  	  	 \item<1-> Principais Resultados do Trabalho
+  	  	 \item<1-> Principais resultados
 		    \begin{itemize}
 				\item<1->Desenvolvimento de serviços com o SDK
 				\item<1->Autenticação de usuários com o proxy LDAP
-				\item<1->Autenticação e Autorização de serviços REST com OAuth2
+				\item<1->Autenticação e autorização de serviços REST com OAuth2
   		     \end{itemize}
   	  
-	   	  \item<1-> Trabalhos Futuros
+	   	  \item<1-> Trabalhos futuros
 	   	  
     \end{itemize}
 
@@ -147,9 +147,9 @@ forma orientada a serviços (SOA) composto por:
   \frametitle{Justificativa}
   
     \begin{itemize}
-       \item<1->Maximizar o reuso dos fluxos de negócios e a modularidade das aplicações;
+       \item<1->Maximizar o reuso dos fluxos de negócios;
        \item<1->Modernizar os sistemas de maneira sistemática e incremental;
-       \item<1->Menor dependência tecnológica; 
+       \item<1->Minimizar dependências tecnológicas; 
        \item<1->Experimentar SOA (Service Oriented Architecture).
     \end{itemize}
     
@@ -166,7 +166,7 @@ forma orientada a serviços (SOA) composto por:
   	
 	\begin{figure}
 	\centering
-		\includegraphics[scale=0.4]{img/bubble_diagram.png}
+		\includegraphics[scale=0.45]{img/bubble_diagram.png}
 	\end{figure}
   
 \end{frame}
@@ -206,7 +206,7 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 \begin{frame}
   \frametitle{Plataforma agnóstica de serviços}
 
-  \begin{exampleblock}{Características do Barramento}
+  \begin{exampleblock}{Características do barramento}
   
 	  \begin{itemize}
 		\item<1->Multiplataforma e arquitetura modular;
@@ -299,7 +299,7 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 
 
 \begin{frame}
-  \frametitle{Autenticação e Autorização de serviços REST com OAuth2}
+  \frametitle{Autenticação e autorização de serviços REST com OAuth2}
 
 	\begin{figure}
 	\centering
@@ -345,10 +345,10 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
   \begin{exampleblock}{}
   
 	  \begin{itemize}
-		\item<1->(QP1) Porque Erlang/OTP?
+		\item<1->(QP1) Por que Erlang/OTP?
 		\item<1->(QP2) Quem usa Erlang/OTP?
-	    \item<1->(QP3) Porque o desenvolvimento de um novo barramento em vez de utilizar um existente?
-	    \item<1->(QP4) Porque não implementar web services usando somente Java e seus frameworks?
+	    \item<1->(QP3) Por que o desenvolvimento de um novo barramento em vez de utilizar um existente?
+	    \item<1->(QP4) Por que não implementar web services usando somente Java e seus frameworks?
 	  \end{itemize}
   
   \end{exampleblock}
@@ -358,7 +358,7 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 
 
 \begin{frame}
-  \frametitle{QP1-- Porque Erlang/OTP?}
+  \frametitle{(QP1) Por que Erlang/OTP?}
 
     \begin{itemize}
        \item<1-> Suporta aplicações distribuídas e tolerantes a falhas a serem executadas em um ambiente de tempo real e ininterrupto;
@@ -373,14 +373,14 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 
 
 \begin{frame}
-  \frametitle{QP2-- Quem usa Erlang/OTP?}
+  \frametitle{(QP2) Quem usa Erlang/OTP?}
 
 	  \begin{itemize}
-		\item<1->Facebook (Backend do chat-- 100 milhões de usuários ativos);
-		\item<1->Whatapps (Servidores de mensagens-- 2 milhões de usuários/servidor);
-		\item<1->Yahoo (Delicious-- 5 milhões de usuários e mais de 150 milhões de bookmarks);
+		\item<1->Facebook (Backend do chat -- 100 milhões de usuários ativos);
+		\item<1->Whatapps (Servidores de mensagens -- 2 milhões de usuários/servidor);
+		\item<1->Yahoo (Delicious -- 5 milhões de usuários e mais de 150 milhões de bookmarks);
 		\item<1->Amazon SimpleDB, o serviço de dados do Amazon EC2;
-		\item<1->GitHub (Backend-- milhares de transações concorrentes);
+		\item<1->GitHub (Backend -- milhares de transações concorrentes);
 		\item<1->T-Mobile nos seus sistemas de SMS e autenticação;
 		\item<1->Motorola, CouchDB, RabbitMQ, Ejabbed, entre outros.
 						
@@ -390,7 +390,7 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 
 
 \begin{frame}
-  \frametitle{QP3-- Porque um novo barramento?}
+  \frametitle{(QP3) Por que um novo barramento?}
 
 	  \begin{itemize}
 		\item<1->Obter domínio sobre as tecnologias e o design RESTful;
@@ -403,10 +403,10 @@ de serviços multiplataforma orientado a contratos de serviços + SDK + Processo
 
 
 \begin{frame}
-  \frametitle{QP4-- Porque não implementar web services em Java com frameworks?}
+  \frametitle{(QP4) Por que não implementar web services em Java com frameworks?}
 
 	  \begin{itemize}
-		\item<1->É uma opção mas exige ferramentas para gerenciar;
+		\item<1->É uma opção, mas exige ferramentas para gerenciar;
 		\item<1->Não é orientado a contrato de serviços;
 		\item<1->Não é independente de linguagem de programação;
 		\item<1->Não é escalável apenas usando os frameworks.
