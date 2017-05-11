@@ -1,0 +1,387 @@
+ %% modeloABNT2.tex, v1.0 athila
+%% Copyright 2013 by Athila e Monaro
+%%
+%% Este trabalho é uma adequação das normas de dissertações e teses
+%% da Universidade de São Paulo - USP de acordo com a Norma ABNT
+%%
+%%
+%% Quaisquer dúvidas favor enviar e-mail para:
+%%
+%% athila.uno@gmail.com ou
+%% renato.monaro@gmail.comsh 
+%%
+
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% eesc: Modelo de Trabalho Acadêmico (tese de doutorado, dissertação de
+% mestrado e trabalhos monográficos em geral) em conformidade com 
+% ABNT NBR 14724:2011. Esta classe estende as funcionalidades da classe
+% abnTeX2 elaborada de forma a adequar os parâmetros exigidos pelas 
+% normas USP e do departamento de elétrica da Escola de Engenharia 
+% de São Carlos - USP.
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------
+% Opções:
+% 	tesedr:     Formata documento para tese de doutorado
+%	qualidr:    Formata documento para qualificação de doutorado
+% 	dissertmst: Formata documento para dissertação de mestrado
+% 	qualimst:   Formata documento para qualificação de mestrado
+% ------------------------------------------------------------------------
+\documentclass[qualidr]{eesc}
+
+% ---
+% PACOTES
+% ---
+
+% ---
+% Pacotes fundamentais 
+% ---
+%\RequirePackage[applemac]{inputenc}
+\usepackage{cmap}				% Mapear caracteres especiais no PDF
+\usepackage{lmodern}				% Usa a fonte Latin Modern			
+\usepackage{makeidx}            	% Cria o indice
+\usepackage{hyperref}  			% Controla a formação do índice
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}			% Indenta o primeiro parágrafo de cada seção.
+\usepackage{nomencl} 			% Lista de simbolos
+\usepackage{graphicx,url}			% Inclusão de gráficos
+\usepackage{listings}
+
+% ---
+
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo eesc
+% ---
+\usepackage{lipsum}				       % para geração de dummy text
+\usepackage[printonlyused]{acronym}
+\usepackage[table]{xcolor}
+% ---
+
+\renewcommand{\citebrackets}[2]{\def\citeopen{#1}\def\citeclose{#2}}
+\renewcommand{\setcitebrackets}{\citebrackets[]}
+
+%\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citaÁıes na bibl
+\usepackage[num]{abntex2cite}	% CitaÁıes padr„o ABNT
+
+
+%\renewcommand{\backref}{}
+% Define os textos da cita√ß√£o
+%\renewcommand*{\backrefalt}[4]{
+%	\ifcase #1 %
+%		Nenhuma citaÁ„o no texto.%
+%	\or
+%		Citado na p·gina #2.%
+%	\else
+%		Citado #1 vezes nas p·ginas #2.%
+%	\fi}%
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+%
+% Título:
+%	1. Título em português
+%	2. Título em inglês
+\titulo{ImplementaÁ„o do SDK utilizado o protocolo SNMP para monitoramento dos serviÁos da Universidade de BrasÌlia\\\\
+	Linha de Pesquisa: Engenharia de Software}{}
+%
+% Autor:
+%	1. Nome completo do autor
+%	2. Formato de nome para bibliografia
+\autor{Felipe Evangelista dos Santos\\FundaÁ„o Universidade de BrasÌlia}{E. Santos, Felipe}
+%
+% Cidade
+\local{BrasÌlia}
+% Ano de defesa
+\data{maio, 2017}
+% Área de concentração da pesquisa
+\areaconcentracao{Engenharia de Software.}
+% Nome do orientador
+%\orientador{Prof. Dr. Eduardo Henrique F.M. Teixeira}
+% Nome do coorientador
+% ---
+
+% ---
+% ConfiguraÁıes de aparÍncia do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informaÁıes do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{relatÛrio tÈcnico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	%liabilitiesnkcolor=blue,          	% color of internal links
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% --- 
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ---
+% Compila a lista de abreviaturas e siglas
+% ---
+\makenomenclature
+% ---
+
+% ---
+% Inserir ficha catalográfica
+%
+% Caso o comando \inserirfichacatalografica seja definido, a ficha catalográfica
+% será inserida atrás da folha de rosto. Caso contrário a página será deixada em
+% branco.
+%
+% CUIDADO: Esta opção deve ser preenchida antes do comando \maketitle
+% ---
+%\inserirfichacatalografica{fichaCatalografica.pdf}
+% ---
+
+% ---
+% Inserir folha de aprovação
+%
+% Caso o comando \inserirfolhaaprovacao seja definido, a a folha de aprovação
+% será inserida. Além disso, conforme Resolução CoPGr 5890, as informações 
+% de rodapé são inseridas apropriadamente na folha de rosto.
+%
+% CUIDADO: Esta opção deve ser preenchida antes do comando \maketitle
+% ---
+%\inserirfolhaaprovacao{folhaAprovacao.pdf}
+% ---
+
+% ----
+% Início do documento
+% ----
+
+\begin{document}
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+\pretextual
+
+% ---
+% Insere Capa, Folha de rosto, Ficha catalográfica (se inserida)
+% e folha de aprovação (se inserida).
+% ---
+\maketitle
+
+% ---
+% Dedicatória
+% ---
+%\imprimirdedicatoria{Este trabalho é dedicado à minha família e amigos.}
+% ---
+
+% ---
+% Agradecimentos
+% ---
+%\imprimiragradecimentos{
+%Os agradecimentos principais são direcionados à minha filha Heloísa e esposa Vaneide, ao meu irmão Benício, minha mãe Socorro, irmã Silvana, Vladmir e a todos os amigos.
+
+%Agradecimentos especiais à equipe de desenvolvimento de software da Sysofit pelo apoio e por fazer parte deste projeto muito ambicioso.
+%}
+% ---
+
+% ---
+% Epígrafe
+% ---
+%\imprimirepigrafe{
+%		``Somos essencialmente profissionais do sentido. Educamos, \\
+%		 quando ensinamos com sentido. Educar é impregnar de sentido\\
+%		 a vida. A profissão docente está centrada na vida, no bem querer.''\\
+%		(Prof. Gilberto Teixeira)
+%}
+% ---
+
+% ---
+% RESUMO e ABSTRACT
+% ---
+
+% Resumo em português
+%\begin{resumo}{\emph{Middleware}, Tolerância a Falhas, Elasticidade, \emph{Cluster}}
+
+  %Este trabalho propõe um \emph{middleware} para implementar  tolerância a falhas e elasticidade em um \emph{cluster} de alta performance e  alta disponibilidade. Assim sendo, espera-se que o \emph{middleware} proposto seja capaz de  diminuir o número de servidores necessários para processar as filas de mensagens de um sistema distribuído e, consequentemente, economizar recursos computacionais  para manutenções evolutivas e corretivas. Para isso é necessária uma arquitetura que seja elástica o suficiente para se adaptar ao crescimento da fila de requisições de forma que as mensagens não se acumulem, e que seja tolerante a falhas para que eventuais paradas do sistema, por queda ou falha dos serviços, não impacte na operacionalidade do \emph{cluster}. 
+
+
+%\end{resumo}
+
+% ---
+
+% ---
+% inserir lista de ilustrações
+% ---
+%\listailustracoes
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---
+%\listatabelas
+% ---
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+%\listasiglas{abrev/Abreviaturas}
+% ---
+
+% ---
+% inserir o sumario
+% ---
+\sumario
+% ---
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\mainmatter
+
+% ----------------------------------------------------------
+% Introdução
+% ----------------------------------------------------------
+\chapter[ImplementaÁ„o do protocolo SNMP para monitoramento de serviÁos no Barramento ErlangMS da Universidade de BrasÌlia]{ImplementaÁ„o do protocolo SNMP para monitoramento de serviÁos no Barramento ErlangMS da Universidade de BrasÌlia}
+
+\section[IntroduÁ„o]{IntroduÁ„o}
+
+
+
+\section{Justificativa}
+
+
+
+
+\section{Objetivo Geral}
+
+
+
+\subsection{Objetivos EspecÌficos}
+
+
+\begin{itemize}
+	 
+\item 
+
+\item 
+
+\item 
+
+\item 
+
+\item 
+
+\end{itemize}
+
+\section{Revis„o da Literatura}
+
+
+
+
+\section{Metodologia}
+
+
+
+\section{Plano de Trabalho e Cronograma}
+
+
+\begin{table}[!htpb]
+	\centering
+	\caption{Cronograma de Atividades do Mestrado}
+	\begin{center}
+		\begin{tabular}{|l|c|c|c|c|}
+			\hline
+			Tarefa  &2017/2   &2018/1 &2018/2 &2019/1   \\
+			\hline\hline
+			Disciplinas do N˙cleo B·sico &X & & & \\
+			\hline
+			Disciplinas de Engenharia de \textit{Software} & &X & &  \\
+			\hline
+			Tarefa 1 &X &X &X &  \\
+			\hline
+			Tarefa 2 & &X &X &  \\
+			\hline
+			Tarefa 3 & & &X &  \\
+			\hline
+			Tarefa 4 & &X &X &X  \\
+			\hline
+			Tarefa 5 & & &X &X  \\
+			\hline
+			Tarefa 6 & & & &X  \\
+			\hline
+			Tarefa 7 & &X &X &X  \\
+			\hline
+			Tarefa 8 & & & &X  \\
+			\hline
+		\end{tabular}
+		\label{tab:cronograma2}
+	\end{center}
+\end{table} 
+
+
+% ---
+
+
+
+
+
+% ---
+% Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
+% ---
+% ---
+
+% ---
+	% Conclusão
+% \textemdash\ 
+
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+%\postextual
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+%\nocite{*}
+\makeatletter
+\renewcommand\@biblabel[1]{{\parbox{0.8cm}{[#1]}}}
+\makeatother
+\bibliography{bib}
+% -----------------------
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+%\glossary
+
+\bookmarksetup{startatroot}% 
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+% ---
+% Inicia os apêndices
+% ---
+
+% ---
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+% ---
+% Inicia os anexos
+% ---
+
+\end{document}
+
