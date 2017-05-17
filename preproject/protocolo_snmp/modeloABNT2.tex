@@ -259,7 +259,9 @@
 
 \section{Justificativa}
 
+Com o aumento da implementação e disponibilização de serviços na UnB, foi identificada a necessidade de um efetivo monitoramento dos serviços, através da coleta de dados ou informações extraídas das requisições. Para gerenciar o monitoramento são necessária ferramentas para um controle mais fácil e objetivo, atualmente o CPD utiliza o Nagios, uma plataforma utilizada para acompanhamento e monitoramento da infraestrutura de redes da UnB,já a parte de sistemas e serviços não são monitoradas de forma precisa ou que possa trazer informações com certa relevância, pois não há uma comunicação ou integração dos sistemas e serviço de forma apropriada, o que implica em um déficit no acompanhamento e monitoramento nos sistemas e serviços. Além disso, também não há um acompanhamento especifico voltado para o monitoramento do ambiente em que as aplicações e serviços estão hospedados. Ou seja, percebe-se que o gerenciamento de importantes funcionalidades são falhos e que precisam ser melhorados.
 
+Dessa forma, com essa pesquisa, espera-se prover meios para realizar a integração do Nagios com o barramento ErlangMS, utilizado o protocolo SNMP para facilitar e tornar o gerenciamento dos serviços mais abrangente contribuindo com um bom funcionamento e acompanhamentos dos \textit{softwares} da UnB. Além disso pretende-se também que a implementação do protocolo SNMP para monitoramento de serviços no barramento ErlangMS possa trazer grandes benefícios como o gerenciamento de falhas, requisições, desempenho e quantidade de acessos em um determinado momento, a partir da implementação, criar e especificar processos, métodos, assim como, realizar estudos e utilizar métricas para estatísticas após a coleta da informações advindas dos serviços implementados para esse propósito. 
 
 
 \section{Objetivo Geral}
@@ -295,7 +297,9 @@ A implementação do protocolo SNMP para monitoramento de serviços no barramento E
 
 Serão coletados dados sobre os serviços executados no barramento ErlangMS, a fim de buscar informações relativas às requisições, solicitações e a execução de agentes e gerentes SNMP. Assim haverá uma análise prévia para a identificação das ferramentas ou aplicações que poderão ser integradas aos serviços implementados para o monitoramento, de forma a encontrar à maneira mais eficiente para atender às situações específicas do gerenciamento.
 
-Faz parte ainda do escopo metodológico do projeto a realização de pesquisas para o entendimento mais aprofundado do protocolo SNMP, seus tipos de requisições , tipos de agentes e as operações do protocolo, ferramentas já utilizadas para o gerenciamento, também sobre o a linguagem Erlang e a montagem de configuração do ambiente de desenvolvimento para a implementação dos serviços. Para a melhoria desse entendimento serão utilizados  processos, ferramentas e o \textit{Request for Comments - RFC}, que  é um documento que descreve os padrões de cada protocolo. Um ambiente computacional será disponibilizado para a realização da coleta de dados dos serviços implementados, avaliação do gerenciamento e monitoramento juntamente com a aceitação dos envolvidos no projeto.
+Faz parte ainda do escopo metodológico do projeto a realização de pesquisas para o entendimento mais aprofundado do protocolo SNMP, seus tipos de requisições , tipos de agentes e as operações do protocolo, ferramentas já utilizadas para o gerenciamento, também sobre o a linguagem Erlang e a montagem de configuração do ambiente de desenvolvimento para a implementação dos serviços. 
+
+Para a melhoria desse entendimento serão utilizados  processos, ferramentas e o \textit{Request for Comments - RFC}, que  é um documento que descreve os padrões de cada protocolo. Um ambiente computacional será disponibilizado para a realização da coleta de dados dos serviços implementados, avaliação do gerenciamento e monitoramento juntamente com a aceitação dos envolvidos no projeto.
 
 \section{Plano de Trabalho e Cronograma}
 
