@@ -259,18 +259,21 @@
 
 \section[Introdução]{Introdução}
 
+A modernização de sistemas legados é um tema que vem sendo cada vez mais discutido na Universidade de Brasília (UnB). Um sistema legado pode ser classificado como \textit{software} que não possui documentação, que é de difícil manutenção e também possui defasagem tecnológica, mas um ponto importante, é que normalmente é essencial para organização. Com o processo de modernização espera-se reduzir os custos com a manutenção dos sistemas legados e aumentar a integração dos fluxos de negócios entre os sistemas\cite{Agilar}.
 
+O Centro de Informática (CPD) da UnB, órgão responsável por desenvolver, gerenciar e manter os sistemas novos e legados, atualmente vem trabalhando na implantação de uma arquitetura orientada a serviços (SOA), como modelo de modernização dos \textit{softwares} da UnB utilizando o processo  \textit{Software Modernization through Service Oriented Computing} (SMSOC) para a implementação dos serviços conectando-os  através de um barramento de serviços (ESB) que utiliza a arquitetura \textit{Representational State Transfer} (REST), esse barramento denominado Erlangms foi desenvolvido na linguagem funcional Erlang, uma linguagem utilizada no desenvolvimento sitemas distribuídos e com tolerância a falhas.
+
+No entanto, a facilidade que a arquitetura proporciona na modernização dos sistemas legados da UnB, pode dificultar o gerenciamento e monitoramento dos serviços que serão implementados, devido ao modelo negocial de cada sistema, em alguns casos poderão haver situações em que vários serviços e micros serviços serão necessários ao negócio do sistema. Diante desse cenário o presente trabalho de pesquisa busca apresentar uma solução para o monitoramento dos serviço implementados, com a implementação do Protocolo de monitoramento \textit{Simple Network Management Protocol} (SNMP) como um serviço do Barramento Erlangms com o objetivo de facilitar o monitoramento dos serviços com a utilização do serviço implementado para integrar com ferramentas de monitoramento, que utilizam o protocolo SNMP para coletar informações, além de validar e verificar detectar condições de falhas nos serviços em execução.
 
 \section{Justificativa}
 
-Com o aumento da implementação e disponibilização de serviços na UnB, foi identificada a necessidade de um efetivo monitoramento dos serviços, através da coleta de dados ou informações extraídas das requisições. Para gerenciar o monitoramento são necessária ferramentas para um controle mais fácil e objetivo, atualmente o CPD utiliza o Nagios, uma plataforma utilizada para acompanhamento e monitoramento da infraestrutura de redes da UnB,já a parte de sistemas e serviços não são monitoradas de forma precisa ou que possa trazer informações com certa relevância, pois não há uma comunicação ou integração dos sistemas e serviço de forma apropriada, o que implica em um déficit no acompanhamento e monitoramento nos sistemas e serviços. Além disso, também não há um acompanhamento especifico voltado para o monitoramento do ambiente em que as aplicações e serviços estão hospedados. Ou seja, percebe-se que o gerenciamento de importantes funcionalidades são falhos e que precisam ser melhorados.
+Com o aumento da implementação e disponibilização de serviços na UnB, foi identificada a necessidade de um efetivo monitoramento dos serviços, através da coleta de dados ou informações extraídas das requisições. Para gerenciar o monitoramento são necessária ferramentas para um controle mais fácil e objetivo, atualmente o CPD utiliza o Nagios, uma plataforma utilizada para acompanhamento e monitoramento da infraestrutura de redes da UnB, já a parte de sistemas e serviços não são monitoradas de forma precisa ou que possa trazer informações com certa relevância, pois não há uma comunicação ou integração dos sistemas e serviço de forma apropriada, o que implica em um déficit no acompanhamento e monitoramento nos sistemas e serviços. Além disso, também não há um acompanhamento especifico voltado para o monitoramento do ambiente em que as aplicações e serviços estão hospedados,ou seja, percebe-se que o gerenciamento de importantes funcionalidades são falhos e que precisam ser melhorados.
 
-Dessa forma, com essa pesquisa, espera-se prover meios para realizar a integração do Nagios com o barramento ErlangMS, utilizado o protocolo SNMP para facilitar e tornar o gerenciamento dos serviços mais abrangente contribuindo com um bom funcionamento e acompanhamentos dos \textit{softwares} da UnB. Além disso pretende-se também que a implementação do protocolo SNMP para monitoramento de serviços no barramento ErlangMS possa trazer grandes benefícios como o gerenciamento de falhas, requisições, desempenho e quantidade de acessos em um determinado momento, a partir da implementação, criar e especificar processos, métodos, assim como, realizar estudos e utilizar métricas para estatísticas após a coleta da informações advindas dos serviços implementados para esse propósito. 
-
+Dessa forma, com essa pesquisa, espera-se prover meios para realizar a integração do Nagios com o barramento Erlangms, utilizado o protocolo SNMP para facilitar e tornar o gerenciamento dos serviços mais abrangente contribuindo com um bom funcionamento e acompanhamento dos \textit{softwares} da UnB. Além disso pretende-se também que a implementação do protocolo SNMP para monitoramento de serviços no barramento Erlangms possa trazer grandes benefícios como o gerenciamento de falhas, requisições, desempenho e quantidade de acessos em um determinado momento. A partir da implementação, criar e especificar processos, métodos, assim como, realizar estudos e utilizar métricas para estatísticas após a coleta da informações advindas dos serviços implementados para esse propósito. 
 
 \section{Objetivo Geral}
 
-O objetivo geral da pesquisa proposta é implementar protocolo SNMP para monitoramento de serviços no Barramento ErlangMS da UnB. Para isso serão realizadas  pesquisas e projetos desenvolvidos e utilizados para monitoramentos de serviços, técnicas e ferramentas de apoio, visando à melhoria do gerenciamento dos serviços.
+O objetivo geral da pesquisa proposta é implementar protocolo SNMP para monitoramento de serviços no Barramento Erlangms da UnB. Para isso serão realizadas  pesquisas e projetos desenvolvidos e utilizados para monitoramentos de serviços, técnicas e ferramentas de apoio, visando à melhoria do gerenciamento dos serviços.
 
 \subsection{Objetivos Específicos}
 
@@ -278,40 +281,56 @@ Os objetivos específicos são:
 
 \begin{itemize}
 	 
-\item Levantamento do estado da arte por meio da análise crítica dos artigos científicos recentes referentes ao tema implementação do protocolo SNMP para monitoramento de serviços no barramento ErlangMS;
+\item Definir um processo para a realização da implementação do protocolo SNMP para monitoramento de serviços no barramento Erlangms baseando-se nas  abordagens mais relevantes estudadas na literatura;
 
-\item Definir um processo para a realização da implementação do protocolo SNMP para monitoramento de serviços no barramento ErlangMS baseando-se nas  abordagens mais relevantes estudadas na literatura;
+\item Utilizar ferramentas de apoio para a implementação do protocolo SNMP para monitoramento de serviços no barramento Erlangms da UnB;
 
-\item Utilizar ferramentas de apoio para a implementação do protocolo SNMP para monitoramento de serviços no barramento ErlangMS da UnB;
+\item implementar o protocolo SNMP para monitoramento de serviços no barramento Erlangms da UnB seguindo o RFC\cite{Schoffstall}, documento que especifica os padrões que serão implementados e utilizados em toda a internet ;
 
 \item Realizar um estudo de caso aplicando o método desenvolvido  para promover adequações e melhorias no gerenciamento de monitoramento dos serviços da UnB; 
 
-\item Publicação de artigos científicos contendo descobertas relevantes e os resultados do estudo de caso realizado. 
+\item Testar, homologar e Implantar a solução proposta para a utilização de monitoramento dos serviços da UnB. 
 
 \end{itemize}
 
 \section{Revisão da Literatura}
 
-Em \cite{Tanenbaum} é apresentada a importância da de definição de um protocolo que é um conjunto de regras que contra o formato e o significado dos pacotes ou mensagens que são trocadas. Em \cite{deGeus} é descrita a definição de um modelo computacional configurável para o gerenciamento e monitoramento de redes, servidores, armazenamento, aplicações e serviços com a utilização do protocolo SNMP para realização de coleta de informações para que sejam criadas métricas onde se possa obter resultados satisfatórios dos serviços disponibilizados. Em sequência, no \cite{daSilva} são explicadas informações do protocolo SNMP, como o seu funcionamento, sua utilização ,Agente(processo), os tipos de Agente, o Gerente que é uma aplicação, em execução em uma estação de gerenciamento, as operações do protocolo, como por exemplo, \textit{GetRequest, 	GetNextRequest,  GetResponse,  SetRequest  e Trap} e também sobre as ferramentas de monitoramento que são compatíveis com o protocolo. 
+Em \cite{deGeus} é descrita a definição de um modelo computacional configurável para o gerenciamento e monitoramento de redes, servidores, armazenamento, aplicações e serviços com a utilização do protocolo SNMP para realização de coleta de informações para que sejam criadas métricas onde se possa obter resultados satisfatórios dos serviços disponibilizados. Em sequência, no \cite{daSilva} são explicadas informações do protocolo SNMP, como o seu funcionamento, sua utilização ,Agente(processo), os tipos de Agente, o Gerente que é uma aplicação, em execução em uma estação de gerenciamento, as operações do protocolo, como por exemplo, \textit{GetRequest, 	GetNextRequest,  GetResponse,  SetRequest  e Trap} e também sobre as ferramentas de monitoramento que são compatíveis com o protocolo, inclusive em \cite{Fraga} é destacado que o protocolo SNMP tem sido o principal protocolo utilizado para gestão e monitoramento de redes. 
 
-Em \cite{Dias} é descrita a forma de construção da plataforma de gerenciamento SNMP  utilizando  o RFC - \textit{Request For Comment} e suas definições. Uma abordagem interessante para a implementação dos serviços que utilizarão o protocolo SNMP  descrita em  \cite{Agilar} onde é proposto um modelo de desenvolvimento juntamente, com o Barramento ErlangMS que é responsável pelo serviço de mensageria, peça importante para a comunicação das ferramentas de monitoramento e os serviços implementados. Entretanto, em \cite{deMello} são descritos e identificados alguns pontos fracos do protocolo SNMP. Apesar  de  seu  nome,  \textit{"Simple"  Network  Management  Protocol},  o  SNMP  é  um protocolo  relativamente  complexo  para  implementar.  Também,  o  SNMP  não  é  um protocolo muito eficiente. Os modos nos quais são identificadas as variáveis SNMP (como \textit{strings} de  \textit{byte} onde  cada  \textit{byte} corresponde  a  um  nodo  particular  no  banco  de  dados da MIB) conduz desnecessariamente a grandes pacotes dedados PDU (\textit{Protocol Description Unit}), que consomem partes significativas de cada mensagem de SNMP, sobrecarregando a rede de transmissão de dados.  
-
+Em \cite{Dias} é descrita a forma de construção da plataforma de gerenciamento SNMP  utilizando  o RFC - \textit{Request For Comment} e suas definições. Uma abordagem interessante para a implementação dos serviços que utilizarão o protocolo SNMP  descrita em  \cite{Agilar} onde é proposto um modelo de desenvolvimento juntamente, com o Barramento Erlangms que é responsável pelo serviço de mensageria, peça importante para a comunicação das ferramentas de monitoramento e os serviços implementados. Entretanto, em \cite{deMello} são descritos e identificados alguns pontos fracos do protocolo SNMP. Apesar  de  seu  nome,  \textit{"Simple"  Network  Management  Protocol},  o  SNMP  é  um protocolo  relativamente  complexo  para  implementar.  Também,  o  SNMP  não  é  um protocolo muito eficiente. Os modos nos quais são identificadas as variáveis SNMP (como \textit{strings} de  \textit{byte} onde  cada  \textit{byte} corresponde  a  um  nodo  particular  no  banco  de  dados da MIB) conduz desnecessariamente a grandes pacotes dedados PDU (\textit{Protocol Description Unit}), que consomem partes significativas de cada mensagem de SNMP, sobrecarregando a rede de transmissão de dados.  
 
 Uma outra abordagem é sobre as ferramentas de gerenciamento mais utilizadas no mercado como por exemplo: ZABBIX, NAGIOS e CACTI, todas têm muitas semelhanças entre si, porém algumas são mais funcionais para um tipo de finalidade do que outras. \cite{Braga}. Nesse estudo partes comuns a vários programas ou serviços poderão ser implementados com informações desnecessárias para uma efetivo monitoramento. Entretanto, deve haver uma preocupação com o desempenho e gerenciamento, devido alta construção de serviços genéricos e comuns.
 
 
 \section{Metodologia}
 
-A implementação do protocolo SNMP para monitoramento de serviços no barramento ErlangMS será realizado no CPD da UnB, e a execução do projeto ocorrerá  na área de desenvolvimento de sistemas do setor Serviço de Sistemas da Informação - SSI. 
+A implementação do protocolo SNMP para monitoramento de serviços no barramento Erlangms será realizado no CPD da UnB, e a execução do projeto ocorrerá  na área de desenvolvimento de sistemas do setor Serviço de Sistemas da Informação - SSI. 
 
-Serão coletados dados sobre os serviços executados no barramento ErlangMS, a fim de buscar informações relativas às requisições, solicitações e a execução de agentes e gerentes SNMP. Assim haverá uma análise prévia para a identificação das ferramentas ou aplicações que poderão ser integradas aos serviços implementados para o monitoramento, de forma a encontrar à maneira mais eficiente para atender às situações específicas do gerenciamento.
+Serão coletados dados sobre os serviços executados no barramento Erlangms, a fim de buscar informações relativas às requisições, solicitações e a execução de agentes e gerentes SNMP. Assim haverá uma análise prévia para a identificação das ferramentas ou aplicações que poderão ser integradas aos serviços implementados para o monitoramento, de forma a encontrar à maneira mais eficiente para atender às situações específicas do gerenciamento.
 
 Faz parte ainda do escopo metodológico do projeto a realização de pesquisas para o entendimento mais aprofundado do protocolo SNMP, seus tipos de requisições , tipos de agentes e as operações do protocolo, ferramentas já utilizadas para o gerenciamento, também sobre o a linguagem Erlang e a montagem de configuração do ambiente de desenvolvimento para a implementação dos serviços. 
 
-Para a melhoria desse entendimento serão utilizados  processos, ferramentas e o \textit{Request for Comments - RFC}, que  é um documento que descreve os padrões de cada protocolo. Um ambiente computacional será disponibilizado para a realização da coleta de dados dos serviços implementados, avaliação do gerenciamento e monitoramento juntamente com a aceitação dos envolvidos no projeto.
+Para a melhoria desse entendimento serão utilizados  processos, ferramentas e o \textit{Request for Comments - RFC}\cite{Case}, que  é um documento que descreve os padrões de cada protocolo. Um ambiente computacional será disponibilizado para a realização da coleta de dados dos serviços implementados, avaliação do gerenciamento e monitoramento juntamente com a aceitação dos envolvidos no projeto.
 
 \section{Plano de Trabalho e Cronograma}
 
+O candidato à vaga no Mestrado em Computação Aplicada cursou como aluno especial as disciplinas de Mineração de Dados e Textos (MDT) e  Engenharia de Requisitos (ER) e obteve aprovação nas duas disciplinas. Considerando-se o aproveitamento desses 4 (quatro) créditos, espera-se cursar 20 (vinte) créditos em disciplinas obrigatórias e defender dissertação para a obtenção do título de Mestre em Computação Aplicada. Para esse fim, serão cursadas disciplinas do Núcleo Básico e da linha de Engenharia de Software, distribuídas conforme mostrado na Tabela \ref{tab:cronograma2}. 
+
+Como o candidato a discente é servidor público da UnB, lotado no CPD, será dedicado o regime de tempo parcial. Dessa forma, uma vez que a referida instituição pública disponibiliza liberação de horário para os seus servidores de quadro efetivo cursarem disciplinas de cursos de pós-graduação, serão necessárias 12 (doze) horas semanais para a realização das disciplinas presenciais, mais 20 (vinte) horas de estudo, totalizando 32 (trinta e duas) horas semanais de dedicação. Após cursadas as disciplinas necessárias para completar os 24 (vinte e quatro) créditos exigidos para o título de Mestre, este trabalho será desenvolvido por meio de sete tarefas listadas a seguir, e por meio do cronograma apresentado na Tabela \ref{tab:cronograma2}.
+
+1. Escolha das abordagens que serão utilizadas por meio de características não exploradas nas soluções atuais de Implementação do protocolo SNMP para monitoramento de serviços no Barramento Erlangms da UnB;
+
+2. Exame de Qualificação de Mestrado;
+
+3. Desenvolvimento de novas abordagens que serão utilizadas na Implementação do protocolo SNMP para monitoramento de serviços no Barramento Erlangms da UnB;
+
+4. Prova de conceito das abordagens desenvolvidas;
+
+5. Submissão de artigos científicos em congressos e periódicos;
+
+6. Escrita da dissertação de mestrado;
+
+7. Defesa do mestrado.
 
 \begin{table}[!htpb]
 	\centering
@@ -327,25 +346,22 @@ Para a melhoria desse entendimento serão utilizados  processos, ferramentas e o
 			\hline
 			Tarefa 1 &X &X &X &  \\
 			\hline
-			Tarefa 2 & &X &X &  \\
+			Tarefa 2 & & &X &  \\
 			\hline
-			Tarefa 3 & & &X &  \\
+			Tarefa 3 & &X&X &  \\
 			\hline
 			Tarefa 4 & &X &X &X  \\
 			\hline
 			Tarefa 5 & & &X &X  \\
 			\hline
-			Tarefa 6 & & & &X  \\
+			Tarefa 6 & &X&X&X  \\
 			\hline
-			Tarefa 7 & &X &X &X  \\
-			\hline
-			Tarefa 8 & & & &X  \\
+			Tarefa 7 & & & &X  \\
 			\hline
 		\end{tabular}
 		\label{tab:cronograma2}
 	\end{center}
 \end{table} 
-
 
 % ---
 
