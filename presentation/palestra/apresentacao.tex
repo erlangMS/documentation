@@ -66,7 +66,7 @@
 				\item<1->Autenticação e autorização de serviços REST com OAuth2
   		     \end{itemize}
  	  
-	   	\item<1-> Trabalhos Futuros
+	   	\item<1-> Pontos Positivos e Desafios
 	   	  
     \end{itemize}
 
@@ -137,12 +137,12 @@ de serviços orientado a contratos de serviços + SDK + Processo de modernizaç�
   \begin{exampleblock}{Características do barramento}
   
 	  \begin{itemize}
-		\item<1->Multiplataforma e arquitetura modular;
+		\item<1->Multiplataforma e modular;
 	    \item<1->Serviços especificados em catálogos de serviços;
 	    \item<1->Suporta serviços RESTful com alta escalabilidade;
    	    \item<1->Modelo de concorrência: Actor Model;
-   	    \item<1->Integração com SGBD via ODBC e Data loaders;
-		\item<1->Implementação de web services em Erlang e Java
+   	    \item<1->Integração com back-end via SDK e Data loaders;
+		\item<1->Implementação de web services em Erlang e Java;
 	  \end{itemize}
 
   \end{exampleblock}
@@ -175,11 +175,6 @@ de serviços orientado a contratos de serviços + SDK + Processo de modernizaç�
 
 
 
-
-%%##############################################################
-
-
-
 \section{Principais Resultados do Trabalho}
 
 
@@ -195,139 +190,84 @@ de serviços orientado a contratos de serviços + SDK + Processo de modernizaç�
 
 	\begin{figure}
 	\centering
-		\includegraphics[scale=0.4]{img/sdk.png}
+		\includegraphics[scale=0.2]{img/sdk.png}
 	\end{figure}
+
+	  \begin{itemize}
+		\item<1->Saldo do RU. Uso: https://matriculaweb.unb.br
+	    \item<1->Consulta foto de aluno. Uso: sistemas que exibem fotos
+	    \item<1->Declaração de aluno regular
+   	    \item<1->Declaração nada consta. Uso: http://www.sgp.unb.br
+   	    \item<1->Conj. web services para o CIC
+		\item<1->Conj. web services para novos sistemas (Questionario, SAE)
+	  \end{itemize}
   
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Autenticação de usuários com o proxy LDAP}
+  \frametitle{Autenticação de usuários com proxy LDAP}
 
 	\begin{figure}
 	\centering
-		\includegraphics[scale=0.6]{img/ldap.png}
+		\includegraphics[scale=0.3]{img/ldap.png}
 	\end{figure}
+
+
+	  \begin{itemize}
+		\item<1->Sistema Eletrônico de Informações (SEI)
+	    \item<1->Sistema de Inscrição Pós-Graduação
+	    \item<1->Redmine
+	  \end{itemize}
   
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Autenticação e autorização de serviços REST com OAuth2}
+  \frametitle{Autenticação/autorização OAuth2}
 
 	\begin{figure}
 	\centering
-		\includegraphics[scale=0.4]{img/oauth2.png}
+		\includegraphics[scale=0.2]{img/oauth2.png}
 	\end{figure}
+
+	  \begin{itemize}
+		\item<1->Integração com sistema de controle de acesso (SCA)
+	    \item<1->Permite autenticar e autorizar chamadas REST
+	    \item<1->Single sign on
+	  \end{itemize}
   
 \end{frame}
 
 
 
 \begin{frame}
-  \frametitle{Trabalhos futuros}
+  \frametitle{Pontos Positivos e Desafios}
 
-  \begin{exampleblock}{Trabalhos futuros}
+  \begin{exampleblock}{Pontos Positivos}
   
 	  \begin{itemize}
- 	    \item<1->Portal Api Management;
-    	    \item<1->JSON Schema Draft 4;
-    	    \item<1->SDK .Net.
+ 	    \item<1->O CPD consegue atender demandas que na arquitetura anterior 
+				 era muito difícil ou praticamente impossível devido as questões de segurança e acesso a banco de dados;
+		\item<1->Sistemas menores e mais leves;
+		\item<1->Cultura Devops.
+	  \end{itemize}
+
+  \end{exampleblock}
+
+
+  \begin{exampleblock}{Desafios}
+  
+	  \begin{itemize}
+ 	    \item<1->Complexidade operacional;
+		\item<1->Gerenciamento dos catálogos de serviços;
+		\item<1->Monitoramento dos serviços em uso.
 	  \end{itemize}
 
   \end{exampleblock}
 
   
 \end{frame}
-
-
-%%##############################################################
-
-
-\subsection{Perguntas}
-
-
-\begin{frame}[c]{ }
-\centering
-  \huge{Perguntas ?}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Perguntas}
-
-  \begin{exampleblock}{}
-  
-	  \begin{itemize}
-		\item<1->(QP1) Por que Erlang/OTP?
-		\item<1->(QP2) Quem usa Erlang/OTP?
-	    \item<1->(QP3) Por que o desenvolvimento de um novo barramento em vez de utilizar um existente?
-	    \item<1->(QP4) Por que não implementar web services usando somente Java e seus frameworks?
-	  \end{itemize}
-  
-  \end{exampleblock}
-
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{(QP1) Por que Erlang/OTP?}
-
-    \begin{itemize}
-       \item<1-> Suporta aplicações distribuídas e tolerantes a falhas a serem executadas em um ambiente de tempo real e ininterrupto;
-       \item<1-> Possui um ambiente de execução que realmente facilita o desenvolvimento de software de rede e de clusters de serviços;
-       
-       \item<1-> Possui um modelo de arquitetura baseado em atores (Actor Model) onde os processos podem 
-       se comunicar apenas por mensagens.
-       
-    \end{itemize}
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{(QP2) Quem usa Erlang/OTP?}
-
-	  \begin{itemize}
-		\item<1->Facebook (Backend do chat -- 100 milhões de usuários ativos);
-		\item<1->Whatapps (Servidores de mensagens -- 2 milhões de usuários/servidor);
-		\item<1->Yahoo (Delicious -- 5 milhões de usuários e mais de 150 milhões de bookmarks);
-		\item<1->Amazon SimpleDB, o serviço de dados do Amazon EC2;
-		\item<1->GitHub (Backend -- milhares de transações concorrentes);
-		\item<1->T-Mobile nos seus sistemas de SMS e autenticação;
-		\item<1->Motorola, CouchDB, RabbitMQ, Ejabbed, entre outros.
-						
-	   \end{itemize}
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{(QP3) Por que um novo barramento?}
-
-	  \begin{itemize}
-		\item<1->Obter domínio sobre as tecnologias e o design RESTful;
-		\item<1->Barramento de serviços são produtos caros e complexos;
-		\item<1->Disponibilizar um produto simples (contém somente 10 mil linhas de código atualmente).
-					
-	   \end{itemize}
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{(QP4) Por que não implementar web services em Java com frameworks?}
-
-	  \begin{itemize}
-		\item<1->É uma opção, mas exige ferramentas para gerenciar;
-		\item<1->Não é orientado a contrato de serviços;
-		\item<1->Não é independente de linguagem de programação;
-		\item<1->Não é escalável apenas usando os frameworks.
-	   \end{itemize}
-  
-\end{frame}
-
 
 
 \begin{frame}[c]{ }
