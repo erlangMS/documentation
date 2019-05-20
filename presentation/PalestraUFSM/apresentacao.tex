@@ -55,7 +55,6 @@
 	    \item<1-> Barramento de serviços ERLANGMS
 		    \begin{itemize}
 		  	  \item<1->Objetivo do projeto
-		  	  \item<1->Panorama geral sobre modernização
 	    	  \item<1->Histórico do projeto
   	  	 	  \item<1->Design e princípios da arquitetura
   	  	 	  \item<1->Artigos produzidos para divulgar o barramento
@@ -64,6 +63,7 @@
 
 	    \item<1-> Implantação do barramento na UFSM
 		    \begin{itemize}
+	        \item<1->Panorama geral sobre modernização
 			\item<1->O que já foi feito
 			\item<1->O que ainda precisa ser feito x prioridade
 			\item<1->Principais desafios do trabalho
@@ -247,7 +247,7 @@
 	
 	\begin{itemize}
 		\item<1->Tornar a camada de fachada mais simples -- Moderado;
-		\item<1->Implementar o subsistema de autenticação OAuth2 (ou integrar por completo o barramento que já possui) -- Alto;
+		\item<1->Implementar o subsistema de autenticação OAuth2 (ou integrar por completo o barramento) -- Alto;
 		\item<1->Analisar os principais métodos do TCliBusiness e prover um suporte adequado no SDK para facilitar a migração -- Alto;
 		\item<1->Permitir gerar uma consulta por meio da Query API para buscar dados de um atributo lista de um objeto principal -- Baixo;
 		\item<1->Permitir encadear funções nos atributos das entidades com o operador \% para modificar a forma como o dado é lido da fonte de dados -- Baixo.
@@ -291,7 +291,7 @@
 \small{
 	\begin{itemize}
 		\item<1->Para o cliente REST do frontend Delphi obter os dados no formato Dataset para os TClis, é necessário especificar o schema dos dados. É relativamente fácil mas trabalhoso;
-		\item<1->Pelo menos por enquanto, pelo fato do Sie-Core ser um artefato monolítico em termos de unidade de deploy, será bem mais desafiador o uso de microservices e Docker no futuro.
+		\item<1->Pelo menos por enquanto, pelo fato do SIE CORE ser um artefato monolítico em termos de unidade de deploy, será bem mais desafiador o uso de microservices e Docker no futuro.
 	\end{itemize}
 }
 \end{exampleblock}
