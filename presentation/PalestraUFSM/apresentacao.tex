@@ -54,24 +54,20 @@
 
     \begin{itemize}
 
-	    \item<1-> Barramento de Serviços ERLANGMS
+	    \item<1-> Barramento de serviços ERLANGMS
 		    \begin{itemize}
-		  	  \item<1->Contexto e justificativa do projeto
+		  	  \item<1->Objetivo do projeto
+		  	  \item<1->Panorama geral sobre modernização
 	    	  \item<1->Histórico do projeto
-	    	  \item<1->Envolvimento e organização da equipe de desenvolvimento
-  	  	 	  \item<1->Funcionalidades implementadas e em uso na UnB
   	  	 	  \item<1->Design da arquitetura
 		    \end{itemize}
 	   	  \item<1-> 
 
 	    \item<1-> Implantação do barramento na UFSM
 		    \begin{itemize}
-			\item<1->Modernização do SIE
-			    \begin{itemize}
-					\item<1->Expectativas e viabilidade
-					\item<1->Desafios da migração do backend Delphi para Java
-					\item<1->Plano de desenvolvimento da versão 2.0
-				\end{itemize}
+			\item<1->O que está sendo feito
+			\item<1->Desafios da migração do backend Delphi para Java
+			\item<1->Plano de desenvolvimento da versão 2.0
 			\item<1->Caso prático 1: Web services implementados para o NCC
 			\item<1->Caso prático 2: TClis do SIE invocando web services Java
 		    \end{itemize}
@@ -85,186 +81,198 @@
 
 
 
-
 %%##############################################################
 
 
-
-
-\section{Barramento de Serviços ERLANGMS}
-
-
-\subsection{Contexto e justificativa do projeto}
-
-
-\begin{frame}
-  \frametitle{Contexto}
-
-  \begin{exampleblock}{Modernização de Sistemas Legados}
-  
-  “\textbf{Legacy information systems} are typically the
-	backbone of an organization’s information flow
-	and the main vehicle for consolidating business
-	information. They are thus mission critical, and
-	their failure can have a serious impact on
-	business.” [BENNET95]
-
-	\vspace{0.5cm} 
-
-	“Migrate Systems Incrementally recommends that the old system be
-	gradually and incrementally replaced by the new system. New
-	results can then be integrated as you proceed...” [DEMEYER et al. 2002]
-  \end{exampleblock}
-
-  
-\end{frame}
-
-
-
-
-%%##############################################################
-
-
-
-\begin{frame}
-  \frametitle{Objetivos}
-  
-    \begin{itemize}
-       \item<1-> Propor uma abordagem para modernizar os sistemas legados de
-forma orientada a serviços (SOA) composto por:
-
-    \begin{itemize}
-       \item<1->um barramento de serviços;
-       \item<1->um processo de modernização para guiar os trabalhos de modernização de software; 
-       \item<1->um kit de desenvolvimento (SDK) para implementar serviços independente da
-       linguagem de programação.
-    \end{itemize}
-				
-    \end{itemize}
-    
-\end{frame}
-
-
-
-
-
-\begin{frame}
-  \frametitle{Justificativa}
-  
-    \begin{itemize}
-       \item<1->Maximizar o reuso dos fluxos de negócios;
-       \item<1->Modernizar os sistemas de maneira sistemática e incremental;
-       \item<1->Minimizar dependências tecnológicas; 
-       \item<1->Experimentar SOA (Service Oriented Architecture).
-    \end{itemize}
-    
-\end{frame}
-
-
-\subsection{Panorama geral sobre modernização na literatura}
-
-
-\begin{frame}
-  \frametitle{Justificativa \\ \small{Panorama geral sobre modernização na literatura}}
-
- 	%% Mostra o diagrama de bolhas
-  	
-	\begin{figure}
-	\centering
-		\includegraphics[scale=0.45]{img/bubble_diagram.png}
-	\end{figure}
-  
-\end{frame}
-
-
-
-%%##############################################################
-
-
-\section{Plataforma agnóstica de serviços}
+\section{Barramento de serviços ERLANGMS}
 
 
 \begin{frame}[c]{ }
 \centering
-  \huge{Plataforma agnóstica de serviços}
+\huge{Barramento de serviços ERLANGMS}
+\end{frame}
+
+
+\subsection{Objetivo do projeto}
+
+
+\begin{frame}
+\frametitle{Objetivo do projeto}
+
+\begin{exampleblock}{ERLANGMS}
+	
+	É uma abordagem desenvolvida na UnB para facilitar a modernização de sistemas para uma arquitetura orientada a serviços 
+	por meio de um barramento de serviços + SDK + processo 
+	de modernização e arquitetura documentado (SMSOC).
+	
+\end{exampleblock}
+
+
 \end{frame}
 
 
 
-\subsection{Sobre}
-
-
 \begin{frame}
-  \frametitle{Plataforma agnóstica de serviços}
+\frametitle{Panorama geral sobre modernização  \\ \small{Estudo realizado para identificar as estratégias de modernização}}
 
-  \begin{exampleblock}{ERLANGMS}
-  
-É uma plataforma de software desenvolvida para facilitar a integração de sistemas por meio de um barramento 
-de serviços multiplataforma orientado a contratos de serviços + SDK + Processo de modernização e arquitetura documentado (SMSOC).
+%% Mostra o diagrama de bolhas
 
-  \end{exampleblock}
+	\centering
+	\includegraphics[scale=0.45]{img/bubble_diagram.png}
 
-  
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Plataforma agnóstica de serviços}
 
-  \begin{exampleblock}{Características do barramento}
-  
-	  \begin{itemize}
-		\item<1->Multiplataforma e arquitetura modular;
-	    \item<1->Serviços especificados em catálogos de serviços;
-	    \item<1->Cluster de serviços (Ex.: Erlang nodes, JBoss Containers) para evitar ponto único de falhas;
-    	    \item<1->Suporta serviços RESTful;
-   	    \item<1->Modelo de concorrência: Actor Model;
-    	    \item<1->Fácil compilação e instalação.
-	  \end{itemize}
+	\frametitle{Histórico do projeto}
 
-  \end{exampleblock}
+	\centering
+	\includegraphics[scale=0.30]{img/historico.png}
 
-  
 \end{frame}
 
 
-\begin{frame}
-  \frametitle{Plataforma agnóstica de serviços}
 
-  \begin{exampleblock}{Principais recursos/features}
-  
-	  \begin{itemize}
+\begin{frame}
+	\frametitle{Histórico do projeto \\ \small{Principais features em uso na UnB}}
+
+\begin{exampleblock}{Features}
+	
+	\begin{itemize}
 		\item<1->HTTP/2, HTTP/1.1, HTTPS (Secure TLS Listener);
-	    \item<1->LDAP v3 -- Proxy LDAP;
-	    \item<1->HTTP Basic authentication;
-    	    \item<1->OAuth2 authentication (em progresso);
-		\item<1->SDK para criar serviços em Java e .Net (suspenso);
-		\item<1->Api query -- filter, fields, sort, limit.
-	  \end{itemize}
+		\item<1->LDAP v3 -- Proxy LDAP;
+		\item<1->HTTP Basic authentication;
+		\item<1->OAuth2 authentication;
+		\item<1->SDK para criar serviços em Java;
+		\item<1->Query Api -- filter, fields, sort, limit.
+		\item<1->Suporte para Dados Abertos.
+	\end{itemize}
+	
+\end{exampleblock}
 
-  \end{exampleblock}
 
-  
 \end{frame}
+
+
 
 
 \begin{frame}
-  \frametitle{Plataforma agnóstica de serviços}
+\frametitle{Design da arquitetura}
 
-  \begin{exampleblock}{Principais recursos/features experimentais}
-  
-	  \begin{itemize}
- 	    \item<1->Suporte para Dados Abertos;
-    	    \item<1->JSON Schema Draft 4 para descrever/validar a entrada/saída no payload das mensagens REST;
-	    \item<1->Django template (processamento de template no back-end).
-	  \end{itemize}
+\begin{exampleblock}{Design da arquitetura}
+	
+	\begin{itemize}
+		\item<1->Multiplataforma e arquitetura modular;
+		\item<1->Serviços especificados em catálogos de serviços;
+		\item<1->Cluster de serviços para evitar ponto único de falhas;
+		\item<1->Suporta serviços RESTful por contrato;
+		\item<1->Modelo de concorrência para serviços em Erlang: Actor Model;
+		\item<1->Baixa curva de aprendizado.
+	\end{itemize}
+	
+\end{exampleblock}
 
-  \end{exampleblock}
 
-  
 \end{frame}
 
 
+
+
+%%##############################################################
+
+
+
+
+
+
+\section{Implantação do barramento na UFSM}
+
+
+\section{Implantação do barramento na UFSM}
+
+
+\begin{frame}[c]{ }
+\centering
+\huge{Implantação do barramento na UFSM}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{O que está sendo feito}
+
+\begin{exampleblock}{O que já foi feito}
+	
+	\begin{itemize}
+		\item<1->Implantação do barramento em partes, priorizando:
+			\begin{itemize}
+				\item<1->Query API
+				\item<1->Subsistema de serialização;
+				\item<1->Adaptar a interfaces do SDK para trabalhar de forma agnóstica com Java EE e Spring. 
+			\end{itemize}
+		\item<1->Features visando a migração de backends SIE para Java:
+			\begin{itemize}
+				\item<1->Novo operador \em{format} para serializar dados como Dataset;
+				\item<1->Novo subsistema provider no SDK para permitir seu uso independente da camada de negócio;
+				\item<1->Provider para trabalhar com meta-queries do Delphi;
+				\item<1->Cliente REST implementado no Delphi.
+			\end{itemize}
+		
+	\end{itemize}
+	
+\end{exampleblock}
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{O que ainda precisa ser feito x prioridade}
+
+\begin{exampleblock}{O que ainda precisa ser feito}
+	
+	\begin{itemize}
+		\item<1->Tornar a camada de fachada mais simples -- Moderado;
+		\item<1->Implementar o subsistema de autenticação OAuth2 (ou integrar o barramento que já possui) -- Alto;
+		\item<1->Analisar os principais métodos do TCliBusiness e prover um suporte adequado no SDK para facilitar a migração -- Alto;
+		\item<1->Permitir gerar uma consulta por meio da Query API para buscar dados de um atributo lista de um objeto principal -- Baixo;
+		\item<1->Permitir encadear funções nos atributos das entidades com o operador \% para modificar a forma como o dado é lido da fonte de dados -- Baixo.
+		
+		
+	\end{itemize}
+	
+\end{exampleblock}
+
+
+
+
+
+
+
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Desafios da migração do backend Delphi para Java}
+
+\begin{exampleblock}{Desafios da migração do backend Delphi para Java}
+	
+	\begin{itemize}
+		\item<1->Basicamente, qualquer parte do Delphi é um desafio enorme levando em consideração o custo de tempo e complexidade do código;
+		\item<1->A única excessão será as meta-queries que serja bem fácil com o provider de meta-query do SDK;
+		\item<1->Os métodos das TClis possuem muito herança de código com muitos métodos virtuais que dificulta extrair a lógica de negócio
+		sem precisar refazer tudo no Java;
+		\item<1->Para mapear os dados em Dataset, é necessário especificar o schema dos Dados;
+	\end{itemize}
+	
+\end{exampleblock}
+
+\end{frame}
 
 
 %%##############################################################
