@@ -20,7 +20,7 @@
 
 \usetheme[faculty=ppca,language=logo,framenumber,totalframenumber]{UniversiteitGent}
 
-\title{Implantando o barramento de serviços ERLANGMS no CPD/UFSM}
+\title{Implantando uma arquitetura de serviços RESTful no CPD/UFSM}
 \subtitle{ \textcolor{black}{Universidade Federal de Santa Maria} \\
 			\textcolor{black}{\small{Centro de Processamento de Dados}} 
 }
@@ -66,8 +66,7 @@
 	    \item<1-> Implantação do barramento na UFSM
 		    \begin{itemize}
 			\item<1->O que está sendo feito
-			\item<1->Desafios da migração do backend Delphi para Java
-			\item<1->Plano de desenvolvimento da versão 2.0
+			\item<1->Principais desafios arquitetura RESTful
 			\item<1->Caso prático 1: Web services implementados para o NCC
 			\item<1->Caso prático 2: TClis do SIE invocando web services Java
 		    \end{itemize}
@@ -227,8 +226,6 @@
 
 \end{frame}
 
-
-
 \begin{frame}
 \frametitle{O que ainda precisa ser feito x prioridade}
 
@@ -236,7 +233,7 @@
 	
 	\begin{itemize}
 		\item<1->Tornar a camada de fachada mais simples -- Moderado;
-		\item<1->Implementar o subsistema de autenticação OAuth2 (ou integrar o barramento que já possui) -- Alto;
+		\item<1->Implementar o subsistema de autenticação OAuth2 (ou integrar por completo o barramento que já possui) -- Alto;
 		\item<1->Analisar os principais métodos do TCliBusiness e prover um suporte adequado no SDK para facilitar a migração -- Alto;
 		\item<1->Permitir gerar uma consulta por meio da Query API para buscar dados de um atributo lista de um objeto principal -- Baixo;
 		\item<1->Permitir encadear funções nos atributos das entidades com o operador \% para modificar a forma como o dado é lido da fonte de dados -- Baixo.
@@ -255,21 +252,35 @@
 \end{frame}
 
 
+\begin{frame}
+\frametitle{Principais desafios arquitetura RESTful}
+
+\begin{exampleblock}{Principais desafios arquitetura RESTful}
+	\small{
+	\begin{itemize}
+		\item<1->Basicamente, a maior parte do backend Delphi é um desafio levando em consideração o custo de tempo para extrair as regras de negócios comuns automatizadas no core do SIE. Dessa forma, estamos preferindo focar mais nas TClis dos frontends;
+		\item<1->Há exceções, as meta-queries do Delphi podem ser convertidas facilmente em webservices como o SDK do barramento;
+		\item<1->A quantidade de herança e, principalmente, métodos virtuais nas classes bases do pkCDESP tornam a migração mais demorada;
+	\end{itemize}
+}
+\end{exampleblock}
+
+\end{frame}
+
+
 
 
 \begin{frame}
-\frametitle{Desafios da migração do backend Delphi para Java}
+\frametitle{Principais desafios arquitetura RESTful}
 
-\begin{exampleblock}{Desafios da migração do backend Delphi para Java}
-	
+\begin{exampleblock}{Principais desafios arquitetura RESTful}
+\small{
 	\begin{itemize}
-		\item<1->Basicamente, qualquer parte do Delphi é um desafio enorme levando em consideração o custo de tempo e complexidade do código;
-		\item<1->A única excessão será as meta-queries que serja bem fácil com o provider de meta-query do SDK;
-		\item<1->Os métodos das TClis possuem muito herança de código com muitos métodos virtuais que dificulta extrair a lógica de negócio
-		sem precisar refazer tudo no Java;
-		\item<1->Para mapear os dados em Dataset, é necessário especificar o schema dos Dados;
+		\item<1->Para o cliente REST do frontend Delphi obter os dados no formato Dataset para os TClis, é necessário especificar o schema dos dados compatível com o esperado o que é fácil mas trabalhoso;
+		\item<1->Pelo menos por enquanto, uma das maiores vantagens em se utilizar microserviços é meio que perdida, visto que o 
+		Sie-Core é um artefato monolítico em termos de unidade de deploy.
 	\end{itemize}
-	
+}
 \end{exampleblock}
 
 \end{frame}
@@ -279,152 +290,45 @@
 
 
 
-\section{Principais Resultados do Trabalho}
-
-
-\begin{frame}[c]{ }
-\centering
-  \huge{Principais Resultados do Trabalho}
-\end{frame}
+\section{Caso prático 1: Web services implementados para o NCC}
 
 
 
 \begin{frame}
-  \frametitle{Desenvolvimento de serviços com o SDK}
+  \frametitle{Caso prático 1: Web services implementados para o NCC}
 
-	\begin{figure}
 	\centering
-		\includegraphics[scale=0.4]{img/sdk.png}
-	\end{figure}
+	\includegraphics[scale=0.4]{img/sdk.png}
   
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Autenticação de usuários com o proxy LDAP}
+  \frametitle{Caso prático 2: TClis do SIE invocando web services Java}
 
-	\begin{figure}
 	\centering
-		\includegraphics[scale=0.6]{img/ldap.png}
-	\end{figure}
+	\includegraphics[scale=0.4]{img/sie.png}
   
 \end{frame}
+
+
+\section{Futuro}
 
 
 \begin{frame}
-  \frametitle{Autenticação e autorização de serviços REST com OAuth2}
+\frametitle{Trabalhos relacionados}
 
-	\begin{figure}
-	\centering
-		\includegraphics[scale=0.4]{img/oauth2.png}
-	\end{figure}
-  
-\end{frame}
+	\small{
+		\begin{itemize}
+			\item<1->A systematic mapping study on legacy system modernization -- 2016
+			\item<1->Uma abordagem orientada a serviços para a modernização de sistemas legados -- 2016
+			\item<1->Uma Implementação do Protocolo OAuth 2 em Erlang para uma Arquitetura Orientada a Serviço -- 2017
+			\item<1->An experience report on the adoption of microservices in three brazilian government institutions -- 2018
+			\item<1->Melhoria na Publicação de Dados Abertos: Automatização na Publicação e Indexação Semântica dos Dados -- 2018
+			\item<1->Integração das Bases de Login e Senha dos Sistemas da Universidade de Brasília - UnB -- 2019
+		\end{itemize}
+	}
 
-
-
-\begin{frame}
-  \frametitle{Trabalhos futuros}
-
-  \begin{exampleblock}{Trabalhos futuros}
-  
-	  \begin{itemize}
- 	    \item<1->Portal Api Management;
-    	    \item<1->JSON Schema Draft 4;
-    	    \item<1->SDK .Net.
-	  \end{itemize}
-
-  \end{exampleblock}
-
-  
-\end{frame}
-
-
-%%##############################################################
-
-
-\subsection{Perguntas}
-
-
-\begin{frame}[c]{ }
-\centering
-  \huge{Perguntas ?}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Perguntas}
-
-  \begin{exampleblock}{}
-  
-	  \begin{itemize}
-		\item<1->(QP1) Por que Erlang/OTP?
-		\item<1->(QP2) Quem usa Erlang/OTP?
-	    \item<1->(QP3) Por que o desenvolvimento de um novo barramento em vez de utilizar um existente?
-	    \item<1->(QP4) Por que não implementar web services usando somente Java e seus frameworks?
-	  \end{itemize}
-  
-  \end{exampleblock}
-
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{(QP1) Por que Erlang/OTP?}
-
-    \begin{itemize}
-       \item<1-> Suporta aplicações distribuídas e tolerantes a falhas a serem executadas em um ambiente de tempo real e ininterrupto;
-       \item<1-> Possui um ambiente de execução que realmente facilita o desenvolvimento de software de rede e de clusters de serviços;
-       
-       \item<1-> Possui um modelo de arquitetura baseado em atores (Actor Model) onde os processos podem 
-       se comunicar apenas por mensagens.
-       
-    \end{itemize}
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{(QP2) Quem usa Erlang/OTP?}
-
-	  \begin{itemize}
-		\item<1->Facebook (Backend do chat -- 100 milhões de usuários ativos);
-		\item<1->Whatapps (Servidores de mensagens -- 2 milhões de usuários/servidor);
-		\item<1->Yahoo (Delicious -- 5 milhões de usuários e mais de 150 milhões de bookmarks);
-		\item<1->Amazon SimpleDB, o serviço de dados do Amazon EC2;
-		\item<1->GitHub (Backend -- milhares de transações concorrentes);
-		\item<1->T-Mobile nos seus sistemas de SMS e autenticação;
-		\item<1->Motorola, CouchDB, RabbitMQ, Ejabbed, entre outros.
-						
-	   \end{itemize}
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{(QP3) Por que um novo barramento?}
-
-	  \begin{itemize}
-		\item<1->Obter domínio sobre as tecnologias e o design RESTful;
-		\item<1->Barramento de serviços são produtos caros e complexos;
-		\item<1->Disponibilizar um produto simples (contém somente 10 mil linhas de código atualmente).
-					
-	   \end{itemize}
-  
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{(QP4) Por que não implementar web services em Java com frameworks?}
-
-	  \begin{itemize}
-		\item<1->É uma opção, mas exige ferramentas para gerenciar;
-		\item<1->Não é orientado a contrato de serviços;
-		\item<1->Não é independente de linguagem de programação;
-		\item<1->Não é escalável apenas usando os frameworks.
-	   \end{itemize}
-  
 \end{frame}
 
 
