@@ -259,8 +259,8 @@
 	\small{
 	\begin{itemize}
 		\item<1->Basicamente, a maior parte do backend Delphi é um desafio levando em consideração o custo de tempo para extrair as regras de negócios comuns automatizadas no core do SIE. Dessa forma, estamos preferindo focar mais nas TClis dos frontends;
-		\item<1->Há exceções, as meta-queries do Delphi podem ser convertidas facilmente em webservices como o SDK do barramento;
 		\item<1->A quantidade de herança e, principalmente, métodos virtuais nas classes bases do pkCDESP tornam a migração mais demorada;
+		\item<1->Há exceções, as meta-queries do Delphi podem ser convertidas facilmente em webservices como o SDK do barramento;
 	\end{itemize}
 }
 \end{exampleblock}
@@ -277,8 +277,7 @@
 \small{
 	\begin{itemize}
 		\item<1->Para o cliente REST do frontend Delphi obter os dados no formato Dataset para os TClis, é necessário especificar o schema dos dados compatível com o esperado o que é fácil mas trabalhoso;
-		\item<1->Pelo menos por enquanto, uma das maiores vantagens em se utilizar microserviços é meio que perdida, visto que o 
-		Sie-Core é um artefato monolítico em termos de unidade de deploy.
+		\item<1->Pelo menos por enquanto, pelo fato do Sie-Core ser um artefato monolítico em termos de unidade de deploy, será bem mais desafiador o uso de microservices e Docker no futuro.
 	\end{itemize}
 }
 \end{exampleblock}
