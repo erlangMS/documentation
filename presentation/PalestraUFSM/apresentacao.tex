@@ -44,13 +44,11 @@
 
 %%##################### PLANO #########################################
 
-\section{Plano}
+\section{Agenda}
 
-
-\subsection{Plano}
 
 \begin{frame}
-  \frametitle{Plano}
+  \frametitle{Agenda}
 
     \begin{itemize}
 
@@ -59,14 +57,16 @@
 		  	  \item<1->Objetivo do projeto
 		  	  \item<1->Panorama geral sobre modernização
 	    	  \item<1->Histórico do projeto
-  	  	 	  \item<1->Design da arquitetura
+  	  	 	  \item<1->Design e princípios da arquitetura
+  	  	 	  \item<1->Artigos produzidos para divulgar o barramento
 		    \end{itemize}
 	   	  \item<1-> 
 
 	    \item<1-> Implantação do barramento na UFSM
 		    \begin{itemize}
-			\item<1->O que está sendo feito
-			\item<1->Principais desafios arquitetura RESTful
+			\item<1->O que já foi feito
+			\item<1->O que ainda precisa ser feito x prioridade
+			\item<1->Principais desafios do trabalho
 			\item<1->Caso prático 1: Web services implementados para o NCC
 			\item<1->Caso prático 2: TClis do SIE invocando web services Java
 		    \end{itemize}
@@ -83,9 +83,6 @@
 %%##############################################################
 
 
-\section{Barramento de serviços ERLANGMS}
-
-
 \begin{frame}[c]{ }
 \centering
 \huge{Barramento de serviços ERLANGMS}
@@ -100,7 +97,7 @@
 
 \begin{exampleblock}{ERLANGMS}
 	
-	É uma abordagem desenvolvida na UnB para facilitar a modernização de sistemas para uma arquitetura orientada a serviços 
+	É um projeto desenvolvido inicialmente na UnB para auxiliar a modernização de sistemas para uma arquitetura orientada a serviços 
 	por meio de um barramento de serviços + SDK + processo 
 	de modernização e arquitetura documentado (SMSOC).
 	
@@ -111,15 +108,6 @@
 
 
 
-\begin{frame}
-\frametitle{Panorama geral sobre modernização  \\ \small{Estudo realizado para identificar as estratégias de modernização}}
-
-%% Mostra o diagrama de bolhas
-
-	\centering
-	\includegraphics[scale=0.45]{img/bubble_diagram.png}
-
-\end{frame}
 
 
 \begin{frame}
@@ -157,15 +145,14 @@
 
 
 \begin{frame}
-\frametitle{Design da arquitetura}
+\frametitle{Design e princípios da arquitetura}
 
-\begin{exampleblock}{Design da arquitetura}
+\begin{exampleblock}{Design e princípios da arquitetura}
 	
 	\begin{itemize}
 		\item<1->Multiplataforma e arquitetura modular;
 		\item<1->Serviços especificados em catálogos de serviços;
 		\item<1->Cluster de serviços para evitar ponto único de falhas;
-		\item<1->Suporta serviços RESTful por contrato;
 		\item<1->Modelo de concorrência para serviços em Erlang: Actor Model;
 		\item<1->Baixa curva de aprendizado.
 	\end{itemize}
@@ -176,6 +163,22 @@
 \end{frame}
 
 
+\begin{frame}
+\frametitle{Artigos produzidos para divulgação do projeto}
+
+\small{
+	\begin{itemize}
+		\item<1->A systematic mapping study on legacy system modernization -- 2016
+		\item<1->Uma abordagem orientada a serviços para a modernização de sistemas legados -- 2016
+		\item<1->Uma Implementação do Protocolo OAuth 2 em Erlang para uma Arquitetura Orientada a Serviço -- 2017
+		\item<1->An experience report on the adoption of microservices in three brazilian government institutions -- 2018
+		\item<1->Melhoria na Publicação de Dados Abertos: Automatização na Publicação e Indexação Semântica dos Dados -- 2018
+		\item<1->Integração das Bases de Login e Senha dos Sistemas da Universidade de Brasília - UnB -- 2019
+	\end{itemize}
+}
+
+\end{frame}
+
 
 
 %%##############################################################
@@ -184,8 +187,6 @@
 
 
 
-
-\section{Implantação do barramento na UFSM}
 
 
 \section{Implantação do barramento na UFSM}
@@ -197,10 +198,23 @@
 \end{frame}
 
 
+\begin{frame}
+\frametitle{Panorama geral sobre modernização  \\ \small{Estudo realizado na UnB para identificar as estratégias de modernização}}
+
+%% Mostra o diagrama de bolhas
+
+\centering
+\includegraphics[scale=0.45]{img/bubble_diagram.png}
+
+\end{frame}
+
+
+
+
 
 
 \begin{frame}
-\frametitle{O que está sendo feito}
+\frametitle{O que já foi feito}
 
 \begin{exampleblock}{O que já foi feito}
 	
@@ -215,8 +229,8 @@
 			\begin{itemize}
 				\item<1->Novo operador \em{format} para serializar dados como Dataset;
 				\item<1->Novo subsistema provider no SDK para permitir seu uso independente da camada de negócio;
-				\item<1->Provider para trabalhar com meta-queries do Delphi;
-				\item<1->Cliente REST implementado no Delphi.
+				\item<1->Provider RestApiMetaQueryProvider;
+				\item<1->Cliente REST implementado no Delphi com suporte a SSL.
 			\end{itemize}
 		
 	\end{itemize}
@@ -229,7 +243,7 @@
 \begin{frame}
 \frametitle{O que ainda precisa ser feito x prioridade}
 
-\begin{exampleblock}{O que ainda precisa ser feito}
+\begin{exampleblock}{O que ainda precisa ser feito x prioridade}
 	
 	\begin{itemize}
 		\item<1->Tornar a camada de fachada mais simples -- Moderado;
@@ -253,12 +267,12 @@
 
 
 \begin{frame}
-\frametitle{Principais desafios arquitetura RESTful}
+\frametitle{Principais desafios do trabalho}
 
-\begin{exampleblock}{Principais desafios arquitetura RESTful}
+\begin{exampleblock}{Principais desafios do trabalho}
 	\small{
 	\begin{itemize}
-		\item<1->Basicamente, a maior parte do backend Delphi é um desafio levando em consideração o custo de tempo para extrair as regras de negócios comuns automatizadas no core do SIE. Dessa forma, estamos preferindo focar mais nas TClis dos frontends;
+		\item<1->Levando em consideração o custo de tempo para extrair as regras de negócios comuns automatizadas no core do SIE, estamos preferindo focar mais nas TClis dos frontends;
 		\item<1->A quantidade de herança e, principalmente, métodos virtuais nas classes bases do pkCDESP tornam a migração mais demorada;
 		\item<1->Há exceções, as meta-queries do Delphi podem ser convertidas facilmente em webservices como o SDK do barramento;
 	\end{itemize}
@@ -271,12 +285,12 @@
 
 
 \begin{frame}
-\frametitle{Principais desafios arquitetura RESTful}
+\frametitle{Principais desafios do trabalho}
 
-\begin{exampleblock}{Principais desafios arquitetura RESTful}
+\begin{exampleblock}{Principais desafios do trabalho}
 \small{
 	\begin{itemize}
-		\item<1->Para o cliente REST do frontend Delphi obter os dados no formato Dataset para os TClis, é necessário especificar o schema dos dados compatível com o esperado o que é fácil mas trabalhoso;
+		\item<1->Para o cliente REST do frontend Delphi obter os dados no formato Dataset para os TClis, é necessário especificar o schema dos dados. É relativamente fácil mas trabalhoso;
 		\item<1->Pelo menos por enquanto, pelo fato do Sie-Core ser um artefato monolítico em termos de unidade de deploy, será bem mais desafiador o uso de microservices e Docker no futuro.
 	\end{itemize}
 }
@@ -286,11 +300,6 @@
 
 
 %%##############################################################
-
-
-
-\section{Caso prático 1: Web services implementados para o NCC}
-
 
 
 \begin{frame}
@@ -311,24 +320,7 @@
 \end{frame}
 
 
-\section{Futuro}
 
-
-\begin{frame}
-\frametitle{Trabalhos relacionados}
-
-	\small{
-		\begin{itemize}
-			\item<1->A systematic mapping study on legacy system modernization -- 2016
-			\item<1->Uma abordagem orientada a serviços para a modernização de sistemas legados -- 2016
-			\item<1->Uma Implementação do Protocolo OAuth 2 em Erlang para uma Arquitetura Orientada a Serviço -- 2017
-			\item<1->An experience report on the adoption of microservices in three brazilian government institutions -- 2018
-			\item<1->Melhoria na Publicação de Dados Abertos: Automatização na Publicação e Indexação Semântica dos Dados -- 2018
-			\item<1->Integração das Bases de Login e Senha dos Sistemas da Universidade de Brasília - UnB -- 2019
-		\end{itemize}
-	}
-
-\end{frame}
 
 
 
