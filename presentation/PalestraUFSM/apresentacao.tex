@@ -61,7 +61,7 @@
 		    \end{itemize}
 	   	  \item<1-> 
 
-	    \item<1-> Implantação do barramento na UFSM
+	    \item<1-> Implantação do barramento no CPD/UFSM
 		    \begin{itemize}
 	        \item<1->Panorama geral sobre modernização
 			\item<1->O que já foi feito
@@ -95,9 +95,9 @@
 \begin{frame}
 \frametitle{Objetivo do projeto}
 
-\begin{exampleblock}{ERLANGMS}
+\begin{exampleblock}{ERLANGMS (https://github.com/erlangms)}
 	
-	É um projeto desenvolvido inicialmente na UnB para auxiliar a modernização de sistemas para uma arquitetura orientada a serviços 
+	É um projeto desenvolvido inicialmente na UnB para auxiliar na modernização de sistemas para uma arquitetura orientada a serviços 
 	por meio de um barramento de serviços + SDK + processo 
 	de modernização e arquitetura documentado (SMSOC).
 	
@@ -132,7 +132,7 @@
 		\item<1->HTTP Basic authentication;
 		\item<1->OAuth2 authentication;
 		\item<1->SDK para criar serviços em Java;
-		\item<1->Query Api -- filter, fields, sort, limit.
+		\item<1->Query Api -- filter, fields, sort, limit;
 		\item<1->Suporte para Dados Abertos.
 	\end{itemize}
 	
@@ -150,10 +150,10 @@
 \begin{exampleblock}{Design e princípios da arquitetura}
 	
 	\begin{itemize}
-		\item<1->Multiplataforma e arquitetura modular;
 		\item<1->Serviços especificados em catálogos de serviços;
-		\item<1->Cluster de serviços para evitar ponto único de falhas;
-		\item<1->Modelo de concorrência para serviços em Erlang: Actor Model;
+		\item<1->Seguir as restrições RESTful quando possível;
+		\item<1->Padrão \emph{Domain-Driven Design (DDD)} para modelagem do domnínio de negócio quando possível;
+		\item<1->Ênfase em microserviços quando possível;
 		\item<1->Baixa curva de aprendizado.
 	\end{itemize}
 	
@@ -227,9 +227,8 @@
 			\end{itemize}
 		\item<1->Features visando a migração de backends SIE para Java:
 			\begin{itemize}
-				\item<1->Novo operador \em{format} para serializar dados como Dataset;
-				\item<1->Novo subsistema provider no SDK para permitir seu uso independente da camada de negócio;
-				\item<1->Provider RestApiMetaQueryProvider;
+				\item<1->Suporte para serialização de dados como Dataset;
+				\item<1->Provider RestApiMetaQueryProvider para migração de meta queries do Delphi;
 				\item<1->Cliente REST implementado no Delphi com suporte a SSL.
 			\end{itemize}
 		
@@ -246,8 +245,7 @@
 \begin{exampleblock}{O que ainda precisa ser feito x prioridade}
 	
 	\begin{itemize}
-		\item<1->Tornar a camada de fachada mais simples -- Moderado;
-		\item<1->Implementar o subsistema de autenticação OAuth2 (ou integrar por completo o barramento) -- Alto;
+		\item<1->Implementar o subsistema de autenticação/autorização OAuth2 (ou integrar por completo o barramento) -- Alto;
 		\item<1->Analisar os principais métodos do TCliBusiness e prover um suporte adequado no SDK para facilitar a migração -- Alto;
 		\item<1->Permitir gerar uma consulta por meio da Query API para buscar dados de um atributo lista de um objeto principal -- Baixo;
 		\item<1->Permitir encadear funções nos atributos das entidades com o operador \% para modificar a forma como o dado é lido da fonte de dados -- Baixo.
